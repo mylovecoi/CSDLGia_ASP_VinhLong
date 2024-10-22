@@ -346,12 +346,12 @@ namespace CSDLGia_ASP.Helper
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac", Name = "Các loại giá khác" });
 
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.hhdvcn", Name = "Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.danhmuc", Name = "Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành - Danh mục" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.thongtin", Name = "Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành - Thông tin" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.xetduyet", Name = "Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành - Xét duyệt" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.timkiem", Name = "Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành - Tìm kiếm" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.baocao", Name = "Giá hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành - Báo cáo" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.hhdvcn", Name = "Giá HH-DV khác theo quy định của pháp luật chuyên ngành" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.danhmuc", Name = "Giá HH-DV khác theo quy định của pháp luật chuyên ngành - Danh mục" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.thongtin", Name = "Giá HH-DV khác theo quy định của pháp luật chuyên ngành - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.xetduyet", Name = "Giá HH-DV khác theo quy định của pháp luật chuyên ngành - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.timkiem", Name = "Giá HH-DV khác theo quy định của pháp luật chuyên ngành - Tìm kiếm" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.hhdvcn.baocao", Name = "Giá HH-DV khác theo quy định của pháp luật chuyên ngành - Báo cáo" });
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.lephi", Name = "Giá lệ phí trước bạ" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.lephi.danhmuc", Name = "Giá lệ phí trước bạ - Danh mục" });
@@ -362,10 +362,10 @@ namespace CSDLGia_ASP.Helper
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.philephi", Name = "Giá phí lệ phí" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.philephi.danhmuc", Name = "Giá phí lệ phí - Danh mục" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.philephi.thongtin", Name = "Giá phí lệ phí  - Thông tin" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.philephi.xetduyet", Name = "Giá phí lệ phí  - Xét duyệt" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.philephi.thongtin", Name = "Giá phí lệ phí - Thông tin" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.philephi.xetduyet", Name = "Giá phí lệ phí - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.philephi.timkiem", Name = "Giá phí lệ phí - Tìm kiếm" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.philephi.baocao", Name = "Giá phí lệ phí  - Báo cáo" });
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.philephi.baocao", Name = "Giá phí lệ phí - Báo cáo" });
 
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.giavatlieuxaydung", Name = "Giá vật liệu xây dựng" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.cacloaigiakhac.giavatlieuxaydung.thongtin", Name = "Giá vật liệu xây dựng - Thông tin" });
@@ -412,7 +412,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "hethong.nguoidung.dsnhomtaikhoan", Name = "Danh sách nhóm tài khoản" });
             roldelist.Add(new VMRoleList { Role = "hethong.nguoidung.dstaikhoan", Name = "Danh sách tài khoản" });
             roldelist.Add(new VMRoleList { Role = "hethong.nguoidung.dstaikhoan.phanquyen", Name = "Danh sách tài khoản phân quyền" });
-            roldelist.Add(new VMRoleList { Role = "hethong.nguoidung.dsdangky", Name = "Tài khoản đăng ký" });
+            roldelist.Add(new VMRoleList { Role = "hethong.nguoidung.dsdangky", Name = "Tài khoản DN đăng ký" });
             roldelist.Add(new VMRoleList { Role = "hethong.hethong", Name = "Quản trị hệ thống" });
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.dsdiaban", Name = "Danh sách địa bàn" });
             roldelist.Add(new VMRoleList { Role = "hethong.hethong.dsdonvi", Name = "Danh sách đơn vị sử dụng" });
@@ -433,7 +433,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmdonvitinh", Name = "Danh mục đơn vị tính" });
            
             //API
-            roldelist.Add(new VMRoleList { Role = "hethong.api", Name = "Quản trị kết nối API" });
+            roldelist.Add(new VMRoleList { Role = "hethong.api", Name = "Quản lí kết nối API" });
             roldelist.Add(new VMRoleList { Role = "hethong.api.doanhngiepdvlt", Name = "Danh sách doanh nghiệp kê khai dịch vụ lưu trú" });
             roldelist.Add(new VMRoleList { Role = "hethong.api.hosodvlt", Name = "Danh sách hồ sơ kê khai dịch vụ lưu trú" });
             roldelist.Add(new VMRoleList { Role = "hethong.api.csdlqg", Name = "Danh sách kết nối cơ sở dữ liệu quốc gia" });

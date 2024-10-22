@@ -309,6 +309,7 @@ namespace CSDLGia_ASP.Database
         public DbSet<NhatKySuDung> NhatKySuDung { get; set; }
         public DbSet<Supports> Supports { get; set; }
         public DbSet<DuLieuTapHuan> DuLieuTapHuan { get; set; }
+        public DbSet<RoleList> RoleList { get; set; }
 
         // Trạng Thái Hồ Sơ
         public DbSet<TrangThaiHoSo> TrangThaiHoSo { get; set; }

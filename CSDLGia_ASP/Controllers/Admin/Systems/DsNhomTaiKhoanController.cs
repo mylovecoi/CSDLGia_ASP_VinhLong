@@ -59,16 +59,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     _db.Permissions.RemoveRange(model_del);
                     _db.SaveChanges();
                     string KeyLink = "Per_" + DateTime.Now.ToString("yymmssfff");
-                    var model = new VMGroupPermissions {KeyLink = KeyLink};
+                    var model = new VMGroupPermissions { KeyLink = KeyLink };
 
-                    var data_rolelist = Helpers.GetRoleList();
-                    if(ChucNang_create == "QUANTRI")
+                    var data_rolelist = _db.RoleList.Where(t => t.TrangThai == "Active").ToList();
+                    
+                    if (ChucNang_create == "QUANTRI")
                     {
-                        data_rolelist = Helpers.GetRoleListQuanTri();
+                        data_rolelist = data_rolelist.Where(t => t.PhanLoai == "QUANTRI").ToList();
                     }
                     if (ChucNang_create == "NHAPLIEU")
                     {
-                        data_rolelist = Helpers.GetRoleListNhapLieu();
+                        data_rolelist = data_rolelist.Where(t => t.PhanLoai == "NHAPLIEU").ToList();
                     }
                     var per = new List<Permissions>();
                     foreach (var item in data_rolelist)
@@ -78,18 +79,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             Username = KeyLink,
                             Roles = item.Role,
                             Name = item.Name,
-                            Index = true,
-                            Create= true,
-                            Edit = true,
-                            Delete = true,
-                            Approve = true,
-                            Public = true,
+                            Index = false,
+                            Create = false,
+                            Edit = false,
+                            Delete = false,
+                            Approve = false,
+                            Public = false,
                             Status = "Disable"
                         });
                     }
                     _db.Permissions.AddRange(per);
                     _db.SaveChanges();
-                    model.Permissions = per.Where(t=>t.Username == model.KeyLink).ToList();
+                    model.Permissions = per.Where(t => t.Username == model.KeyLink).ToList();
 
                     ViewData["ChucNang"] = ChucNang_create;
                     ViewData["RoleList"] = data_rolelist;
@@ -153,15 +154,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         Id = model_group.Id,
                         Permissions = model_per.ToList()
                     };
-                    var data_rolelist = Helpers.GetRoleList();
+
+                    var data_rolelist = _db.RoleList.Where(t => t.TrangThai == "Active").ToList();
                     if (model.ChucNang == "QUANTRI")
                     {
-                        data_rolelist = Helpers.GetRoleListQuanTri();
+                        data_rolelist = data_rolelist.Where(t => t.PhanLoai == "QUANTRI").ToList();
                     }
                     if (model.ChucNang == "NHAPLIEU")
                     {
-                        data_rolelist = Helpers.GetRoleListNhapLieu();
+                        data_rolelist = _db.RoleList.Where(t => t.TrangThai == "Active").ToList();
                     }
+
                     ViewData["RoleList"] = data_rolelist;
                     ViewData["Title"] = "Thông tin quyền truy cập";
                     ViewData["MenuLv1"] = "menu_hethong";

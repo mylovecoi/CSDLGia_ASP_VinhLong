@@ -1,7 +1,7 @@
 ﻿@model CSDLGia_ASP.ViewModels.Systems.VMGroupPermissions
 @{
     int record_id = 1;
-    var rolelist = (IEnumerable<VMRoleList>)ViewData["RoleList"];
+    var rolelist = (IEnumerable<RoleList>)ViewData["RoleList"];
 }
 <div class="mb-3 font-weight-bold font-size-lg">
     <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin quyền truy cập vào hệ thống:</label>
@@ -19,9 +19,9 @@
                     </h3>
                 </div>
                 <div class="card-toolbar">
-                    <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal" onclick="ClearFrmCreate()">
+                    @* <button type="button" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal" onclick="ClearFrmCreate()">
                         <i class="la la-plus"></i>Thêm mới
-                    </button>
+                    </button> *@
                 </div>
             </div>
             <hr />
@@ -114,10 +114,10 @@
                                             <i class="icon-lg la la-edit text-primary"></i>
                                         </button>
 
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal"
+                                        @* <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal"
                                                 onclick="getId('@item.Id', '@item.Roles')">
                                             <i class="icon-lg la la-trash text-danger"></i>
-                                        </button>
+                                        </button> *@
                                     </td>
                                 </tr>
                             }
