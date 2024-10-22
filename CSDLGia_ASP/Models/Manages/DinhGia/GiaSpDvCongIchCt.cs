@@ -16,6 +16,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Manhom { get; set; }
         public string Ten { get; set; }
         public string LoaiDoThi { get; set; }
+        public string LoaiDoThi2 { get; set; }
         public string Dvt { get; set; }
         public double Mucgiatu { get; set; }
         public double Mucgiaden { get; set; }

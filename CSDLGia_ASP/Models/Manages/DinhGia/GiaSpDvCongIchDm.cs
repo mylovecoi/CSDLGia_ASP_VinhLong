@@ -12,6 +12,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Maspdv { get; set; }
         public string Tenspdv { get; set; }
         public string LoaiDoThi { get; set; }
+        public string LoaiDoThi2 { get; set; }
         public string HienThi { get; set; }
         public string Dvt { get; set; }
         public int Sapxep { get; set; }

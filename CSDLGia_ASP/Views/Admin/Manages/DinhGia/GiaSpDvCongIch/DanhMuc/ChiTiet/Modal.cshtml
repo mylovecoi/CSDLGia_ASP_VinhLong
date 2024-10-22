@@ -54,8 +54,14 @@
                     </div>
                     <div class="col-xl-4">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Loại đô thị</label>
+                            <label>Loại đô thị II</label>
                             <input type="text" id="loaidothi_create" name="loaidothi_create" class="form-control" />
+                        </div>
+                    </div>
+                     <div class="col-xl-4">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Loại đô thị III-V</label>
+                            <input type="text" id="loaidothi2_create" name="loaidothi2_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-4">
@@ -464,6 +470,7 @@
                 Manhom: $('#manhom_create').val(),
                 Tenspdv: $('#tenspdv_create').val(),
                 LoaiDoThi: $('#loaidothi_create').val(),
+                   LoaiDoThi2: $('#loaidothi2_create').val(),
                 Dvt: $('#dvt_create').val(),
                 Sapxep: $('#sapxep_create').val(),
                 Style: $('#style_create').val(),
@@ -528,6 +535,7 @@
             data: {
                 Tenspdv: $('#tenspdv_edit').val(),
                 LoaiDoThi: $('#loaidothi_edit').val(),
+                  LoaiDoThi2: $('#loaidothi2_edit').val(),
                 Sapxep: $('#sapxep_edit').val(),
                 HienThi: $('#hienthi_edit').val(),
                 Dvt: $('#dvt_edit').val(),

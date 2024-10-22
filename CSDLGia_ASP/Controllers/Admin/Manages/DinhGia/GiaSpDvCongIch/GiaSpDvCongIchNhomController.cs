@@ -49,6 +49,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     {
                         model = model.Where(t => t.Madv == Madv);
                     }
+                    
 
                     ViewData["SapXep"] = model.Any() ? model.Max(t => t.SapXep) + 1 : 1;
                     ViewData["Madv"] = Madv;
