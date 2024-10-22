@@ -23,6 +23,9 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public double Giavt3 { get; set; }
         public double Giavt4 { get; set; }
         public double Giavt5 { get; set; }
+        public double Giavt6 { get; set; }
+        public double Giavt7 { get; set; }
+        public double Giavtconlai { get; set; }
         public double Hesok { get; set; }
         public double Sapxep { get; set; }
         public string Trangthai { get; set; }

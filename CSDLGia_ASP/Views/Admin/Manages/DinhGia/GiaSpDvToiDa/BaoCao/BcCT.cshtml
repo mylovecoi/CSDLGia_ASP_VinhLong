@@ -31,7 +31,11 @@
             <th style="text-align:center" width="2%">STT</th>
             <th style="text-align:center">Tên sản phẩm, dịch vụ</th>
             <th style="text-align:center">Đơn vị tính</th>
-            <th style="text-align:center">Đơn giá</th>  
+            <th style="text-align:center">Đơn giá</th>
+            <th>Mức giá tối đa cự ly dưới 500m</th>
+            <th>Mức giá tối đa cự ly từ 500m đến dưới 1.000m</th>
+            <th>Mức giá tối đa cự ly từ 1.000m đến dưới 2.000m</th>
+            <th>Mức giá tối đa cự ly từ 2.000m đến dưới 3.000m</th>
         </tr>
     </thead>
     <tbody>
@@ -57,6 +61,10 @@
                         <td style="text-align:left">@item.Tenspdv</td>
                         <td style="text-align:center">@item.Dvt</td>
                         <td style="text-align:right">@Helpers.ConvertDbToStr(item.Dongia)</td>
+                        <td style="text-align:center">@item.GiaToiDaTheoCuLy1</td>
+                        <td style="text-align:center">@item.GiaToiDaTheoCuLy2</td>
+                        <td style="text-align:center">@item.GiaToiDaTheoCuLy3</td>
+                        <td style="text-align:center">@item.GiaToiDaTheoCuLy4</td>
                     </tr>
 
                 }

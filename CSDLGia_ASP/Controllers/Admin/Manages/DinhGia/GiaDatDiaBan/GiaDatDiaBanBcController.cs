@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using CSDLGia_ASP.ViewModels.Manages.DinhGia;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
 {
@@ -137,6 +138,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatDiaBan
                                     Giavt3 = dgct.Giavt3,
                                     Giavt4 = dgct.Giavt4,
                                     Giavt5 = dgct.Giavt5,
+                                    Giavt6 = dgct.Giavt6,
+                                    Giavt7 = dgct.Giavt7,
+                                    Giavtconlai = dgct.Giavtconlai,
                                     Trangthai = dg.Trangthai,
                                     Madiaban = dgct.Madiaban,
                                     TenDiaBan = diaban.TenDiaBan,

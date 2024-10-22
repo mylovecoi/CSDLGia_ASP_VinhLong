@@ -18,6 +18,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string ChiTieu { get; set; }
         public string Dvt { get; set; }
         public double Dongia { get; set; } = 0;
+        public double Dongia2 { get; set; } = 0;
         public string Madv { get; set; }
         public string TrangThai { get; set; }
         [NotMapped]

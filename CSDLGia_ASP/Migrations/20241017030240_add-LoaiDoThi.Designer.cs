@@ -4,6 +4,7 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241017030240_add-LoaiDoThi")]
+    partial class addLoaiDoThi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,7 +146,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChiSoGiaTd", (string)null);
+                    b.ToTable("ChiSoGiaTd");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTdDd", b =>
@@ -237,7 +240,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChiSoGiaTdDd", (string)null);
+                    b.ToTable("ChiSoGiaTdDd");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTdDm", b =>
@@ -295,7 +298,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChiSoGiaTdDm", (string)null);
+                    b.ToTable("ChiSoGiaTdDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTdDmCt", b =>
@@ -362,7 +365,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChiSoGiaTdDmCt", (string)null);
+                    b.ToTable("ChiSoGiaTdDmCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTdDmCtDd", b =>
@@ -429,7 +432,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChiSoGiaTdDmCtDd", (string)null);
+                    b.ToTable("ChiSoGiaTdDmCtDd");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTdHh", b =>
@@ -478,7 +481,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChiSoGiaTdHh", (string)null);
+                    b.ToTable("ChiSoGiaTdHh");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ChiSoGiaTd.ChiSoGiaTdHhCt", b =>
@@ -530,7 +533,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChiSoGiaTdHhCt", (string)null);
+                    b.ToTable("ChiSoGiaTdHhCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaBanNhaTaiDinhCu", b =>
@@ -594,7 +597,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaBanNhaTaiDinhCu", (string)null);
+                    b.ToTable("GiaBanNhaTaiDinhCu");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaCayTrongVatNuoi", b =>
@@ -742,7 +745,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaCayTrongVatNuoi", (string)null);
+                    b.ToTable("GiaCayTrongVatNuoi");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaCayTrongVatNuoiCt", b =>
@@ -794,7 +797,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaCayTrongVatNuoiCt", (string)null);
+                    b.ToTable("GiaCayTrongVatNuoiCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaCayTrongVatNuoiDm", b =>
@@ -846,7 +849,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaCayTrongVatNuoiDm", (string)null);
+                    b.ToTable("GiaCayTrongVatNuoiDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaCayTrongVatNuoiNhom", b =>
@@ -877,7 +880,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaCayTrongVatNuoiNhom", (string)null);
+                    b.ToTable("GiaCayTrongVatNuoiNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaCuocVanChuyen", b =>
@@ -1022,7 +1025,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaCuocVanChuyen", (string)null);
+                    b.ToTable("GiaCuocVanChuyen");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaCuocVanChuyenCt", b =>
@@ -1077,7 +1080,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaCuocVanChuyenCt", (string)null);
+                    b.ToTable("GiaCuocVanChuyenCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan", b =>
@@ -1213,7 +1216,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatDiaBan", (string)null);
+                    b.ToTable("GiaDatDiaBan");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanCt", b =>
@@ -1246,15 +1249,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("float");
 
                     b.Property<double>("Giavt5")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Giavt6")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Giavt7")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Giavtconlai")
                         .HasColumnType("float");
 
                     b.Property<double>("Hesok")
@@ -1304,7 +1298,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatDiaBanCt", (string)null);
+                    b.ToTable("GiaDatDiaBanCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBanTt", b =>
@@ -1341,7 +1335,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatDiaBanTt", (string)null);
+                    b.ToTable("GiaDatDiaBanTt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDuAn", b =>
@@ -1444,7 +1438,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatDuAn", (string)null);
+                    b.ToTable("GiaDatDuAn");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDuAnDm", b =>
@@ -1469,7 +1463,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatDuAnDm", (string)null);
+                    b.ToTable("GiaDatDuAnDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoai", b =>
@@ -1605,7 +1599,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatPhanLoai", (string)null);
+                    b.ToTable("GiaDatPhanLoai");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoaiCt", b =>
@@ -1678,7 +1672,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatPhanLoaiCt", (string)null);
+                    b.ToTable("GiaDatPhanLoaiCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoaiDm", b =>
@@ -1724,7 +1718,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatPhanLoaiDm", (string)null);
+                    b.ToTable("GiaDatPhanLoaiDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatPhanLoaiExcel", b =>
@@ -1818,7 +1812,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatPhanLoaiExcel", (string)null);
+                    b.ToTable("GiaDatPhanLoaiExcel");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatThiTruong", b =>
@@ -1966,7 +1960,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatThiTruong", (string)null);
+                    b.ToTable("GiaDatThiTruong");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatThiTruongCt", b =>
@@ -2051,7 +2045,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatThiTruongCt", (string)null);
+                    b.ToTable("GiaDatThiTruongCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDat", b =>
@@ -2202,7 +2196,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDauGiaDat", (string)null);
+                    b.ToTable("GiaDauGiaDat");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDatCt", b =>
@@ -2272,7 +2266,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDauGiaDatCt", (string)null);
+                    b.ToTable("GiaDauGiaDatCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDatTs", b =>
@@ -2333,7 +2327,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDauGiaDatTs", (string)null);
+                    b.ToTable("GiaDauGiaDatTs");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDauGiaDatTsCt", b =>
@@ -2424,7 +2418,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDauGiaDatTsCt", (string)null);
+                    b.ToTable("GiaDauGiaDatTsCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDvGdDt", b =>
@@ -2569,7 +2563,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDvGdDt", (string)null);
+                    b.ToTable("GiaDvGdDt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDvGdDtCt", b =>
@@ -2669,7 +2663,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDvGdDtCt", (string)null);
+                    b.ToTable("GiaDvGdDtCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDvGdDtDm", b =>
@@ -2712,7 +2706,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDvGdDtDm", (string)null);
+                    b.ToTable("GiaDvGdDtDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDvGdDtNhom", b =>
@@ -2737,7 +2731,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDvGdDtNhom", (string)null);
+                    b.ToTable("GiaDvGdDtNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcb", b =>
@@ -2897,7 +2891,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDvKcb", (string)null);
+                    b.ToTable("GiaDvKcb");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcbCt", b =>
@@ -2958,7 +2952,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDvKcbCt", (string)null);
+                    b.ToTable("GiaDvKcbCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcbDm", b =>
@@ -3010,7 +3004,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDvKcbDm", (string)null);
+                    b.ToTable("GiaDvKcbDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcbNhom", b =>
@@ -3038,7 +3032,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDvKcbNhom", (string)null);
+                    b.ToTable("GiaDvKcbNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS", b =>
@@ -3186,7 +3180,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaGiaoDichBDS", (string)null);
+                    b.ToTable("GiaGiaoDichBDS");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDSCt", b =>
@@ -3226,7 +3220,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaGiaoDichBDSCt", (string)null);
+                    b.ToTable("GiaGiaoDichBDSCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDSDm", b =>
@@ -3281,7 +3275,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaGiaoDichBDSDm", (string)null);
+                    b.ToTable("GiaGiaoDichBDSDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDSNhom", b =>
@@ -3312,7 +3306,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaGiaoDichBDSNhom", (string)null);
+                    b.ToTable("GiaGiaoDichBDSNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDat", b =>
@@ -3460,7 +3454,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaGiaoDichDat", (string)null);
+                    b.ToTable("GiaGiaoDichDat");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDatCt", b =>
@@ -3500,7 +3494,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaGiaoDichDatCt", (string)null);
+                    b.ToTable("GiaGiaoDichDatCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDatDm", b =>
@@ -3555,7 +3549,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaGiaoDichDatDm", (string)null);
+                    b.ToTable("GiaGiaoDichDatDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichDatNhom", b =>
@@ -3586,7 +3580,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaGiaoDichDatNhom", (string)null);
+                    b.ToTable("GiaGiaoDichDatNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaGocVlxdTh", b =>
@@ -3740,7 +3734,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaGocVlxdTh", (string)null);
+                    b.ToTable("GiaGocVlxdTh");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThi", b =>
@@ -3876,7 +3870,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHangHoaTaiSieuThi", (string)null);
+                    b.ToTable("GiaHangHoaTaiSieuThi");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThiCt", b =>
@@ -3931,7 +3925,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHangHoaTaiSieuThiCt", (string)null);
+                    b.ToTable("GiaHangHoaTaiSieuThiCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThiDm", b =>
@@ -3956,7 +3950,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHangHoaTaiSieuThiDm", (string)null);
+                    b.ToTable("GiaHangHoaTaiSieuThiDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHangHoaTaiSieuThiDmCt", b =>
@@ -3999,7 +3993,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHangHoaTaiSieuThiDmCt", (string)null);
+                    b.ToTable("GiaHangHoaTaiSieuThiDmCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCn", b =>
@@ -4141,7 +4135,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhDvCn", (string)null);
+                    b.ToTable("GiaHhDvCn");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnCt", b =>
@@ -4190,7 +4184,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhDvCnCt", (string)null);
+                    b.ToTable("GiaHhDvCnCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnDm", b =>
@@ -4236,7 +4230,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhDvCnDm", (string)null);
+                    b.ToTable("GiaHhDvCnDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvCnNhom", b =>
@@ -4267,7 +4261,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhDvCnNhom", (string)null);
+                    b.ToTable("GiaHhDvCnNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk", b =>
@@ -4421,7 +4415,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhDvk", (string)null);
+                    b.ToTable("GiaHhDvk");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkCt", b =>
@@ -4467,7 +4461,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhDvkCt", (string)null);
+                    b.ToTable("GiaHhDvkCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkCtTh", b =>
@@ -4528,7 +4522,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhDvkCtTh", (string)null);
+                    b.ToTable("GiaHhDvkCtTh");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkDm", b =>
@@ -4571,7 +4565,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhDvkDm", (string)null);
+                    b.ToTable("GiaHhDvkDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkDmDv", b =>
@@ -4617,7 +4611,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhDvkDmDv", (string)null);
+                    b.ToTable("GiaHhDvkDmDv");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkNhom", b =>
@@ -4651,7 +4645,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhDvkNhom", (string)null);
+                    b.ToTable("GiaHhDvkNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkTh", b =>
@@ -4736,7 +4730,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhDvkTh", (string)null);
+                    b.ToTable("GiaHhDvkTh");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkThCt", b =>
@@ -4779,7 +4773,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhDvkThCt", (string)null);
+                    b.ToTable("GiaHhDvkThCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhHaiQuanXnk", b =>
@@ -4927,7 +4921,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhHaiQuanXnk", (string)null);
+                    b.ToTable("GiaHhHaiQuanXnk");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhHaiQuanXnkCt", b =>
@@ -4970,7 +4964,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhHaiQuanXnkCt", (string)null);
+                    b.ToTable("GiaHhHaiQuanXnkCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhHaiQuanXnkDm", b =>
@@ -4998,7 +4992,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhHaiQuanXnkDm", (string)null);
+                    b.ToTable("GiaHhHaiQuanXnkDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaHhHaiQuanXnkThue", b =>
@@ -5023,7 +5017,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaHhHaiQuanXnkThue", (string)null);
+                    b.ToTable("GiaHhHaiQuanXnkThue");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDat", b =>
@@ -5168,7 +5162,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaKhungGiaDat", (string)null);
+                    b.ToTable("GiaKhungGiaDat");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaKhungGiaDatCt", b =>
@@ -5217,7 +5211,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaKhungGiaDatCt", (string)null);
+                    b.ToTable("GiaKhungGiaDatCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaLpTbNha", b =>
@@ -5266,7 +5260,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaLpTbNha", (string)null);
+                    b.ToTable("GiaLpTbNha");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaLpTbNhaCtClCl", b =>
@@ -5300,7 +5294,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaLpTbNhaCtClCl", (string)null);
+                    b.ToTable("GiaLpTbNhaCtClCl");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaLpTbNhaCtXdm", b =>
@@ -5340,7 +5334,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaLpTbNhaCtXdm", (string)null);
+                    b.ToTable("GiaLpTbNhaCtXdm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSan", b =>
@@ -5488,7 +5482,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaMuaTaiSan", (string)null);
+                    b.ToTable("GiaMuaTaiSan");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSanCt", b =>
@@ -5534,7 +5528,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaMuaTaiSanCt", (string)null);
+                    b.ToTable("GiaMuaTaiSanCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaMuaTaiSanDm", b =>
@@ -5571,7 +5565,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaMuaTaiSanDm", (string)null);
+                    b.ToTable("GiaMuaTaiSanDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocSh", b =>
@@ -5713,7 +5707,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaNuocSh", (string)null);
+                    b.ToTable("GiaNuocSh");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocShCt", b =>
@@ -5816,7 +5810,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaNuocShCt", (string)null);
+                    b.ToTable("GiaNuocShCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaNuocShDmKhung", b =>
@@ -5850,7 +5844,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaNuocShDmKhung", (string)null);
+                    b.ToTable("GiaNuocShDmKhung");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiChuyenGia", b =>
@@ -5986,7 +5980,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaPhiChuyenGia", (string)null);
+                    b.ToTable("GiaPhiChuyenGia");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiChuyenGiaCt", b =>
@@ -6014,7 +6008,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaPhiChuyenGiaCt", (string)null);
+                    b.ToTable("GiaPhiChuyenGiaCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiChuyenGiaDm", b =>
@@ -6051,7 +6045,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaPhiChuyenGiaDm", (string)null);
+                    b.ToTable("GiaPhiChuyenGiaDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiChuyenGiaNhom", b =>
@@ -6079,7 +6073,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaPhiChuyenGiaNhom", (string)null);
+                    b.ToTable("GiaPhiChuyenGiaNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhi", b =>
@@ -6224,7 +6218,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaPhiLePhi", (string)null);
+                    b.ToTable("GiaPhiLePhi");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiCt", b =>
@@ -6309,7 +6303,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaPhiLePhiCt", (string)null);
+                    b.ToTable("GiaPhiLePhiCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiDm", b =>
@@ -6373,7 +6367,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaPhiLePhiDm", (string)null);
+                    b.ToTable("GiaPhiLePhiDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaPhiLePhiNhom", b =>
@@ -6404,7 +6398,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaPhiLePhiNhom", (string)null);
+                    b.ToTable("GiaPhiLePhiNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaRung", b =>
@@ -6555,7 +6549,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaRung", (string)null);
+                    b.ToTable("GiaRung");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaRungCt", b =>
@@ -6688,7 +6682,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaRungCt", (string)null);
+                    b.ToTable("GiaRungCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaRungDm", b =>
@@ -6743,7 +6737,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaRungDm", (string)null);
+                    b.ToTable("GiaRungDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaRungDmCt", b =>
@@ -6771,7 +6765,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaRungDmCt", (string)null);
+                    b.ToTable("GiaRungDmCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCi", b =>
@@ -6913,7 +6907,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvCi", (string)null);
+                    b.ToTable("GiaSpDvCi");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCiCt", b =>
@@ -6953,7 +6947,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvCiCt", (string)null);
+                    b.ToTable("GiaSpDvCiCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCiDm", b =>
@@ -6996,7 +6990,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvCiDm", (string)null);
+                    b.ToTable("GiaSpDvCiDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIch", b =>
@@ -7150,7 +7144,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvCongIch", (string)null);
+                    b.ToTable("GiaSpDvCongIch");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchCt", b =>
@@ -7168,12 +7162,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HienThi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LoaiDoThi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LoaiDoThi2")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Madv")
@@ -7217,7 +7205,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvCongIchCt", (string)null);
+                    b.ToTable("GiaSpDvCongIchCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchDm", b =>
@@ -7238,9 +7226,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LoaiDoThi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LoaiDoThi2")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Madv")
@@ -7266,7 +7251,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvCongIchDm", (string)null);
+                    b.ToTable("GiaSpDvCongIchDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCongIchNhom", b =>
@@ -7303,7 +7288,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvCongIchNhom", (string)null);
+                    b.ToTable("GiaSpDvCongIchNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuThe", b =>
@@ -7454,7 +7439,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvCuThe", (string)null);
+                    b.ToTable("GiaSpDvCuThe");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuTheCt", b =>
@@ -7518,7 +7503,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvCuTheCt", (string)null);
+                    b.ToTable("GiaSpDvCuTheCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuTheDm", b =>
@@ -7558,7 +7543,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvCuTheDm", (string)null);
+                    b.ToTable("GiaSpDvCuTheDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvCuTheNhom", b =>
@@ -7589,7 +7574,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvCuTheNhom", (string)null);
+                    b.ToTable("GiaSpDvCuTheNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGia", b =>
@@ -7734,7 +7719,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvKhungGia", (string)null);
+                    b.ToTable("GiaSpDvKhungGia");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGiaCt", b =>
@@ -7792,7 +7777,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvKhungGiaCt", (string)null);
+                    b.ToTable("GiaSpDvKhungGiaCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGiaDm", b =>
@@ -7847,7 +7832,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvKhungGiaDm", (string)null);
+                    b.ToTable("GiaSpDvKhungGiaDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvKhungGiaNhom", b =>
@@ -7878,7 +7863,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvKhungGiaNhom", (string)null);
+                    b.ToTable("GiaSpDvKhungGiaNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDa", b =>
@@ -8029,7 +8014,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvToiDa", (string)null);
+                    b.ToTable("GiaSpDvToiDa");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDaCt", b =>
@@ -8048,18 +8033,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<string>("Dvt")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("GiaToiDaTheoCuLy1")
-                        .HasColumnType("float");
-
-                    b.Property<double>("GiaToiDaTheoCuLy2")
-                        .HasColumnType("float");
-
-                    b.Property<double>("GiaToiDaTheoCuLy3")
-                        .HasColumnType("float");
-
-                    b.Property<double>("GiaToiDaTheoCuLy4")
-                        .HasColumnType("float");
 
                     b.Property<string>("HienThi")
                         .HasColumnType("nvarchar(max)");
@@ -8090,7 +8063,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvToiDaCt", (string)null);
+                    b.ToTable("GiaSpDvToiDaCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDaDm", b =>
@@ -8133,7 +8106,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvToiDaDm", (string)null);
+                    b.ToTable("GiaSpDvToiDaDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDaNhom", b =>
@@ -8170,7 +8143,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaSpDvToiDaNhom", (string)null);
+                    b.ToTable("GiaSpDvToiDaNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong", b =>
@@ -8339,7 +8312,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaTaiSanCong", (string)null);
+                    b.ToTable("GiaTaiSanCong");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCongCt", b =>
@@ -8388,7 +8361,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaTaiSanCongCt", (string)null);
+                    b.ToTable("GiaTaiSanCongCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCongDm", b =>
@@ -8434,7 +8407,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaTaiSanCongDm", (string)null);
+                    b.ToTable("GiaTaiSanCongDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanTths", b =>
@@ -8582,7 +8555,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaTaiSanTths", (string)null);
+                    b.ToTable("GiaTaiSanTths");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanTthsCt", b =>
@@ -8637,7 +8610,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaTaiSanTthsCt", (string)null);
+                    b.ToTable("GiaTaiSanTthsCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThiTruong", b =>
@@ -8692,7 +8665,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThiTruong", (string)null);
+                    b.ToTable("GiaThiTruong");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThiTruongCt", b =>
@@ -8747,7 +8720,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThiTruongCt", (string)null);
+                    b.ToTable("GiaThiTruongCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThiTruongDm", b =>
@@ -8793,7 +8766,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThiTruongDm", (string)null);
+                    b.ToTable("GiaThiTruongDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThiTruongTt", b =>
@@ -8827,7 +8800,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThiTruongTt", (string)null);
+                    b.ToTable("GiaThiTruongTt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc", b =>
@@ -8948,7 +8921,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueMatDatMatNuoc", (string)null);
+                    b.ToTable("GiaThueMatDatMatNuoc");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocCt", b =>
@@ -9036,7 +9009,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueMatDatMatNuocCt", (string)null);
+                    b.ToTable("GiaThueMatDatMatNuocCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocDm", b =>
@@ -9085,7 +9058,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueMatDatMatNuocDm", (string)null);
+                    b.ToTable("GiaThueMatDatMatNuocDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocNhom", b =>
@@ -9116,7 +9089,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueMatDatMatNuocNhom", (string)null);
+                    b.ToTable("GiaThueMatDatMatNuocNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXh", b =>
@@ -9273,7 +9246,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueMuaNhaXh", (string)null);
+                    b.ToTable("GiaThueMuaNhaXh");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXhCt", b =>
@@ -9349,7 +9322,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueMuaNhaXhCt", (string)null);
+                    b.ToTable("GiaThueMuaNhaXhCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMuaNhaXhDm", b =>
@@ -9395,7 +9368,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueMuaNhaXhDm", (string)null);
+                    b.ToTable("GiaThueMuaNhaXhDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueNhaCongVu", b =>
@@ -9456,7 +9429,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueNhaCongVu", (string)null);
+                    b.ToTable("GiaThueNhaCongVu");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueNhaSV", b =>
@@ -9604,7 +9577,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueNhaSV", (string)null);
+                    b.ToTable("GiaThueNhaSV");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueNhaSVCt", b =>
@@ -9635,7 +9608,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueNhaSVCt", (string)null);
+                    b.ToTable("GiaThueNhaSVCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueNhaSVDm", b =>
@@ -9690,7 +9663,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueNhaSVDm", (string)null);
+                    b.ToTable("GiaThueNhaSVDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueNhaSVNhom", b =>
@@ -9721,7 +9694,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueNhaSVNhom", (string)null);
+                    b.ToTable("GiaThueNhaSVNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyen", b =>
@@ -9875,7 +9848,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueTaiNguyen", (string)null);
+                    b.ToTable("GiaThueTaiNguyen");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyenCt", b =>
@@ -9942,7 +9915,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueTaiNguyenCt", (string)null);
+                    b.ToTable("GiaThueTaiNguyenCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyenDm", b =>
@@ -9997,7 +9970,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueTaiNguyenDm", (string)null);
+                    b.ToTable("GiaThueTaiNguyenDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiNguyenNhom", b =>
@@ -10034,7 +10007,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueTaiNguyenNhom", (string)null);
+                    b.ToTable("GiaThueTaiNguyenNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiSanCong", b =>
@@ -10158,7 +10131,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueTaiSanCong", (string)null);
+                    b.ToTable("GiaThueTaiSanCong");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiSanCongCt", b =>
@@ -10231,7 +10204,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueTaiSanCongCt", (string)null);
+                    b.ToTable("GiaThueTaiSanCongCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiSanCongDm", b =>
@@ -10277,7 +10250,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaThueTaiSanCongDm", (string)null);
+                    b.ToTable("GiaThueTaiSanCongDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaTroGiaTroCuoc", b =>
@@ -10404,7 +10377,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaTroGiaTroCuoc", (string)null);
+                    b.ToTable("GiaTroGiaTroCuoc");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaTroGiaTroCuocCt", b =>
@@ -10447,7 +10420,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaTroGiaTroCuocCt", (string)null);
+                    b.ToTable("GiaTroGiaTroCuocCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaTroGiaTroCuocDm", b =>
@@ -10484,7 +10457,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaTroGiaTroCuocDm", (string)null);
+                    b.ToTable("GiaTroGiaTroCuocDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaVangNgoaiTe", b =>
@@ -10614,7 +10587,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaVangNgoaiTe", (string)null);
+                    b.ToTable("GiaVangNgoaiTe");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaVangNgoaiTeCt", b =>
@@ -10666,7 +10639,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaVangNgoaiTeCt", (string)null);
+                    b.ToTable("GiaVangNgoaiTeCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaVangNgoaiTeDm", b =>
@@ -10703,7 +10676,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaVangNgoaiTeDm", (string)null);
+                    b.ToTable("GiaVangNgoaiTeDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDung", b =>
@@ -10851,7 +10824,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaVatLieuXayDung", (string)null);
+                    b.ToTable("GiaVatLieuXayDung");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungCt", b =>
@@ -10906,7 +10879,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaVatLieuXayDungCt", (string)null);
+                    b.ToTable("GiaVatLieuXayDungCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaVatLieuXayDungDm", b =>
@@ -10937,7 +10910,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaVatLieuXayDungDm", (string)null);
+                    b.ToTable("GiaVatLieuXayDungDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaXayDungMoi", b =>
@@ -11085,7 +11058,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaXayDungMoi", (string)null);
+                    b.ToTable("GiaXayDungMoi");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaXayDungMoiCt", b =>
@@ -11128,7 +11101,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaXayDungMoiCt", (string)null);
+                    b.ToTable("GiaXayDungMoiCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaXayDungMoiDm", b =>
@@ -11183,7 +11156,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaXayDungMoiDm", (string)null);
+                    b.ToTable("GiaXayDungMoiDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaXayDungMoiNhom", b =>
@@ -11214,7 +11187,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaXayDungMoiNhom", (string)null);
+                    b.ToTable("GiaXayDungMoiNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhi", b =>
@@ -11357,7 +11330,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PhiLePhi", (string)null);
+                    b.ToTable("PhiLePhi");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhiCt", b =>
@@ -11375,9 +11348,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Dongia")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Dongia2")
                         .HasColumnType("float");
 
                     b.Property<string>("Dvt")
@@ -11421,7 +11391,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PhiLePhiCt", (string)null);
+                    b.ToTable("PhiLePhiCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhiDm", b =>
@@ -11476,7 +11446,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PhiLePhiDm", (string)null);
+                    b.ToTable("PhiLePhiDm");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.PhiLePhiNhom", b =>
@@ -11507,7 +11477,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PhiLePhiNhom", (string)null);
+                    b.ToTable("PhiLePhiNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.ThongTinGiayTo", b =>
@@ -11538,7 +11508,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ThongTinGiayTo", (string)null);
+                    b.ToTable("ThongTinGiayTo");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia.KeKhaiDangKyGia", b =>
@@ -11617,7 +11587,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KeKhaiDangKyGia", (string)null);
+                    b.ToTable("KeKhaiDangKyGia");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia.KeKhaiDangKyGiaCSKD", b =>
@@ -11651,7 +11621,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KeKhaiDangKyGiaCSKD", (string)null);
+                    b.ToTable("KeKhaiDangKyGiaCSKD");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia.KeKhaiDangKyGiaCt", b =>
@@ -11691,7 +11661,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KeKhaiDangKyGiaCt", (string)null);
+                    b.ToTable("KeKhaiDangKyGiaCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiDkg.KkDkg", b =>
@@ -11809,7 +11779,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkDkg", (string)null);
+                    b.ToTable("KkDkg");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiDkg.KkDkgCt", b =>
@@ -12191,7 +12161,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkDkgCt", (string)null);
+                    b.ToTable("KkDkgCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiDkg.KkDkgCtDf", b =>
@@ -12237,7 +12207,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkDkgCtDf", (string)null);
+                    b.ToTable("KkDkgCtDf");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiDkg.KkMhBog", b =>
@@ -12427,7 +12397,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkMhBog", (string)null);
+                    b.ToTable("KkMhBog");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiDkg.KkMhBogCt", b =>
@@ -12482,7 +12452,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkMhBogCt", (string)null);
+                    b.ToTable("KkMhBogCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkCuocVcHkCt", b =>
@@ -12531,7 +12501,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkCuocVcHkCt", (string)null);
+                    b.ToTable("KkCuocVcHkCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGia", b =>
@@ -12724,7 +12694,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGia", (string)null);
+                    b.ToTable("KkGia");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaCatSanCt", b =>
@@ -12773,7 +12743,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaCatSanCt", (string)null);
+                    b.ToTable("KkGiaCatSanCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaDaXayDungCt", b =>
@@ -12822,7 +12792,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaDaXayDungCt", (string)null);
+                    b.ToTable("KkGiaDaXayDungCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaDatSanLapCt", b =>
@@ -12871,7 +12841,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaDatSanLapCt", (string)null);
+                    b.ToTable("KkGiaDatSanLapCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaDvCangCt", b =>
@@ -12920,7 +12890,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaDvCangCt", (string)null);
+                    b.ToTable("KkGiaDvCangCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaDvChCt", b =>
@@ -12969,7 +12939,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaDvChCt", (string)null);
+                    b.ToTable("KkGiaDvChCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaDvDlBbCt", b =>
@@ -13018,7 +12988,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaDvDlBbCt", (string)null);
+                    b.ToTable("KkGiaDvDlBbCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaDvHdTmCt", b =>
@@ -13067,7 +13037,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaDvHdTmCt", (string)null);
+                    b.ToTable("KkGiaDvHdTmCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaDvLtCskd", b =>
@@ -13119,7 +13089,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaDvLtCskd", (string)null);
+                    b.ToTable("KkGiaDvLtCskd");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaDvLtCt", b =>
@@ -13171,7 +13141,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaDvLtCt", (string)null);
+                    b.ToTable("KkGiaDvLtCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaEtanolCt", b =>
@@ -13220,7 +13190,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaEtanolCt", (string)null);
+                    b.ToTable("KkGiaEtanolCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaGiayCt", b =>
@@ -13269,7 +13239,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaGiayCt", (string)null);
+                    b.ToTable("KkGiaGiayCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaHpLxCt", b =>
@@ -13318,7 +13288,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaHpLxCt", (string)null);
+                    b.ToTable("KkGiaHpLxCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaKcbTnCt", b =>
@@ -13367,7 +13337,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaKcbTnCt", (string)null);
+                    b.ToTable("KkGiaKcbTnCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaLuHanhCt", b =>
@@ -13431,7 +13401,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaLuHanhCt", (string)null);
+                    b.ToTable("KkGiaLuHanhCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaOtoNkSxCt", b =>
@@ -13480,7 +13450,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaOtoNkSxCt", (string)null);
+                    b.ToTable("KkGiaOtoNkSxCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaSachCt", b =>
@@ -13529,7 +13499,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaSachCt", (string)null);
+                    b.ToTable("KkGiaSachCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaSieuThiCt", b =>
@@ -13578,7 +13548,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaSieuThiCt", (string)null);
+                    b.ToTable("KkGiaSieuThiCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaTaCnCt", b =>
@@ -13627,7 +13597,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaTaCnCt", (string)null);
+                    b.ToTable("KkGiaTaCnCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaThanCt", b =>
@@ -13676,7 +13646,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaThanCt", (string)null);
+                    b.ToTable("KkGiaThanCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaVeTqKdlCt", b =>
@@ -13725,7 +13695,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaVeTqKdlCt", (string)null);
+                    b.ToTable("KkGiaVeTqKdlCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaVlXdCt", b =>
@@ -13774,7 +13744,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaVlXdCt", (string)null);
+                    b.ToTable("KkGiaVlXdCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaVtXbCt", b =>
@@ -13823,7 +13793,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaVtXbCt", (string)null);
+                    b.ToTable("KkGiaVtXbCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaVtXkCt", b =>
@@ -13872,7 +13842,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaVtXkCt", (string)null);
+                    b.ToTable("KkGiaVtXkCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaVtXtxCt", b =>
@@ -13921,7 +13891,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaVtXtxCt", (string)null);
+                    b.ToTable("KkGiaVtXtxCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaXeMayNkSxCt", b =>
@@ -13970,7 +13940,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaXeMayNkSxCt", (string)null);
+                    b.ToTable("KkGiaXeMayNkSxCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGiaXmTxdCt", b =>
@@ -14019,7 +13989,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGiaXmTxdCt", (string)null);
+                    b.ToTable("KkGiaXmTxdCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.KeKhaiGia.KkGsCt", b =>
@@ -14068,7 +14038,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KkGsCt", (string)null);
+                    b.ToTable("KkGsCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGia", b =>
@@ -14249,7 +14219,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ThamDinhGia", (string)null);
+                    b.ToTable("ThamDinhGia");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaCt", b =>
@@ -14319,7 +14289,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ThamDinhGiaCt", (string)null);
+                    b.ToTable("ThamDinhGiaCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDmHh", b =>
@@ -14359,7 +14329,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ThamDinhGiaDmHh", (string)null);
+                    b.ToTable("ThamDinhGiaDmHh");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDv", b =>
@@ -14408,7 +14378,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ThamDinhGiaDv", (string)null);
+                    b.ToTable("ThamDinhGiaDv");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaDvLichSu", b =>
@@ -14445,7 +14415,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ThamDinhGiaDvLichSu", (string)null);
+                    b.ToTable("ThamDinhGiaDvLichSu");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaHD", b =>
@@ -14521,7 +14491,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ThamDinhGiaHD", (string)null);
+                    b.ToTable("ThamDinhGiaHD");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.ThamDinhGia.ThamDinhGiaHDCt", b =>
@@ -14555,7 +14525,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ThamDinhGiaHDCt", (string)null);
+                    b.ToTable("ThamDinhGiaHDCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.VbQlNn.VbQlNn", b =>
@@ -14625,7 +14595,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VbQlNn", (string)null);
+                    b.ToTable("VbQlNn");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.API.KetNoiAPI", b =>
@@ -14674,7 +14644,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KetNoiAPI", (string)null);
+                    b.ToTable("KetNoiAPI");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.API.KetNoiAPI_DanhSach", b =>
@@ -14717,7 +14687,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KetNoiAPI_DanhSach", (string)null);
+                    b.ToTable("KetNoiAPI_DanhSach");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.API.KetNoiAPI_HoSo", b =>
@@ -14772,7 +14742,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KetNoiAPI_HoSo", (string)null);
+                    b.ToTable("KetNoiAPI_HoSo");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.API.KetNoiAPI_HoSo_ChiTiet", b =>
@@ -14827,7 +14797,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KetNoiAPI_HoSo_ChiTiet", (string)null);
+                    b.ToTable("KetNoiAPI_HoSo_ChiTiet");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Company", b =>
@@ -15032,7 +15002,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Company", (string)null);
+                    b.ToTable("Company");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.CompanyLvCc", b =>
@@ -15069,7 +15039,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CompanyLvCc", (string)null);
+                    b.ToTable("CompanyLvCc");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DanhMucChucNang", b =>
@@ -15103,7 +15073,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DanhMucChucNang", (string)null);
+                    b.ToTable("DanhMucChucNang");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Districts", b =>
@@ -15128,7 +15098,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Districts", (string)null);
+                    b.ToTable("Districts");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmChiTieuKinhTeViMo", b =>
@@ -15153,7 +15123,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DmChiTieuKinhTeViMo", (string)null);
+                    b.ToTable("DmChiTieuKinhTeViMo");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmChucnang", b =>
@@ -15190,7 +15160,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DmChucnang", (string)null);
+                    b.ToTable("DmChucnang");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmDvt", b =>
@@ -15215,7 +15185,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DmDvt", (string)null);
+                    b.ToTable("DmDvt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmHinhThucThanhToan", b =>
@@ -15243,7 +15213,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DmHinhThucThanhToan", (string)null);
+                    b.ToTable("DmHinhThucThanhToan");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmLoaiDat", b =>
@@ -15268,7 +15238,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DmLoaiDat", (string)null);
+                    b.ToTable("DmLoaiDat");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmLoaiGia", b =>
@@ -15296,7 +15266,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DmLoaiGia", (string)null);
+                    b.ToTable("DmLoaiGia");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmNganhKd", b =>
@@ -15324,7 +15294,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DmNganhKd", (string)null);
+                    b.ToTable("DmNganhKd");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmNgheKd", b =>
@@ -15364,7 +15334,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DmNgheKd", (string)null);
+                    b.ToTable("DmNgheKd");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmNhomHh", b =>
@@ -15395,7 +15365,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DmNhomHh", (string)null);
+                    b.ToTable("DmNhomHh");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmSieuThi", b =>
@@ -15420,7 +15390,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DmSieuThi", (string)null);
+                    b.ToTable("DmSieuThi");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmTaiLieuHuongDanSuDung", b =>
@@ -15445,7 +15415,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DmTaiLieuHuongDanSuDung", (string)null);
+                    b.ToTable("DmTaiLieuHuongDanSuDung");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DsDiaBan", b =>
@@ -15480,7 +15450,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DsDiaBan", (string)null);
+                    b.ToTable("DsDiaBan");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DsDonVi", b =>
@@ -15565,7 +15535,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DsDonVi", (string)null);
+                    b.ToTable("DsDonVi");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DsNhomTaiKhoan", b =>
@@ -15602,7 +15572,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DsNhomTaiKhoan", (string)null);
+                    b.ToTable("DsNhomTaiKhoan");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DsThamDinhVien", b =>
@@ -15678,7 +15648,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DsThamDinhVien", (string)null);
+                    b.ToTable("DsThamDinhVien");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DsVanPhong", b =>
@@ -15721,7 +15691,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DsVanPhong", (string)null);
+                    b.ToTable("DsVanPhong");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DsXaPhuong", b =>
@@ -15755,7 +15725,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DsXaPhuong", (string)null);
+                    b.ToTable("DsXaPhuong");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DuLieuTapHuan", b =>
@@ -15789,7 +15759,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DuLieuTapHuan", (string)null);
+                    b.ToTable("DuLieuTapHuan");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Excell.ExcellDanhMucLoaiDat", b =>
@@ -15811,7 +15781,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExcellDanhMucLoaiDat", (string)null);
+                    b.ToTable("ExcellDanhMucLoaiDat");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.GeneralConfigs", b =>
@@ -15902,7 +15872,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GeneralConfigs", (string)null);
+                    b.ToTable("GeneralConfigs");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.GroupPermissions", b =>
@@ -15931,7 +15901,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GroupPermissions", (string)null);
+                    b.ToTable("GroupPermissions");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu.CoSoKinhDoanhDVLT", b =>
@@ -15974,7 +15944,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("CoSoKinhDoanhDVLT", (string)null);
+                    b.ToTable("CoSoKinhDoanhDVLT");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu.DoanhNghiepDVLT", b =>
@@ -16029,7 +15999,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("DoanhNghiepDVLT", (string)null);
+                    b.ToTable("DoanhNghiepDVLT");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu.HoSoKeKhaiGia", b =>
@@ -16132,7 +16102,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("HoSoKeKhaiGia", (string)null);
+                    b.ToTable("HoSoKeKhaiGia");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu.HoSoKeKhaiGia_ChiTiet", b =>
@@ -16178,7 +16148,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("HoSoKeKhaiGia_ChiTiet", (string)null);
+                    b.ToTable("HoSoKeKhaiGia_ChiTiet");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.NhatKySuDung", b =>
@@ -16221,7 +16191,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("NhatKySuDung", (string)null);
+                    b.ToTable("NhatKySuDung");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Permissions", b =>
@@ -16272,7 +16242,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permissions", (string)null);
+                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Register", b =>
@@ -16412,7 +16382,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Register", (string)null);
+                    b.ToTable("Register");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Supports", b =>
@@ -16434,7 +16404,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Supports", (string)null);
+                    b.ToTable("Supports");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Towns", b =>
@@ -16462,7 +16432,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Towns", (string)null);
+                    b.ToTable("Towns");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.TrangThaiHoSo", b =>
@@ -16502,7 +16472,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TrangThaiHoSo", (string)null);
+                    b.ToTable("TrangThaiHoSo");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.TtDnTd", b =>
@@ -16599,7 +16569,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TtDnTd", (string)null);
+                    b.ToTable("TtDnTd");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.TtDnTdCt", b =>
@@ -16636,7 +16606,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TtDnTdCt", (string)null);
+                    b.ToTable("TtDnTdCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.Users", b =>
@@ -16736,7 +16706,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.YKienGopY", b =>
@@ -16782,7 +16752,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("YKienGopY", (string)null);
+                    b.ToTable("YKienGopY");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.tblDMChucNang", b =>
@@ -16846,7 +16816,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("MaChucNang");
 
-                    b.ToTable("tblDMChucNang", (string)null);
+                    b.ToTable("tblDMChucNang");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.tblHeThong", b =>
@@ -16910,7 +16880,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("tblHeThong", (string)null);
+                    b.ToTable("tblHeThong");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.tblPhanQuyen", b =>
@@ -16947,7 +16917,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("MaChucNang", "TenDangNhap");
 
-                    b.ToTable("tblPhanQuyen", (string)null);
+                    b.ToTable("tblPhanQuyen");
                 });
 #pragma warning restore 612, 618
         }

@@ -152,11 +152,21 @@
 
     function SetUpdate() {
         var gia = $('#gia_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        var giatoidatheoculy1 = $('#giatoidatheoculy1_edit').val().replace(/\./g, "").replace(/,/g, ".");
+                var giatoidatheoculy2= $('#giatoidatheoculy2_edit').val().replace(/\./g, "").replace(/,/g, ".");
+                        var giatoidatheoculy3 = $('#giatoidatheoculy3_edit').val().replace(/\./g, "").replace(/,/g, ".");
+                                var giatoidatheoculy4 = $('#giatoidatheoculy4_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/DinhGiaSpDvToiDaCt/Update',
             type: 'POST',
             data: {
                 Gia: gia,
+          
+                  GiaToiDaTheoCuLy1: giatoidatheoculy1,
+                   GiaToiDaTheoCuLy2: giatoidatheoculy2,
+                    GiaToiDaTheoCuLy3: giatoidatheoculy3,
+                      GiaToiDaTheoCuLy4: giatoidatheoculy4,
+                
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',

@@ -107,6 +107,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     result += "<tr >";
                     result += "<th style='text-align:center' rowspan='2' width='2%'>Hiển thị</th>";
                     result += "<th style='text-align:center' rowspan='2' >Tên sản phẩm dịch vụ</th>";
+                    result += "<th style='text-align:center' rowspan='2' >Loại đô thị II</th>";
+                    result += "<th style='text-align:center' rowspan='2' >Loại đô thị III-V</th>";
                     result += "<th style='text-align:center'rowspan='2'>Đơn vị tính</th>";
                     result += "<th style='text-align:center'colspan='4'>Mức giá</th>";
                     result += "<th style='text-align:center'rowspan='2'>Thao tác</th>";
@@ -127,6 +129,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                         result += "<tr>";
                         result += "<td style='text-align:center'>" + item.HienThi + "</td>";
                         result += "<td style='text-align:left'>" + item.Ten + "</td>";
+                        result += "<td style='text-align:center'>" + item.LoaiDoThi + "</td>";
+                        result += "<td style='text-align:center'>" + item.LoaiDoThi2 + "</td>";
                         result += "<td style='text-align:center'>" + item.Dvt + "</td>";
                         result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Mucgiatu) + "</td>";
                         result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Mucgiaden) + "</td>";

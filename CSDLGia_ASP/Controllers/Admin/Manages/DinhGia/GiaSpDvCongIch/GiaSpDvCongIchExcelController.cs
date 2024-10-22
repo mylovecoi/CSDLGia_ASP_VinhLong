@@ -138,6 +138,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                                 Style = strStyle.ToString(),
                                 Manhom = worksheet.Cells[row, 8].Value != null ?
                                             worksheet.Cells[row, 8].Value.ToString().Trim() : "",
+                                LoaiDoThi = worksheet.Cells[row, 9].Value != null ?
+                                            worksheet.Cells[row, 9].Value.ToString().Trim() : "",
                             });
                             line = line + 1;
                         }

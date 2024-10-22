@@ -195,6 +195,7 @@
                     <th style="text-align:center">Nội dung</th>
                     <th width="10%" style="text-align:center">Đơn vị tính</th>
                     <th width="10%" style="text-align:center">Đơn giá</th>
+                    <th width="10%" style="text-align:center">Đơn giá2</th>
                     <th width="10%" style="text-align:center">Ghi chú</th>
                     <th width="5%" style="text-align:center">Thao tác</th>
                 </tr>
@@ -211,6 +212,7 @@
                         <td style="text-align:left;">@item.Tenspdv</td>
                         <td style="text-align:center;">@item.Dvt</td>
                         <td style="text-align:right; ">@Helpers.ConvertDbToStr(item.Dongia)</td>
+                        <td style="text-align:right; ">@Helpers.ConvertDbToStr(item.Dongia2)</td>
                         <td style="text-align:center;">@item.GhiChu</td>
                         <td>
                             <a asp-controller="PhiLePhi" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết hồ sơ"
