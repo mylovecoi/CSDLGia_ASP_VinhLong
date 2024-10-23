@@ -43,20 +43,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                 result += "</div>";
                 result += "</div>";
 
-                result += "<div class='col-xl-6'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Mức giá 3</label>";
-                result += "<input type='text' id='Mucgia3_edit' name='Mucgia3_edit' value='" + model.Mucgia3 + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
-                result += "</div>";
-                result += "</div>";
-
-                result += "<div class='col-xl-6'>";
-                result += "<div class='form-group fv-plugins-icon-container'>";
-                result += "<label>Mức giá 4</label>";
-                result += "<input type='text' id='Mucgia4_edit' name='Mucgia4_edit' value='" + model.Mucgia4 + "' class='form-control money-decimal-mask' style='font-weight: bold'/>";
-                result += "</div>";
-                result += "</div>";
-
                 result += "<input hidden type='text' id='id_edit' name='id_edit' value='" + model.Id + "'/>";
                 result += "</div>";
 
@@ -107,41 +93,38 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     result += "<tr >";
                     result += "<th style='text-align:center' rowspan='2' width='2%'>Hiển thị</th>";
                     result += "<th style='text-align:center' rowspan='2' >Tên sản phẩm dịch vụ</th>";
-                    result += "<th style='text-align:center' rowspan='2' >Loại đô thị II</th>";
-                    result += "<th style='text-align:center' rowspan='2' >Loại đô thị III-V</th>";
                     result += "<th style='text-align:center'rowspan='2'>Đơn vị tính</th>";
-                    result += "<th style='text-align:center'colspan='4'>Mức giá</th>";
+                    result += "<th style='text-align:center' colspan='2' >Loại đô thị</th>";
+                    result += "<th style='text-align:center'colspan='2'>Mức giá</th>";
                     result += "<th style='text-align:center'rowspan='2'>Thao tác</th>";
                     result += "</tr>";
 
                     result += "<tr style='text-align:center'>";
+                    result += "<th>II</th>";
+                    result += "<th>III-V</th>";
                     result += "<th>Mức giá 1</th>";
                     result += "<th>Mức giá 2</th>";
-                    result += "<th>Mức giá 3</th>";
-                    result += "<th>Mức giá 4</th>";
                     result += "</tr>";
 
                     result += "</thead>";
 
                     result += "<tbody>";
-                    foreach (var item in data.OrderBy(t=>t.Sapxep))
+                    foreach (var item in data.OrderBy(t => t.Sapxep))
                     {
                         result += "<tr>";
                         result += "<td style='text-align:center'>" + item.HienThi + "</td>";
                         result += "<td style='text-align:left'>" + item.Ten + "</td>";
+                        result += "<td style='text-align:center'>" + item.Dvt + "</td>";
                         result += "<td style='text-align:center'>" + item.LoaiDoThi + "</td>";
                         result += "<td style='text-align:center'>" + item.LoaiDoThi2 + "</td>";
-                        result += "<td style='text-align:center'>" + item.Dvt + "</td>";
                         result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Mucgiatu) + "</td>";
                         result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Mucgiaden) + "</td>";
-                        result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Mucgia3) + "</td>";
-                        result += "<td style='text-align:right'>" + Helpers.ConvertDbToStr(item.Mucgia4) + "</td>";
 
                         result += "<td>";
                         result += "<button type='button' class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'";
                         result += " data-target='#Edit_Modal' data-toggle='modal' onclick='SetEdit(`" + item.Id + "`)'>";
                         result += "<i class='icon-lg la la-edit text-primary'></i>";
-                        result += "</button>";                      
+                        result += "</button>";
                         result += "</td>";
                         result += "</tr>";
                     }

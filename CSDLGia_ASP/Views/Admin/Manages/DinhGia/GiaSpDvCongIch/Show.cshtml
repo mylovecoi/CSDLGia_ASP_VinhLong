@@ -53,17 +53,17 @@
                     <thead>
                         <tr>
                             <th style="text-align:center" rowspan="2">TT</th>
-                            <th style="text-align:center" rowspan="2">Tên sản phẩm dịch vụ</th>
-                            <th style="text-align:center" rowspan="2">Loại đô thị</th>
                             <th style="text-align:center" rowspan="2">Đơn vị tính</th>
-                            <th style="text-align:center" colspan="4">Mức giá</th>
+                            <th style="text-align:center" rowspan="2">Tên sản phẩm dịch vụ</th>
+                            <th style="text-align:center" colspan="2">Loại đô thị</th>
+                            <th style="text-align:center" colspan="2">Mức giá</th>
 
                         </tr>
                         <tr style="text-align:center">
+                            <th>II</th>
+                            <th>III-V</th>
                             <th>Mức giá 1</th>
                             <th>Mức giá 2</th>
-                            <th>Mức giá 3</th>
-                            <th>Mức giá 4</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,12 +74,11 @@
                                 <tr>
                                     <td style="text-align:center">@item.HienThi</td>
                                     <td style="text-align:left">@item.Ten</td>
-                                    <td style="text-align:center">@item.LoaiDoThi</td>
                                     <td style="text-align:center">@item.Dvt</td>
+                                    <td style="text-align:center">@item.LoaiDoThi</td>
+                                    <td style="text-align:center">@item.LoaiDoThi</td>
                                     <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgiatu)</td>
                                     <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgiaden)</td>
-                                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgia3)</td>
-                                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgia4)</td>
                                 </tr>
                             }
                         }

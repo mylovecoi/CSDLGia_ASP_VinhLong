@@ -27,19 +27,18 @@
 
 <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
     <thead>
-
         <tr>
-            <th rowspan="2" width="2%" style="text-align:center">STT</th>
+            <th style="text-align:center" rowspan="2">TT</th>
             <th style="text-align:center" rowspan="2">Tên sản phẩm dịch vụ</th>
-            <th style="text-align:center" rowspan="2">Loại đô thị</th>
             <th style="text-align:center" rowspan="2">Đơn vị tính</th>
-            <th style="text-align:center" colspan="4">Mức giá</th>
+            <th style="text-align:center" colspan="2">Loại đô thị</th>
+            <th style="text-align:center" colspan="2">Mức giá</th>
         </tr>
         <tr>
+            <th style="text-align:center">Loại II</th>
+            <th style="text-align:center">Loại III - V</th>
             <th style="text-align:center">Mức giá 1</th>
             <th style="text-align:center">Mức giá 2</th>
-            <th style="text-align:center">Mức giá 3</th>
-            <th style="text-align:center">Mức giá 4</th>
         </tr>
     </thead>
     <tbody>
@@ -63,12 +62,11 @@
                     <tr>
                         <td style="text-align:center">@item.HienThi</td>
                         <td style="text-align:left">@item.Ten</td>
-                        <td style="text-align:center">@item.LoaiDoThi</td>
                         <td style="text-align:center">@item.Dvt</td>
+                        <td style="text-align:center">@item.LoaiDoThi</td>
+                        <td style="text-align:center">@item.LoaiDoThi2</td> 
                         <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgiatu)</td>
                         <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgiaden)</td>
-                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgia3)</td>
-                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Mucgia4)</td>
                     </tr>
 
                 }

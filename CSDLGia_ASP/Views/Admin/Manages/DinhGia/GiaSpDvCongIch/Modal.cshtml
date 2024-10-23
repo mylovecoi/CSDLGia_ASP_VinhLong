@@ -182,16 +182,16 @@
     function SetUpdate() {
         var giatu = $('#Mucgiatu_edit').val().replace(/\./g, "").replace(/,/g, ".");
         var giaden = $('#Mucgiaden_edit').val().replace(/\./g, "").replace(/,/g, ".");
-        var gia3 = $('#Mucgia3_edit').val().replace(/\./g, "").replace(/,/g, ".");
-        var gia4 = $('#Mucgia4_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        // var gia3 = $('#Mucgia3_edit').val().replace(/\./g, "").replace(/,/g, ".");
+        // var gia4 = $('#Mucgia4_edit').val().replace(/\./g, "").replace(/,/g, ".");
         $.ajax({
             url: '/GiaSpDvCongIchCt/Update',
             type: 'POST',
             data: {
                 Mucgiatu: giatu,
                 Mucgiaden: giaden,
-                Mucgia3: gia3,
-                Mucgia4: gia4,
+                // Mucgia3: gia3,
+                // Mucgia4: gia4,
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',
