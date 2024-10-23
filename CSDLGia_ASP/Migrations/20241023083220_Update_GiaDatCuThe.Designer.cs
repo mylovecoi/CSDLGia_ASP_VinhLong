@@ -4,6 +4,7 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241023083220_Update_GiaDatCuThe")]
+    partial class Update_GiaDatCuThe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1080,7 +1083,7 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("GiaCuocVanChuyenCt");
                 });
 
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVl", b =>
+            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuThe", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1213,10 +1216,10 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatCuTheVl");
+                    b.ToTable("GiaDatCuThe");
                 });
 
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlCt", b =>
+            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheCt", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1295,10 +1298,10 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatCuTheVlCt");
+                    b.ToTable("GiaDatCuTheCt");
                 });
 
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlDmPPDGDat", b =>
+            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheDmPPDGDat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1326,10 +1329,10 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatCuTheVlDmPPDGDat");
+                    b.ToTable("GiaDatCuTheDmPPDGDat");
                 });
 
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlDmPPDGDatCt", b =>
+            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheDmPPDGDatCt", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1363,7 +1366,7 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatCuTheVlDmPPDGDatCt");
+                    b.ToTable("GiaDatCuTheDmPPDGDatCt");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan", b =>

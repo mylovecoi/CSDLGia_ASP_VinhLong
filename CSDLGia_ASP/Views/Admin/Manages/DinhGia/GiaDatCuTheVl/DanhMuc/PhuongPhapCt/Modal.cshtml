@@ -1,0 +1,270 @@
+﻿@{
+    var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"];
+    int STT = Int32.Parse(ViewData["STT"].ToString());
+}
+
+<!--Create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Thêm mới chi tiết danh mục hồ sơ
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input hidden id="Manhom" name="Manhom" value="@ViewData["Manhom"]" />
+                <div class="row">
+                    <div class="col-xl-2">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold;color:blue">Sắp xếp:</label>
+                            <input type="number" id="sapxep_create" name="sapxep_create" step="1" value="@STT" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-2">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold;color:blue">STT hiển thị:</label>
+                            <input type="text" id="hienthi_create" name="hienthi_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold;color:blue">Kiểu in hiển thị:</label>
+                            <select class="form-control select2multi" multiple="multiple" id="style_create" name="style_create" style="width:100%">
+                                <option value="Chữ in đậm">Chữ in đậm</option>
+                                <option value="Chữ in nghiêng">Chữ in nghiêng</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Vị trí, địa bàn:</label>
+                            <input type="text" id="loaidat_create" name="loaidat_create" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold;color:blue">Nhập giá</label>
+                            <select id="nhapgia_create" name="nhapgia_create" class="form-control">
+                                <option value="false">Không nhập</option>
+                                <option value="true">Nhập</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Store()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Chỉnh sửa chi tiết danh mục hồ sơ
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="edit_thongtin">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="Update()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Xóa chi tiết danh mục hồ sơ
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="GiaThueDNDm" asp-action="Delete">
+                <div class="modal-body">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Vị trí, địa bàn:</label>
+                            <label type="text" id="loaidat_delete" name="loaidat_delete" class="form-control"></label>
+                        </div>
+                    </div>
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Remove Modal-->
+<div class="modal fade" id="Remove_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Xóa chi tiết danh mục hồ sơ
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form asp-controller="GiaLePhiDm" asp-action="RemoveRange">
+                <div class="modal-body">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label>Nhóm:</label>
+                            <label class="form-control">@ViewData["TenNhom"]</label>
+                            <input hidden id="manhom_remove" name="manhom_remove" value="@ViewData["Manhom"]" />
+                        </div>
+                    </div>
+                    <input hidden id="id_delete" name="id_delete" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    function Store() {
+        if ($('#loaidat_create').val().trim() == '') {
+            toastr.error("Tên loại đất không được để trống!!!", "Lỗi!");
+        } else {
+            $.ajax({
+                url: '/GiaThueDNDMCT/Store',
+                type: 'POST',
+                data: {
+                    Nhapgia: $('#nhapgia_create').val(),
+                    Manhom: $('#Manhom').val(),
+                    Loaidat: $('#loaidat_create').val(),
+                    HienThi: $('#hienthi_create').val(),
+                    SapXep: $('#sapxep_create').val(),
+                    Style: $('#style_create').val(),
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success(data.message);
+                        location.reload();
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
+    }
+
+    function getId(id, loaidat) {
+        document.getElementById("id_delete").value = id;
+        document.getElementById("loaidat_delete").innerHTML = loaidat;
+    }
+
+    function editId(id_edit) {
+        $.ajax({
+            url: '/GiaThueDNDMCT/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Success!");
+                    $('#edit_thongtin').replaceWith(data.message);
+                    $('.select2multi').select2();
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+
+    function Update() {
+        if ($('#loaidat_edit').val().trim() == '') {
+            toastr.error("Tên sản phẩm không được để trống!!!", "Lỗi!");
+        } else {
+            $.ajax({
+                url: '/GiaThueDNDMCT/Update',
+                type: 'POST',
+                data: {
+                    Nhapgia: $('#nhapgia_edit').val(),
+                    Loaidat: $('#loaidat_edit').val(),
+                    Hientrang: $('#hientrang_edit').val(),
+                    HienThi: $('#hienthi_edit').val(),
+                    SapXep: $('#sapxep_edit').val(),
+                    Style: $('#style_edit').val(),
+                    Id: $('#id_edit').val()
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        toastr.success(data.message);
+                        location.reload();
+                    } else {
+                        toastr.error(data.message, "Lỗi!");
+                    }
+                }
+            })
+        }
+    }
+
+    function Lock() {
+        $.ajax({
+            url: '/GiaThueDNDMCT/Lock',
+            type: 'POST',
+            data: {
+                Manhom: $('#manhom_lock').val(),
+                Theodoi: $('#theodoi_lock').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success(data.message);
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

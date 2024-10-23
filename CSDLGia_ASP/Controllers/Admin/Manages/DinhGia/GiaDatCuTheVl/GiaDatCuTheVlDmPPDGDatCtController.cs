@@ -1,41 +1,37 @@
-
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using CSDLGia_ASP.Database;
-using System.Security.Cryptography;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Systems;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml.Style;
 using OfficeOpenXml;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Text;
+using System.Threading.Tasks;
+using System;
 
-namespace CSDLGia_ASP.Controllers.Admin.Systems
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
 {
-    public class GiaThueDNDmController : Controller
+    public class GiaDatCuTheVlDmPPDGDatCtController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public GiaThueDNDmController(CSDLGiaDBContext db)
+        public GiaDatCuTheVlDmPPDGDatCtController(CSDLGiaDBContext db)
         {
             _db = db;
         }
 
-        [Route("GiaThueDNDMCT")]
+        [Route("GiaDatCuTheVlDmPPDGDatCt")]
         [HttpGet]
-        public IActionResult Index(string Manhom)
+        public IActionResult Index(string Mapp)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Index"))
                 {
-                    var model = _db.GiaThueMatDatMatNuocDm.Where(x => x.Manhom == Manhom);
+                    var model = _db.GiaDatCuTheVlDmPPDGDatCt.Where(x => x.Mapp == Mapp);
 
                     if (model.Any())
                     {
@@ -50,10 +46,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgtmdmn";
                     ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
-                    ViewData["Tennhom"] = _db.GiaThueMatDatMatNuocNhom.FirstOrDefault(t => t.Manhom == Manhom)?.Tennhom ?? "";
+                    ViewData["Tenpp"] = _db.GiaDatCuTheVlDmPPDGDat.FirstOrDefault(t => t.Mapp == Mapp)?.Tenpp ?? "";
 
-                    ViewData["Manhom"] = Manhom;
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Danhmuc/ChiTiet/Index.cshtml", model);
+                    ViewData["Mapp"] = Mapp;
+                    return View("Views/Admin/Manages/DinhGia/GiaDatCuTheVl/Danhmuc/ChiTiet/Index.cshtml", model);
                 }
                 else
                 {
@@ -67,13 +63,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        [Route("GiaThueDNDMCT/Store")]
+        [Route("GiaDatCuTheVlDmPPDGDatCt/Store")]
         [HttpPost]
         public JsonResult Store(string Loaidat, string MaNhom, string HienThi, double SapXep, string[] Style, bool Nhapgia)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Create"))
                 {
                     string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
                     var model = new Models.Manages.DinhGia.GiaThueMatDatMatNuocDm
@@ -106,13 +102,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        [Route("GiaThueDNDMCT/Delete")]
+        [Route("GiaDatCuTheVlDmPPDGDatCt/Delete")]
         [HttpPost]
         public IActionResult Delete(int id_delete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Delete"))
                 {
                     var model = _db.GiaThueMatDatMatNuocDm.FirstOrDefault(t => t.Id == id_delete);
                     string Manhom = model.Manhom;
@@ -135,13 +131,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
         }
 
-        [Route("GiaThueDNDMCT/Edit")]
+        [Route("GiaDatCuTheVlDmPPDGDatCt/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Edit"))
                 {
 
                     var model = _db.GiaThueMatDatMatNuocDm.FirstOrDefault(p => p.Id == Id);
@@ -216,13 +212,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         }
 
         // Cập nhật thông tin mới
-        [Route("GiaThueDNDMCT/Update")]
+        [Route("GiaDatCuTheVlDmPPDGDatCt/Update")]
         [HttpPost]
         public IActionResult Update(int Id, string Loaidat, string HienThi, double SapXep, string[] Style, bool Nhapgia)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Edit"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Edit"))
                 {
                     var model = _db.GiaThueMatDatMatNuocDm.FirstOrDefault(t => t.Id == Id);
                     string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
@@ -255,7 +251,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Delete"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Delete"))
                 {
                     var model = _db.GiaThueMatDatMatNuocDm.Where(t => t.Manhom == manhom_remove);
 
@@ -284,7 +280,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Create"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Create"))
                 {
 
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
@@ -374,6 +370,5 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
     }
 }
