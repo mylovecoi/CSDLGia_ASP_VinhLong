@@ -47,11 +47,11 @@
             </h3>
         </div>
         <div>
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.thongtin", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.thongtin", "Create"))
             {
                 @if (ViewData["Madv"].ToString() != "all" && ViewData["Madv"].ToString() != "")
                 {
-                    <button class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal" type="buttom">
+                    <button class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#Create_Modal" type="button">
                         <i class="la la-plus"></i>Thêm mới
                     </button>
 
