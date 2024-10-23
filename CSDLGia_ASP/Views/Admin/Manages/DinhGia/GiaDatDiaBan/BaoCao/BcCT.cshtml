@@ -32,16 +32,15 @@
     <thead>
         <tr>
             <th style="text-align:center" rowspan="2" width="2%">TT</th>
-            <th style="text-align:center" rowspan="2">Địa bàn</th>
             <th style="text-align:center" rowspan="2">Loại đất</th>
-            <th style="text-align:center" rowspan="2">Tên đường phố</th>
-            <th style="text-align:center" rowspan="2">Loại đường ( Loại đô thị )</th>
-            <th style="text-align:center" rowspan="2">Điểm đầu</th>
-            <th style="text-align:center" rowspan="2">Điểm cuối</th>
-            <th style="text-align:center" rowspan="2">Hệ số</th>
-            <th style="text-align:center" colspan="8">Giá đất theo hệ số đường</th>
+            <th style="text-align:center" rowspan="2">Tên đường và đơn vị hành chính</th>
+            <th style="text-align:center" colspan="2">Đoạn đường khu vực</th>
+            <th style="text-align:center" rowspan="2">Loại đô thị</th>
+            <th style="text-align:center" colspan="8">Giá đất</th>
         </tr>
         <tr>
+            <th style="text-align:center">Điểm đầu</th>
+            <th style="text-align:center">Điểm cuối</th>
             <th style="text-align:center">VT1</th>
             <th style="text-align:center">VT2</th>
             <th style="text-align:center">VT3</th>
@@ -50,7 +49,6 @@
             <th style="text-align:center">VT6</th>
             <th style="text-align:center">VT7</th>
             <th style="text-align:center">VT còn lại</th>
-
         </tr>
     </thead>
     <tbody>
@@ -58,7 +56,7 @@
         {
             <tr>
                 <td></td>
-                <td colspan="15" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
+                <td colspan="13" style="font-weight: bold;" class="text-uppercase">@donvi.TenDv</td>
             </tr>
             var hosoInDv = hoso.Where(t => t.Madv == donvi.MaDv);
             @foreach (var hosoindv in hosoInDv)
@@ -68,20 +66,18 @@
                 {
                     <tr>
                         <td></td>
-                        <td colspan="15" style="font-weight: bold; padding-left: 2em;">Số QĐ: @hosoindv.Soqd - Thời Điểm: @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
+                        <td colspan="13" style="font-weight: bold; padding-left: 2em;">Số QĐ: @hosoindv.Soqd - Thời Điểm: @Helpers.ConvertDateToStr(hosoindv.Thoidiem)</td>
                     </tr>
 
                     @foreach (var item in chitieths.OrderBy(t => t.Sapxep))
                     {
                         <tr>
                             <td style="text-align:center">@item.HienThi</td>
-                            <td style="text-align:center">@item.TenDiaBan</td>
                             <td style="text-align:left">@item.Loaidat</td>
                             <td style="text-align:left">@item.Mota</td>
-                            <td style="text-align:left">@item.Loaiduong</td>
                             <td style="text-align:center">@item.Diemdau</td>
-                            <td style="text-align:center">@item.Diemcuoi </td>
-                            <td style="text-align:center">@item.Hesok </td>
+                            <td style="text-align:center">@item.Diemcuoi</td>
+                            <td style="text-align:left">@item.Loaiduong</td>
                             <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt1)</td>
                             <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt2)</td>
                             <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt3)</td>
@@ -92,54 +88,10 @@
                             <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavtconlai)</td>
                         </tr>
                     }
-                }               
-
-                @* <tr>
-                    <td></td>
-                    <td colspan="12" style="font-weight: bold; padding-left: 4em;"> @ViewData["TenTinh"]</td>
-                </tr>
-                var chitieths = Model.Where(t => t.Mahs == hosoindv.Mahs);                
-                @foreach (var huyen in DsDiaBanHuyen)
-                {
-                    var datahuyen = chitieths.Where(x => x.MaDiaBanCapHuyen==huyen.MaDiaBan);
-                    if (datahuyen.Any())
-                    {
-                        <tr>
-                            <td></td>
-                            <td colspan="12" style="font-weight: bold; padding-left: 6em;">@huyen.TenDiaBan</td>
-                        </tr>
-                        foreach (var xa in DsDiaBanXa)
-                        {
-                            var dataXa = datahuyen.Where(x=>x.Madiaban == xa.MaDiaBan);
-                            if (dataXa.Any())
-                            {
-                                <tr>
-                                    <td></td>
-                                    <td colspan="12" style="font-weight: bold; padding-left: 8em;">@xa.TenDiaBan</td>
-                                </tr>
-                                @foreach (var item in dataXa.OrderBy(t => t.Sapxep))
-                                {
-                                    <tr>
-                                        <td style="text-align:center">@item.HienThi</td>
-                                        <td style="text-align:center">@item.TenDiaBan</td>
-                                        <td style="text-align:left">@item.Loaidat</td>
-                                        <td style="text-align:left">@item.Mota</td>
-                                        <td style="text-align:left">@item.Loaiduong</td>
-                                        <td style="text-align:center">@item.Diemdau</td>
-                                        <td style="text-align:center">@item.Diemcuoi </td>
-                                        <td style="text-align:center">@item.Hesok </td>
-                                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt1)</td>
-                                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt2)</td>
-                                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt3)</td>
-                                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt4)</td>
-                                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt5)</td>
-                                    </tr>
-                                }
-                            }
-                        }
-                    }
-                } *@
+                }
             }
+        }
+        
         }
     </tbody>
 </table>

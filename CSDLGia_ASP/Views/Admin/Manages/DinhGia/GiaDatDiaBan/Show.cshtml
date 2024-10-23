@@ -2,7 +2,7 @@
     Layout = "_LayoutReports";
     var DsDiaBanHuyen = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanHuyen"];
     var DsDiaBanXa = (IEnumerable<DsDiaBan>)ViewData["DsDiaBanXa"];
-    var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];   
+    var dsloaidat = (IEnumerable<DmLoaiDat>)ViewData["Dsloaidat"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
 
 
@@ -25,14 +25,16 @@
 
     <thead>
         <tr>
-            <th style="text-align:center">STT</th>
-            <th style="text-align:center">Địa bàn</th>
-            <th style="text-align:center">Loại đất</th>
-            <th style="text-align:center">Tên đường phố</th>
-            <th style="text-align:center">Loại đường</th>
+            <th style="text-align:center" rowspan="2" width="2%">TT</th>
+            <th style="text-align:center" rowspan="2">Loại đất</th>
+            <th style="text-align:center" rowspan="2">Tên đường và đơn vị hành chính</th>
+            <th style="text-align:center" colspan="2">Đoạn đường khu vực</th>
+            <th style="text-align:center" rowspan="2">Loại đô thị</th>
+            <th style="text-align:center" colspan="8">Giá đất</th>
+        </tr>
+        <tr>
             <th style="text-align:center">Điểm đầu</th>
             <th style="text-align:center">Điểm cuối</th>
-            <th style="text-align:center">Hệ số</th>
             <th style="text-align:center">VT1</th>
             <th style="text-align:center">VT2</th>
             <th style="text-align:center">VT3</th>
@@ -41,83 +43,34 @@
             <th style="text-align:center">VT6</th>
             <th style="text-align:center">VT7</th>
             <th style="text-align:center">VT còn lại</th>
-      
         </tr>
     </thead>
     <tbody>
         @if (Model != null)
         {
-            @if (Model.GiaDatDiaBanCt.Any())
+            if (Model.GiaDatDiaBanCt.Any())
             {
-                @foreach (var item in Model.GiaDatDiaBanCt)
+                foreach (var item in Model.GiaDatDiaBanCt)
                 {
-                    <tr style="text-align:center">
+                    <tr>
                         <td style="text-align:center">@item.HienThi</td>
-                        <td style="text-align:center">@item.TenDiaBan</td>
                         <td style="text-align:left">@item.Loaidat</td>
-                        <td class="active" style="text-align:left">@item.Mota</td>
-                        <td class="active" style="text-align:left">@item.Loaiduong</td>
-                        <td class="active" style="text-align:left">@item.Diemdau</td>
-                        <td class="active" style="text-align:left">@item.Diemcuoi </td>
-                        <td class="active">@Helpers.ConvertDbToStr(item.Hesok)</td>
-                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt1)</td>
-                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt2)</td>
-                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt3)</td>
-                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt4)</td>
-                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt5)</td>
-                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt6)</td>
-                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt7)</td>
-                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavtconlai)</td>
-          
+                        <td style="text-align:left">@item.Mota</td>
+                        <td style="text-align:center">@item.Diemdau</td>
+                        <td style="text-align:center">@item.Diemcuoi</td>
+                        <td style="text-align:left">@item.Loaiduong</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt1)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt2)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt3)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt4)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt5)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt6)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt7)</td>
+                        <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavtconlai)</td>
                     </tr>
                 }
-
-
-
-
-                @* <tr>
-                    <td colspan="12" style="text-align:left; font-weight:bold;">@ViewData["TenTinh"]</td>
-                </tr>
-                @foreach (var huyen in DsDiaBanHuyen)
-                {
-                    var dataHuyen = Model.GiaDatDiaBanCt.Where(x => x.MaDiaBanCapHuyen == huyen.MaDiaBan);
-                    if (dataHuyen.Any())
-                    {                        
-                        <tr>
-                            <td colspan="12" style="text-align:left; font-weight:bold;"> &emsp;@huyen.TenDiaBan</td>
-                        </tr>                       
-                        @foreach (var xa in DsDiaBanXa)
-                        {
-                            var dataXa = dataHuyen.Where(x => x.Madiaban == xa.MaDiaBan);
-                            if (dataXa.Any())
-                            {
-                                <tr>
-                                    <td colspan="12" style="text-align:left; font-weight:bold;"> &emsp;&emsp; @xa.TenDiaBan</td>
-                                </tr>
-                                @foreach (var item in dataXa)
-                                {
-                                    <tr style="text-align:center">
-                                        <td style="text-align:center">@item.HienThi</td>
-                                        <td style="text-align:center">@item.TenDiaBan</td>
-                                        <td style="text-align:left">@item.Loaidat</td>
-                                        <td class="active" style="text-align:left">@item.Mota</td>
-                                        <td class="active" style="text-align:left">@item.Loaiduong</td>
-                                        <td class="active" style="text-align:left">@item.Diemdau</td>
-                                        <td class="active" style="text-align:left">@item.Diemcuoi </td>
-                                        <td class="active">@Helpers.ConvertDbToStr(item.Hesok)</td>
-                                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt1)</td>
-                                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt2)</td>
-                                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt3)</td>
-                                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt4)</td>
-                                        <td class="active" style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt5)</td>
-                                    </tr>
-                                }
-                            }
-                        }
-                    }
-
-                } *@
             }
         }
     </tbody>
+
 </table>
