@@ -30,7 +30,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                 {
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
                     {
-                        LineStart = 4,
+                        LineStart = 5,
                         LineStop = 1000,
                         Sheet = 1,
                         MaDv = Madv,
@@ -89,18 +89,21 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvToiDa
                                             worksheet.Cells[row, 2].Value.ToString().Trim() : "",
                                 Dvt = worksheet.Cells[row, 3].Value != null ?
                                             worksheet.Cells[row, 3].Value.ToString().Trim() : "",
-                                Dongia = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
+                                //Dongia = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
+                                //                    worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
+
+                                GiaToiDaTheoCuLy1 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
                                                     worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
-                                Manhom = worksheet.Cells[row, 5].Value != null ?
-                                            worksheet.Cells[row, 5].Value.ToString().Trim() : "",
-                                GiaToiDaTheoCuLy1 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
+                                GiaToiDaTheoCuLy2 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
+                                                    worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
+                                GiaToiDaTheoCuLy3 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
                                                     worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
-                                GiaToiDaTheoCuLy2 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
+                                GiaToiDaTheoCuLy4 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
                                                     worksheet.Cells[row, 7].Value.ToString().Trim() : ""),
-                                GiaToiDaTheoCuLy3 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 8].Value != null ?
-                                                    worksheet.Cells[row, 8].Value.ToString().Trim() : ""),
-                                GiaToiDaTheoCuLy4 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 9].Value != null ?
-                                                    worksheet.Cells[row, 9].Value.ToString().Trim() : ""),
+
+                                Manhom = worksheet.Cells[row, 8].Value != null ?
+                                            worksheet.Cells[row, 8].Value.ToString().Trim() : "",
+                              
 
                             });
                         }
