@@ -61,7 +61,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     {
                         MaDv = Madv,
                         Sheet = 1,
-                        LineStart = 2,
+                        LineStart = 6,
                         LineStop = 3000,
                     };
                     ViewData["GiaSpDvCongIchNhom"] = _db.GiaSpDvCongIchNhom;
@@ -127,19 +127,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                                             worksheet.Cells[row, 2].Value.ToString().Trim() : "",
                                 Dvt = worksheet.Cells[row, 3].Value != null ?
                                             worksheet.Cells[row, 3].Value.ToString().Trim() : "",
-                                Mucgiatu = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
-                                            worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
-                                Mucgiaden = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
-                                            worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
-                                Mucgia3 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
+
+                                LoaiDoThi = worksheet.Cells[row, 4].Value != null ?
+                                            worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+
+                                LoaiDoThi2 = worksheet.Cells[row, 5].Value != null ?
+                                            worksheet.Cells[row, 5].Value.ToString().Trim() : "",
+
+                                Mucgiatu = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
                                             worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
-                                Mucgia4 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
+                                Mucgiaden = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
                                             worksheet.Cells[row, 7].Value.ToString().Trim() : ""),
+                                //Mucgia3 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
+                                //            worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
+                                //Mucgia4 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
+                                //            worksheet.Cells[row, 7].Value.ToString().Trim() : ""),
                                 Style = strStyle.ToString(),
                                 Manhom = worksheet.Cells[row, 8].Value != null ?
                                             worksheet.Cells[row, 8].Value.ToString().Trim() : "",
-                                LoaiDoThi = worksheet.Cells[row, 9].Value != null ?
-                                            worksheet.Cells[row, 9].Value.ToString().Trim() : "",
+                               
                             });
                             line = line + 1;
                         }

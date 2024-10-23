@@ -207,33 +207,45 @@
                     <!--begin::Table-->
                     <table class="table table-striped table-hover table-responsive-lg" id="sample_4">
                         <thead>
-                            <tr class="text-center text-uppercase">
-                                <th>Loại đất</th>
-                                <th>Tên đường phố</th>
-                                <th>Loại đường</th>
-                                <th>Điểm đầu/Điểm cuối</th>
-                                <th>Hệ số</th>
-                                <th>VT1</th>
-                                <th>VT2</th>
-                                <th>VT3</th>
-                                <th>VT4</th>
-                                <th>VT5</th>
+                            <tr>
+                                <th style="text-align:center" rowspan="2" width="2%">TT</th>
+                                <th style="text-align:center" rowspan="2">Loại đất</th>
+                                <th style="text-align:center" rowspan="2">Tên đường và đơn vị hành chính</th>
+                                <th style="text-align:center" colspan="2">Đoạn đường khu vực</th>
+                                <th style="text-align:center" rowspan="2">Loại đô thị</th>
+                                <th style="text-align:center" colspan="8">Giá đất</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align:center">Điểm đầu</th>
+                                <th style="text-align:center">Điểm cuối</th>
+                                <th style="text-align:center">VT1</th>
+                                <th style="text-align:center">VT2</th>
+                                <th style="text-align:center">VT3</th>
+                                <th style="text-align:center">VT4</th>
+                                <th style="text-align:center">VT5</th>
+                                <th style="text-align:center">VT6</th>
+                                <th style="text-align:center">VT7</th>
+                                <th style="text-align:center">VT còn lại</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in ThongTinHoSo.GiaDatDiaBanCt.OrderBy(t=>t.Sapxep))
                             {
                                 <tr>
-                                    <td>@item.Loaidat</td>
-                                    <td>@item.Mota</td>
-                                    <td>@item.Loaiduong</td>
-                                    <td>@item.Diemdau <br /> @item.Diemcuoi</td>
-                                    <td style="text-align:center">@Helpers.ConvertDbToStr(item.Hesok) </td>
+                                    <td style="text-align:center">@item.HienThi</td>
+                                    <td style="text-align:left">@item.Loaidat</td>
+                                    <td style="text-align:left">@item.Mota</td>
+                                    <td style="text-align:center">@item.Diemdau</td>
+                                    <td style="text-align:center">@item.Diemcuoi</td>
+                                    <td style="text-align:center">@item.Loaiduong</td>
                                     <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt1)</td>
                                     <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt2)</td>
                                     <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt3)</td>
                                     <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt4)</td>
-                                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt5)</td>                                   
+                                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt5)</td>
+                                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt6)</td>
+                                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavt7)</td>
+                                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giavtconlai)</td>
                                 </tr>
                             }
                         </tbody>
