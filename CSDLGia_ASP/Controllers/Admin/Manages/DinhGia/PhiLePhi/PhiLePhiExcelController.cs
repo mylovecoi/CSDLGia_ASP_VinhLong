@@ -61,7 +61,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
 
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
                     {
-                        LineStart = 3,
+                        LineStart = 4,
                         LineStop = 1000,
                         Sheet = 1,
                         MaDv = Madv,
@@ -132,10 +132,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
                                                      worksheet.Cells[row, 3].Value.ToString().Trim() : "",
                                 Dongia = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
                                                 worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
-                                GhiChu = worksheet.Cells[row, 5].Value != null ?
-                                                     worksheet.Cells[row, 5].Value.ToString().Trim() : "",
-                                Dongia2 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
-                                                worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
+                                Dongia2 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
+                                                worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
+                                GhiChu = worksheet.Cells[row, 6].Value != null ?
+                                                     worksheet.Cells[row, 6].Value.ToString().Trim() : "",
+                               
                                 Style = strStyle.ToString(),
                             });
                             line = line + 1;

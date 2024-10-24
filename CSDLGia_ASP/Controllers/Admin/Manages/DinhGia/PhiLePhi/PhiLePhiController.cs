@@ -616,27 +616,38 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.PhiLePhi
             var model = _db.PhiLePhiCt.FirstOrDefault(t => t.Id == Id);
 
             string result = "<div class='row' id='edit_thongtin'>";
+
             result += "<div class='col-xl-12'>";
             result += "<div class='form-group fv-plugins-icon-container'>";
             result += "<label>Nội dung</label>";
-            result += "<label type='text'class='form-control'>" + model.Tenspdv + "</label>";
+            result += "<textarea class='form-control' rows='4'>" + model.Tenspdv + "</textarea>";
             result += "</div>";
             result += "</div>";
 
-            result += "<div class='col-xl-6'>";
+
+            result += "<div class='col-xl-4'>";
             result += "<div class='form-group fv-plugins-icon-container'>";
             result += "<label><b>Đơn vị tính</b></label>";
             result += "<label type='text' class='form-control' style='font-weight: bold'>" + model.Dvt + " </label>";
             result += "</div>";
             result += "</div>";
-            result += "<div class='col-xl-6'>";
+
+            result += "<div class='col-xl-4'>";
             result += "<div class='form-group fv-plugins-icon-container'>";
-            result += "<label><b>Đơn giá</b></label>";
+            result += "<label><b>Đơn giá </b></label>";
             result += "<input type='text' id='dongia_edit' name='dongia_edit' class='form-control money-decimal-mask' style='font-weight: bold' value='" + Helpers.ConvertDbToStr(model.Dongia) + "'/>";
-            result += "<label><b>Đơn giá 2</b></label>";
+            result += "</div>";
+            result += "</div>";
+
+
+            result += "<div class='col-xl-4'>";
+            result += "<div class='form-group fv-plugins-icon-container'>";
+            result += "<label><b>Đơn giá 2 </b></label>";
             result += "<input type='text' id='dongia2_edit' name='dongia2_edit' class='form-control money-decimal-mask' style='font-weight: bold' value='" + Helpers.ConvertDbToStr(model.Dongia2) + "'/>";
             result += "</div>";
             result += "</div>";
+     
+
             result += "<div class='col-xl-12'>";
             result += "<div class='form-group fv-plugins-icon-container'>";
             result += "<label>Ghi chú</label>";
