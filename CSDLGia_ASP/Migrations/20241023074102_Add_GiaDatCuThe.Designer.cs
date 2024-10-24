@@ -4,6 +4,7 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241023074102_Add_GiaDatCuThe")]
+    partial class Add_GiaDatCuThe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1080,7 +1083,7 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("GiaCuocVanChuyenCt");
                 });
 
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVl", b =>
+            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuThe", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1213,10 +1216,10 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatCuTheVl");
+                    b.ToTable("GiaDatCuThe");
                 });
 
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlCt", b =>
+            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheCt", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1295,41 +1298,10 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatCuTheVlCt");
+                    b.ToTable("GiaDatCuTheCt");
                 });
 
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlDmPPDGDat", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Mapp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Mota")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tenpp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Theodoi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GiaDatCuTheVlDmPPDGDat");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlDmPPDGDatCt", b =>
+            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheDm", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1343,7 +1315,7 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("HienThi")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Mapp")
+                    b.Property<string>("Manhom")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("NhapGia")
@@ -1363,7 +1335,38 @@ namespace CSDLGia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GiaDatCuTheVlDmPPDGDatCt");
+                    b.ToTable("GiaDatCuTheDm");
+                });
+
+            modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheNhom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created_at")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Manhom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mota")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tennhom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Theodoi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GiaDatCuTheNhom");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Manages.DinhGia.GiaDatDiaBan", b =>

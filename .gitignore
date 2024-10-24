@@ -364,3 +364,11 @@ FodyWeavers.xsd
 /CSDLGia_ASP/Controllers/Admin/Manages/DinhGia/GiaHhDvk/GiaHhDvkExcelController.cs
 /CSDLGia_ASP/Controllers/Admin/Manages/ThamDinhGia/ThamDinhGiaController.cs
 /CSDLGia_ASP/Controllers/Admin/Manages/ThamDinhGia/ThamDinhGiaController.cs
+/CSDLGia_ASP/Controllers/AjaxController.cs
+/CSDLGia_ASP/Migrations/20240405013156_update-DsDonVi-20240405.cs
+/CSDLGia_ASP/Migrations/20240405013156_update-DsDonVi-20240405.Designer.cs
+/CSDLGia_ASP/Migrations/20240405021159_add_MaHuyen_MaXa_model_GiaDatDiaBan.cs
+/CSDLGia_ASP/Migrations/20240405021159_add_MaHuyen_MaXa_model_GiaDatDiaBan.Designer.cs
+/.gitignore
+/.gitignore
+/.gitignore
