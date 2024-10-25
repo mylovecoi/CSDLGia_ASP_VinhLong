@@ -367,12 +367,7 @@
     <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVtXtx\XetDuyet\Modal.cshtml" />
     <None Include="Views\Admin\Systems\DmPhanLoaiTaiSan\Index.cshtml" />
     <None Include="Views\Admin\Systems\DmPhanLoaiGia\Index.cshtml" />
-    <None Include="Views\Admin\Systems\DmPhanLoaiGiaDat\Index.cshtml" />
     <None Include="Views\Admin\Systems\DmGiaTriTaiSan\Index.cshtml" />
-    <None Include="Views\Admin\Systems\DmLoaiHinhDoanhNghiep\Index.cshtml" />
-    <None Include="Views\Admin\Systems\DmThuocTinh\Index.cshtml" />
-    <None Include="Views\Admin\Systems\DmPhanLoaiKhuVuc\Index.cshtml" />
-    <None Include="Views\Admin\Systems\DmPhuongPhapThamDinh\Index.cshtml" />
     <None Include="Views\Admin\Systems\DmChucnang\Index.cshtml" />
     <None Include="wwwroot\Admin\assets\css\pages\error\error-3.css.map" />
     <None Include="wwwroot\Admin\assets\css\pages\error\error-3.js" />
@@ -2552,7 +2547,35 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Admin\Systems\DmGiaTriTaiSan\Excel.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Admin\Systems\DmGiaTriTaiSan\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Update="Views\Admin\Systems\DmLinhVuc\Excel.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Admin\Systems\DmLoaiHinhDoanhNghiep\Excel.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Admin\Systems\DmPhanLoaiGiaDat\Excel.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Admin\Systems\DmPhanLoaiGia\Excel.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Admin\Systems\DmPhanLoaiGia\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Admin\Systems\DmPhanLoaiKhuVuc\Excel.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -2561,6 +2584,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Update="Views\Admin\Systems\DmPhanLoaiNhomHangHoaDichVu\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Admin\Systems\DmPhanLoaiTaiSan\Excel.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Admin\Systems\DmPhanLoaiTaiSan\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Admin\Systems\DmPhuongPhapThamDinh\Excel.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Admin\Systems\DmThuocTinh\Excel.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
