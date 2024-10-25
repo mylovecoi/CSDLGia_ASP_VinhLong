@@ -4,6 +4,7 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241025013203_dmphanloaihanghoadv")]
+    partial class dmphanloaihanghoadv
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -15504,40 +15507,6 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("DmDvt");
                 });
 
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmGiaTriTaiSan", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MaGiaTriTaiSan")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenGiaTriTaiSan")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DmGiaTriTaiSan");
-                });
-
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmHinhThucThanhToan", b =>
                 {
                     b.Property<int>("Id")
@@ -15564,40 +15533,6 @@ namespace CSDLGia_ASP.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DmHinhThucThanhToan");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmLinhVuc", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MaLinhVuc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenLinhVuc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DmLinhVuc");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmLoaiDat", b =>
@@ -15651,40 +15586,6 @@ namespace CSDLGia_ASP.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DmLoaiGia");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmLoaiHinhDoanhNghiep", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MaLoaiHinhDoanhNghiep")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenLoaiHinhDoanhNghiep")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DmLoaiHinhDoanhNghiep");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmNganhKd", b =>
@@ -15786,244 +15687,6 @@ namespace CSDLGia_ASP.Migrations
                     b.ToTable("DmNhomHh");
                 });
 
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmPhanLoaiGia", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MaPhanLoaiGia")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenPhanLoaiGia")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DmPhanLoaiGia");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmPhanLoaiGiaDat", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MaPhanLoaiGiaDat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenPhanLoaiGiaDat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DmPhanLoaiGiaDat");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmPhanLoaiHangHoaDichVu", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MaHangHoaDichVu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenHangHoaDichVu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DmPhanLoaiHangHoaDichVu");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmPhanLoaiKhuVuc", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MaKhuVuc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenKhuVuc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DmPhanLoaiKhuVuc");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmPhanLoaiNhomHangHoaDichVu", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MaNhomHangHoaDichVu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenNhomHangHoaDichVu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DmPhanLoaiNhomHangHoaDichVu");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmPhanLoaiTaiSan", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MaTaiSan")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenTaiSan")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DmPhanLoaiTaiSan");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmPhuongPhapThamDinh", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MaPhuongPhapThamDinh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenPhuongPhapThamDinh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DmPhuongPhapThamDinh");
-                });
-
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmSieuThi", b =>
                 {
                     b.Property<int>("Id")
@@ -16072,40 +15735,6 @@ namespace CSDLGia_ASP.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DmTaiLieuHuongDanSuDung");
-                });
-
-            modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DmThuocTinh", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MaThuocTinh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenThuocTinh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Updated_at")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DmThuocTinh");
                 });
 
             modelBuilder.Entity("CSDLGia_ASP.Models.Systems.DsDiaBan", b =>

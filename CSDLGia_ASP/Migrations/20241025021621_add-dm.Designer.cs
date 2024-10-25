@@ -4,6 +4,7 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241025021621_add-dm")]
+    partial class adddm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -15518,15 +15521,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("MaGiaTriTaiSan")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TenGiaTriTaiSan")
                         .HasColumnType("nvarchar(max)");
 
@@ -15578,15 +15572,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MaLinhVuc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TenLinhVuc")
@@ -15665,15 +15650,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MaLoaiHinhDoanhNghiep")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TenLoaiHinhDoanhNghiep")
@@ -15800,15 +15776,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("MaPhanLoaiGia")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TenPhanLoaiGia")
                         .HasColumnType("nvarchar(max)");
 
@@ -15832,15 +15799,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MaPhanLoaiGiaDat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TenPhanLoaiGiaDat")
@@ -15868,15 +15826,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("MaHangHoaDichVu")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TenHangHoaDichVu")
                         .HasColumnType("nvarchar(max)");
 
@@ -15900,15 +15849,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MaKhuVuc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TenKhuVuc")
@@ -15936,15 +15876,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("MaNhomHangHoaDichVu")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TenNhomHangHoaDichVu")
                         .HasColumnType("nvarchar(max)");
 
@@ -15970,15 +15901,6 @@ namespace CSDLGia_ASP.Migrations
                     b.Property<string>("MaTaiSan")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("TenTaiSan")
                         .HasColumnType("nvarchar(max)");
 
@@ -16002,15 +15924,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MaPhuongPhapThamDinh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TenPhuongPhapThamDinh")
@@ -16086,15 +15999,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MaThuocTinh")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("STTHienthi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapxep")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Style")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TenThuocTinh")

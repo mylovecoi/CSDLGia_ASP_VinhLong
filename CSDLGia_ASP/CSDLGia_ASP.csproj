@@ -39,6 +39,17 @@
     <None Remove="Models\Manages\VanBanPlVeGia\**" />
     <None Remove="Views\NghiepVu\**" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Content Remove="Views\Admin\Systems\DanhMuc - Copy (2) - Copy\Index.cshtml" />
+    <Content Remove="Views\Admin\Systems\DanhMuc - Copy (2)\Index.cshtml" />
+    <Content Remove="Views\Admin\Systems\DanhMuc - Copy (3) - Copy\Index.cshtml" />
+    <Content Remove="Views\Admin\Systems\DanhMuc - Copy (3)\Index.cshtml" />
+    <Content Remove="Views\Admin\Systems\DanhMuc - Copy (4) - Copy\Index.cshtml" />
+    <Content Remove="Views\Admin\Systems\DanhMuc - Copy (4)\Index.cshtml" />
+    <Content Remove="Views\Admin\Systems\DanhMuc - Copy (5) - Copy\Index.cshtml" />
+    <Content Remove="Views\Admin\Systems\DanhMuc - Copy (5)\Index.cshtml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Aspose.Words" Version="24.5.0" />
@@ -354,6 +365,14 @@
     <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVtXtx\TimKiem\Printf.cshtml" />
     <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVtXtx\XetDuyet\Index.cshtml" />
     <None Include="Views\Admin\Manages\KeKhaiGia\KkGiaVtXtx\XetDuyet\Modal.cshtml" />
+    <None Include="Views\Admin\Systems\DmPhanLoaiTaiSan\Index.cshtml" />
+    <None Include="Views\Admin\Systems\DmPhanLoaiGia\Index.cshtml" />
+    <None Include="Views\Admin\Systems\DmPhanLoaiGiaDat\Index.cshtml" />
+    <None Include="Views\Admin\Systems\DmGiaTriTaiSan\Index.cshtml" />
+    <None Include="Views\Admin\Systems\DmLoaiHinhDoanhNghiep\Index.cshtml" />
+    <None Include="Views\Admin\Systems\DmThuocTinh\Index.cshtml" />
+    <None Include="Views\Admin\Systems\DmPhanLoaiKhuVuc\Index.cshtml" />
+    <None Include="Views\Admin\Systems\DmPhuongPhapThamDinh\Index.cshtml" />
     <None Include="Views\Admin\Systems\DmChucnang\Index.cshtml" />
     <None Include="wwwroot\Admin\assets\css\pages\error\error-3.css.map" />
     <None Include="wwwroot\Admin\assets\css\pages\error\error-3.js" />
@@ -2530,6 +2549,21 @@
     <None Include="wwwroot\lib\jquery\dist\jquery.js" />
     <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
     <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Admin\Systems\DmLinhVuc\Excel.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Admin\Systems\DmPhanLoaiNhomHangHoaDichVu\Excel.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Admin\Systems\DmPhanLoaiNhomHangHoaDichVu\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
