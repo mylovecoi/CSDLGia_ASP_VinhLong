@@ -10,7 +10,9 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [Key]
         public int Id { get; set; }
         public string Mahs { get; set; }
-        public string Manhom { get; set; }
+        public string Mapp { get; set; }
+        public string Noidungcv { get; set; }
+        public bool NhapGia { get; set; } = false;
         public double ChiPhiNhanCong { get; set; }
         public double ChiPhiDungCu { get; set; }
         public double ChiPhiNangLuong { get; set; }
@@ -50,7 +52,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         [Required(ErrorMessage = "Thông tin không được bỏ trống")]
         public IFormFile FormFile { get; set; }
 
-        public int STTSapXep { get; set; }
+        public double STTSapXep { get; set; }
         public string STTHienThi { get; set; }
         public string MoTa { get; set; }
         public string Style { get; set; }
@@ -61,5 +63,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
 
         [NotMapped]
         public string Soqd { get; set; }
+        [NotMapped]
+        public string Tenpp { get; set; }
     }
 }

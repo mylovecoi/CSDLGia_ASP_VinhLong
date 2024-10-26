@@ -1,7 +1,7 @@
 ﻿@{
     var dsdvt = (IEnumerable<DmDvt>)ViewData["Donvitinh"];
 }
-@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocDm>
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlDmPPDGDatCt>
 
 @section custom_style {
     <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
@@ -27,27 +27,27 @@
             <h3 class="card-label">
                 @ViewData["Title"]
                 <span class="d-block text-muted pt-2 font-size-sm">
-                    Quản lý Chi tiết nhóm giá thuê đất, mặt nước @ViewData["Tennhom"]
+                    Quản lý chi tiết Danh mục phương pháp định giá đất @ViewData["Tenpp"]
                 </span>
             </h3>
         </div>
         <div class="card-toolbar">
-            <a asp-controller="GiaThueDNNhom" asp-action="Index" class="btn btn-danger">
+            <a asp-controller="GiaDatCuTheVlDmPPDGDat" asp-action="Index" class="btn btn-danger">
                 <i class="la la-reply"></i>Quay lại
             </a>&ensp;
-            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Create"))
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Create"))
             {
-                @if (ViewData["Manhom"].ToString() != "")
+                @if (ViewData["Mapp"].ToString() != "")
                 {
                     <button type="button" data-target="#Create_Modal" data-toggle="modal" class="btn btn-primary  font-weight-bolder">
                         <i class="la la-plus"></i>Thêm mới
                     </button>
                     <span>&ensp;</span>
-                    <a class="btn btn-success font-weight-bolder" asp-controller="GiaThueDNDm" asp-action="NhanExcel"
-                       asp-route-Manhom="@ViewData["Manhom"]">
+                    @* <a class="btn btn-success font-weight-bolder" asp-controller="GiaDatCuTheVlDmPPDGDatCt" asp-action="NhanExcel"
+                       asp-route-Manhom="@ViewData["Mapp"]">
                         <i class="la la-file-excel-o"></i>Nhận dữ liệu
                     </a>
-                    <span>&ensp;</span>
+                    <span>&ensp;</span> *@
                     <button type="button" data-target="#Remove_Modal" data-toggle="modal"
                             class="btn btn-danger font-weight-bolder" title="Xóa">
                         <i class="la la-trash"></i>Xóa dữ liệu
@@ -63,7 +63,7 @@
                 <tr style="text-align:center">
                     <th width="2%">#</th>
                     <th width="5%">STT</th>
-                    <th>Vị trí, địa bàn</th>
+                    <th>Nội dung công việc</th>
                     <th width="10%">Thao tác</th>
                 </tr>
             </thead>
@@ -74,10 +74,10 @@
                     <tr>
                         <td style="text-align: center">@item.SapXep</td>
                         <td style="text-align: center; @HtmlStyle">@item.HienThi</td>
-                        <td style="text-align: left; @HtmlStyle">@item.Loaidat</td>
+                        <td style="@HtmlStyle">@item.Noidungcv</td>
                         <td>
 
-                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Edit"))
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Edit"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa" data-toggle="modal"
                                         data-target="#Edit_Modal" onclick="editId('@item.Id')">
@@ -85,10 +85,10 @@
                                 </button>
                             }
 
-                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.danhmuc", "Delete"))
+                            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Delete"))
                             {
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal"
-                                        data-target="#Delete_Modal" onclick="getId('@item.Id','@item.Loaidat')">
+                                        data-target="#Delete_Modal" onclick="getId('@item.Id','@item.Noidungcv')">
                                     <i class="icon-lg la la-trash text-danger"></i>
                                 </button>
                             }
@@ -99,4 +99,4 @@
         </table>
     </div>
 </div>
-@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/DanhMuc/ChiTiet/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatCuTheVl/DanhMuc/PhuongPhapCt/Modal.cshtml")

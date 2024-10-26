@@ -1,0 +1,97 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    var DanhMucPp = (IEnumerable<GiaDatCuTheVlDmPPDGDat>)ViewData["DanhMucPp"];
+}
+
+<br />
+<br />
+@model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVl
+
+<p style="text-align: center; font-weight: bold; font-size: 30px;">THÔNG TIN HỒ SƠ </p>
+<p style="text-align: left; font-size: 16px;">Số quyết định:@Model.Soqd</p>
+@* <p style="text-align: left; font-size: 16px;">
+    Địa bàn:
+    @foreach (var ds in dsdiaban)
+    {
+        @if (Model.Madiaban == ds.MaDiaBan)
+        {
+            @ds.TenDiaBan
+        }
+    }
+</p> *@
+<p style="text-align: left; font-size: 16px;">Thời điểm: @Helpers.ConvertDateToStr(Model.Thoidiem)</p>
+<p style="text-align: left; font-size: 16px;">Mô tả: @Model.Ghichu</p>
+@* <p style="text-align: left; font-size: 16px;">
+    Cơ quan tiếp nhận:
+    @foreach (var dsonvi in dsdonvi)
+    {
+        @if (Model.Macqcq == dsonvi.MaDv)
+        {
+            @dsonvi.TenDv
+        }
+    }
+</p> *@
+
+<br />
+<p style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</p>
+
+@foreach (var dm in DanhMucPp)
+{
+    var data_dm = Model.GiaDatCuTheVlCt.Where(t => t.Mapp == dm.Mapp);
+    if (data_dm.Any())
+    {
+        <p style="text-align:center; font-size:16px; text-transform:uppercase; font-weight:bold">
+            ĐƠN GIÁ DỊCH VỤ ĐỊNH GIÁ ĐẤT CỤ THỂ
+            THEO PHƢƠNG PHÁP @dm.Tenpp
+        </p>
+
+        <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
+            <thead>
+                <tr style="text-align:center">
+                    <th rowspan="2" width="2%" style="text-align:center">STT</th>
+                    <th rowspan="2" style="text-align:center">Nội dung công việc</th>
+                    <th rowspan="2" style="text-align:center">Chi phí<br />nhân<br />công</th>
+                    <th rowspan="2" style="text-align:center">Chi phí<br />dụng cụ</th>
+                    <th colspan="2" style="text-align:center">Chi phí thiết bị</th>
+                    <th rowspan="2" style="text-align:center">Chi phí<br />vật liệu</th>
+                    <th colspan="2" style="text-align:center">Chi phí trực tiếp</th>
+                    <th colspan="2" style="text-align:center">Chi phí quản<br />lí chung(Nội nghiệp<br />15%;Ngoại nghiệp 20%)</th>
+                    <th colspan="2" style="text-align:center">Đơn giá</th>
+                </tr>
+                <tr>
+                    <th style="text-align:center">Chi phí<br />năng<br />lượng</th>
+                    <th style="text-align:center">Chi phí<br />khấu hao</th>
+                    <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+                    <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+                    <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+                    <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+                    <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+                    <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in data_dm.OrderBy(t => t.STTSapXep))
+                {
+                    <tr style="text-align:center">
+                        <td style="text-align:center; font-weight:bold;">@item.STTHienThi</td>
+                        <td style="text-align:left; font-weight:bold;">@item.Noidungcv</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiNhanCong)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiDungCu)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiNangLuong)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiKhauHao)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiVatLieu)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiTrucTiepKkh)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiTrucTiepCkh)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiQlChungKkh)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiQlChungCkh)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.DonGiaKkh)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.DonGiaCkh)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    }
+}
