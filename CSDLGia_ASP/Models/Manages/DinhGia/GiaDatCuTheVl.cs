@@ -54,7 +54,9 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string Tendiaban { get; set; }
         public string Phanloai { get; set; }
         [NotMapped]
-        public List<GiaDatCuTheVlCt> GiaDatCuTheCt { get; set; }
+        public List<GiaDatCuTheVlCt> GiaDatCuTheVlCt { get; set; }
+        [NotMapped]
+        public List<ThongTinGiayTo> ThongTinGiayTo { get; set; }
         [NotMapped]
         public string MadvCh { get; set; }
         [NotMapped]

@@ -42,14 +42,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
                         ViewData["STT"] = 1;
                     }
 
-                    ViewData["Title"] = "Danh mục mặt đất, mặt nước";
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
                     ViewData["Tenpp"] = _db.GiaDatCuTheVlDmPPDGDat.FirstOrDefault(t => t.Mapp == Mapp)?.Tenpp ?? "";
-
                     ViewData["Mapp"] = Mapp;
-                    return View("Views/Admin/Manages/DinhGia/GiaDatCuTheVl/Danhmuc/ChiTiet/Index.cshtml", model);
+                    ViewData["Title"] = "Danh mục phương pháp định giá đất cụ thể chi tiết";
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdctvl";
+                    ViewData["MenuLv3"] = "menu_dgdctvl_dm";
+
+                    return View("Views/Admin/Manages/DinhGia/GiaDatCuTheVl/DanhMuc/PhuongPhapCt/Index.cshtml", model);
                 }
                 else
                 {
@@ -65,25 +65,25 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
 
         [Route("GiaDatCuTheVlDmPPDGDatCt/Store")]
         [HttpPost]
-        public JsonResult Store(string Loaidat, string MaNhom, string HienThi, double SapXep, string[] Style, bool Nhapgia)
+        public JsonResult Store(string Noidungcv, string Mapp, string HienThi, double SapXep, string[] Style, bool Nhapgia)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Create"))
                 {
                     string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
-                    var model = new Models.Manages.DinhGia.GiaThueMatDatMatNuocDm
+                    var model = new Models.Manages.DinhGia.GiaDatCuTheVlDmPPDGDatCt
                     {
-                        Manhom = MaNhom,
+                        Mapp = Mapp,
                         HienThi = HienThi,
                         SapXep = SapXep,
-                        Loaidat = Loaidat,
+                        Noidungcv = Noidungcv,
                         Style = str_style,
                         NhapGia = Nhapgia,
                         Created_at = DateTime.Now,
                         Updated_at = DateTime.Now,
                     };
-                    _db.GiaThueMatDatMatNuocDm.Add(model);
+                    _db.GiaDatCuTheVlDmPPDGDatCt.Add(model);
                     _db.SaveChanges();
                     var data = new { status = "success", message = "Thêm mới loại đất thành công!" };
                     return Json(data);
@@ -102,35 +102,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
             }
         }
 
-        [Route("GiaDatCuTheVlDmPPDGDatCt/Delete")]
-        [HttpPost]
-        public IActionResult Delete(int id_delete)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Delete"))
-                {
-                    var model = _db.GiaThueMatDatMatNuocDm.FirstOrDefault(t => t.Id == id_delete);
-                    string Manhom = model.Manhom;
-                    _db.GiaThueMatDatMatNuocDm.Remove(model);
-                    _db.SaveChanges();
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
-                    return RedirectToAction("Index", "GiaThueDNDm", new { Manhom = Manhom });
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
         [Route("GiaDatCuTheVlDmPPDGDatCt/Edit")]
         [HttpPost]
         public JsonResult Edit(int Id)
@@ -140,7 +111,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Edit"))
                 {
 
-                    var model = _db.GiaThueMatDatMatNuocDm.FirstOrDefault(p => p.Id == Id);
+                    var model = _db.GiaDatCuTheVlDmPPDGDatCt.FirstOrDefault(p => p.Id == Id);
                     if (model != null)
                     {
                         List<string> list_style = !string.IsNullOrEmpty(model.Style) ? new List<string>(model.Style.Split(',')) : new List<string>();
@@ -170,15 +141,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
 
                         result += "<div class='col-xl-12'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label>Loại mặt đất mặt nước<span class='require'>*</span></label>";
-                        result += "<input type='text' class='form-control' id='loaidat_edit' name='loaidat_edit' value='" + model.Loaidat + "'/>";
+                        result += "<label>Nội dung công việc</label>";
+                        result += "<input type='text' class='form-control' id='noidungcv_edit' name='noidungcv_edit' value='" + model.Noidungcv + "'/>";
                         result += "</div>";
                         result += "</div>";
 
 
                         result += "<div class='col-xl-6'>";
                         result += "<div class='form-group fv-plugins-icon-container'>";
-                        result += "<label style='font-weight:bold;color:blue'>Nhập giá </label>";
+                        result += "<label style='font-weight:bold;color:blue'>Nhập giá</label>";
                         result += "<select class='form-control' id='nhapgia_edit' name='nhapgia_edit' style='width:100%'>";
                         result += "<option value='false'" + (!model.NhapGia ? " selected" : "") + " >Không nhập giá</option >";
                         result += "<option value='true' " + (model.NhapGia ? " selected" : "") + ">Nhập giá</option >";
@@ -211,24 +182,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
             }
         }
 
-        // Cập nhật thông tin mới
         [Route("GiaDatCuTheVlDmPPDGDatCt/Update")]
         [HttpPost]
-        public IActionResult Update(int Id, string Loaidat, string HienThi, double SapXep, string[] Style, bool Nhapgia)
+        public IActionResult Update(int Id, string Noidungcv, string HienThi, double SapXep, string[] Style, bool Nhapgia)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Edit"))
                 {
-                    var model = _db.GiaThueMatDatMatNuocDm.FirstOrDefault(t => t.Id == Id);
+                    var model = _db.GiaDatCuTheVlDmPPDGDatCt.FirstOrDefault(t => t.Id == Id);
                     string str_style = Style.Count() > 0 ? string.Join(",", Style.ToArray()) : "";
-                    model.Loaidat = Loaidat;
+                    model.Noidungcv = Noidungcv;
                     model.HienThi = HienThi;
                     model.NhapGia = Nhapgia;
                     model.SapXep = SapXep;
                     model.Style = str_style;
                     model.Updated_at = DateTime.Now;
-                    _db.GiaThueMatDatMatNuocDm.Update(model);
+                    _db.GiaDatCuTheVlDmPPDGDatCt.Update(model);
                     _db.SaveChanges();
 
                     var data = new { status = "success", message = "Cập nhật thành công!" };
@@ -246,22 +216,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
             }
         }
 
+        [Route("GiaDatCuTheVlDmPPDGDatCt/Delete")]
         [HttpPost]
-        public IActionResult RemoveRange(string manhom_remove)
+        public IActionResult Delete(int id_delete)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Delete"))
                 {
-                    var model = _db.GiaThueMatDatMatNuocDm.Where(t => t.Manhom == manhom_remove);
-
-                    _db.GiaThueMatDatMatNuocDm.RemoveRange(model);
+                    var model = _db.GiaDatCuTheVlDmPPDGDatCt.FirstOrDefault(t => t.Id == id_delete);
+                    string Mapp = model.Mapp;
+                    _db.GiaDatCuTheVlDmPPDGDatCt.Remove(model);
                     _db.SaveChanges();
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
-                    return RedirectToAction("Index", "GiaThueDNDm", new { Manhom = manhom_remove });
 
+                    ViewData["Title"] = "Danh mục phương pháp định giá đất cụ thể chi tiết";
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdctvl";
+                    ViewData["MenuLv3"] = "menu_dgdctvl_dm";
+                    return RedirectToAction("Index", "GiaDatCuTheVlDmPPDGDatCt", new { Mapp = Mapp });
                 }
                 else
                 {
@@ -274,96 +246,31 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
                 return View("Views/Admin/Error/SessionOut.cshtml");
             }
         }
-
-        [HttpGet]
-        public IActionResult NhanExcel(string Manhom)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Create"))
-                {
-
-                    var model = new CSDLGia_ASP.ViewModels.VMImportExcel
-                    {
-                        LineStart = 3,
-                        LineStop = 1000,
-                        Sheet = 1,
-                        MaNhom = Manhom,
-                        TenNhom = _db.GiaPhiLePhiNhom.FirstOrDefault(t => t.Manhom == Manhom)?.Tennhom ?? ""
-                    };
-
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_dm";
-                    ViewData["Title"] = "Danh mục mặt đất, mặt nước";
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Danhmuc/ChiTiet/Excel.cshtml", model);
-
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
 
         [HttpPost]
-        public async Task<IActionResult> ImportExcel(CSDLGia_ASP.ViewModels.VMImportExcel requests)
+        public IActionResult RemoveRange(string mapp_remove)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                requests.LineStart = requests.LineStart == 0 ? 1 : requests.LineStart;
-                int sheet = requests.Sheet == 0 ? 0 : (requests.Sheet - 1);
-
-                using (var stream = new MemoryStream())
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.danhmuc", "Delete"))
                 {
-                    await requests.FormFile.CopyToAsync(stream);
-                    using (var package = new ExcelPackage(stream))
-                    {
-                        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets[sheet];
-                        if (worksheet != null)
-                        {
-                            int rowcount = worksheet.Dimension.Rows;
-                            requests.LineStop = requests.LineStop > rowcount ? rowcount : requests.LineStop;
-                            Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
-                            var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocDm>();
-                            int line = 1;
-                            for (int row = requests.LineStart; row <= requests.LineStop; row++)
-                            {
-                                ExcelStyle style = worksheet.Cells[row, 2].Style;
-                                // Kiểm tra xem font chữ có được đánh dấu là đậm không
-                                bool isBold = style.Font.Bold;
-                                // Kiểm tra xem font chữ có được đánh dấu là nghiêng không
-                                bool isItalic = style.Font.Italic;
-                                StringBuilder strStyle = new StringBuilder();
-                                if (isBold) { strStyle.Append("Chữ in đậm,"); }
-                                if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
+                    var model = _db.GiaDatCuTheVlDmPPDGDatCt.Where(t => t.Mapp == mapp_remove);
 
-                                list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocDm
-                                {
-                                    SapXep = line,
-                                    HienThi = worksheet.Cells[row, 1].Value != null ?
-                                                 worksheet.Cells[row, 1].Value.ToString().Trim() : "",
-                                    Loaidat = worksheet.Cells[row, 2].Value != null ?
-                                                 worksheet.Cells[row, 2].Value.ToString().Trim() : "",
-                                    Style = strStyle.ToString(),
-                                    Manhom = requests.MaNhom
-                                });
-                                line++;
-                            }
-                            _db.GiaThueMatDatMatNuocDm.AddRange(list_add);
-                            _db.SaveChanges();
-                        }
-                    }
+                    _db.GiaDatCuTheVlDmPPDGDatCt.RemoveRange(model);
+                    _db.SaveChanges();
+
+                    ViewData["Title"] = "Danh mục phương pháp định giá đất cụ thể chi tiết";
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdctvl";
+                    ViewData["MenuLv3"] = "menu_dgdctvl_dm";
+                    return RedirectToAction("Index", "GiaDatCuTheVlDmPPDGDatCt", new { Mapp = mapp_remove });
+
                 }
-
-                return RedirectToAction("Index", "GiaThueDNDm", new { Manhom = requests.MaNhom });
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
             }
             else
             {

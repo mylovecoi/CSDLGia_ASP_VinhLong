@@ -19,7 +19,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input hidden id="Manhom" name="Manhom" value="@ViewData["Manhom"]" />
+                <input hidden id="Mapp" name="Mapp" value="@ViewData["Mapp"]" />
                 <div class="row">
                     <div class="col-xl-2">
                         <div class="form-group fv-plugins-icon-container">
@@ -44,8 +44,8 @@
                     </div>
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Vị trí, địa bàn:</label>
-                            <input type="text" id="loaidat_create" name="loaidat_create" class="form-control" />
+                            <label>Nội dung công việc:</label>
+                            <input type="text" id="noidungcv_create" name="noidungcv_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-8">
@@ -109,12 +109,12 @@
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <form asp-controller="GiaThueDNDm" asp-action="Delete">
+            <form asp-controller="GiaDatCuTheVlDmPPDGDatCt" asp-action="Delete">
                 <div class="modal-body">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Vị trí, địa bàn:</label>
-                            <label type="text" id="loaidat_delete" name="loaidat_delete" class="form-control"></label>
+                            <label>Nội dung công việc:</label>
+                            <label type="text" id="noidungcv_delete" name="noidungcv_delete" class="form-control"></label>
                         </div>
                     </div>
                     <input hidden id="id_delete" name="id_delete" />
@@ -143,13 +143,13 @@
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <form asp-controller="GiaLePhiDm" asp-action="RemoveRange">
+            <form asp-controller="GiaDatCuTheVlDmPPDGDatCt" asp-action="RemoveRange">
                 <div class="modal-body">
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Nhóm:</label>
-                            <label class="form-control">@ViewData["TenNhom"]</label>
-                            <input hidden id="manhom_remove" name="manhom_remove" value="@ViewData["Manhom"]" />
+                            <label>Tên phương pháp:</label>
+                            <label class="form-control">@ViewData["Tenpp"]</label>
+                            <input hidden id="mapp_remove" name="mapp_remove" value="@ViewData["Mapp"]" />
                         </div>
                     </div>
                     <input hidden id="id_delete" name="id_delete" />
@@ -167,16 +167,16 @@
 
 
     function Store() {
-        if ($('#loaidat_create').val().trim() == '') {
-            toastr.error("Tên loại đất không được để trống!!!", "Lỗi!");
+        if ($('#noidungcv_create').val().trim() == '') {
+            toastr.error("Nội dung công việc không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
-                url: '/GiaThueDNDMCT/Store',
+                url: '/GiaDatCuTheVlDmPPDGDatCt/Store',
                 type: 'POST',
                 data: {
                     Nhapgia: $('#nhapgia_create').val(),
-                    Manhom: $('#Manhom').val(),
-                    Loaidat: $('#loaidat_create').val(),
+                    Mapp: $('#Mapp').val(),
+                    Noidungcv: $('#noidungcv_create').val(),
                     HienThi: $('#hienthi_create').val(),
                     SapXep: $('#sapxep_create').val(),
                     Style: $('#style_create').val(),
@@ -194,14 +194,14 @@
         }
     }
 
-    function getId(id, loaidat) {
+    function getId(id, noidungcv) {
         document.getElementById("id_delete").value = id;
-        document.getElementById("loaidat_delete").innerHTML = loaidat;
+        document.getElementById("noidungcv_delete").innerHTML = noidungcv;
     }
 
     function editId(id_edit) {
         $.ajax({
-            url: '/GiaThueDNDMCT/Edit',
+            url: '/GiaDatCuTheVlDmPPDGDatCt/Edit',
             type: 'POST',
             data: {
                 Id: id_edit
@@ -220,15 +220,15 @@
     }
 
     function Update() {
-        if ($('#loaidat_edit').val().trim() == '') {
-            toastr.error("Tên sản phẩm không được để trống!!!", "Lỗi!");
+        if ($('#noidungcv_edit').val().trim() == '') {
+            toastr.error("Nội dung công việc không được để trống!!!", "Lỗi!");
         } else {
             $.ajax({
-                url: '/GiaThueDNDMCT/Update',
+                url: '/GiaDatCuTheVlDmPPDGDatCt/Update',
                 type: 'POST',
                 data: {
                     Nhapgia: $('#nhapgia_edit').val(),
-                    Loaidat: $('#loaidat_edit').val(),
+                    Noidungcv: $('#noidungcv_edit').val(),
                     Hientrang: $('#hientrang_edit').val(),
                     HienThi: $('#hienthi_edit').val(),
                     SapXep: $('#sapxep_edit').val(),
@@ -250,10 +250,10 @@
 
     function Lock() {
         $.ajax({
-            url: '/GiaThueDNDMCT/Lock',
+            url: '/GiaDatCuTheVlDmPPDGDatCt/Lock',
             type: 'POST',
             data: {
-                Manhom: $('#manhom_lock').val(),
+                Mapp: $('#mapp_lock').val(),
                 Theodoi: $('#theodoi_lock').val(),
             },
             dataType: 'JSON',

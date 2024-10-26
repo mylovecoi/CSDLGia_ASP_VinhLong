@@ -1,0 +1,136 @@
+﻿@{
+    var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
+    var DanhMucPp = (IEnumerable<GiaDatCuTheVlDmPPDGDat>)ViewData["DanhMucPp"];
+}
+@model CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVl;
+
+<input hidden asp-for="Madv" />
+<input hidden asp-for="Mahs" />
+<input hidden asp-for="Id" />
+<div class="mb-3 font-weight-bold font-size-lg">
+    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
+</div>
+<div class="row">
+    <div class="col-xl-4">
+        <div class="form-group">
+            <label>Địa bàn:</label>
+            <select class="form-control select2basic" asp-for="Madiaban">
+                @foreach (var item in dsdiaban)
+                {
+                    <option value="@item.MaDiaBan">@item.TenDiaBan</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="form-group">
+            <label>Số quyết định: <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" asp-for="Soqd" required />
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="form-group">
+            <label>Thời điểm:</label>
+            <input type="date" class="form-control" asp-for="Thoidiem" required />
+        </div>
+    </div>
+    <div class="col-xl-12">
+        <div class="form-group">
+            <label>Thông tin hồ sơ:</label>
+            <input type="text" class="form-control" asp-for="Thongtin" required />
+        </div>
+    </div>
+    <div class="col-xl-12">
+        <div class="form-group">
+            <label>Ghi chú:</label>
+            <textarea class="form-control" rows="2" cols="50" asp-for="Ghichu"></textarea>
+        </div>
+    </div>
+</div>
+
+<!--Thông tin giấy tời-->
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatCuTheVl/ThongTinGiayTo/Index.cshtml")
+<br />
+
+<div class="mb-3 font-weight-bold font-size-lg">
+    <label style="color: blue; text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ chi tiết</label>
+</div>
+<div class="card card-custom" style="border: 1px solid #60aee4;">
+    <div class="card-body" id="frm_data">
+        @if (Model.GiaDatCuTheVlCt != null)
+        {
+            @foreach (var dm in DanhMucPp)
+            {
+                var data = Model.GiaDatCuTheVlCt.Where(t => t.Mapp == dm.Mapp);
+                if (data.Any())
+                {
+                    <p style="text-align:center; font-size:16px; text-transform:uppercase; font-weight:bold">
+                        ĐƠN GIÁ DỊCH VỤ ĐỊNH GIÁ ĐẤT CỤ THỂ
+                        THEO PHƢƠNG PHÁP @dm.Tenpp
+                    </p>
+                    <table class="table table-striped table-bordered table-hover class-nosort">
+                        <thead>
+                            <tr style="text-align:center">
+                                <th rowspan="2" width="2%" style="text-align:center">STT</th>
+                                <th rowspan="2" style="text-align:center">Nội dung công việc</th>
+                                <th rowspan="2" style="text-align:center">Chi phí<br />nhân<br />công</th>
+                                <th rowspan="2" style="text-align:center">Chi phí<br />dụng cụ</th>
+                                <th colspan="2" style="text-align:center">Chi phí thiết bị</th>
+                                <th rowspan="2" style="text-align:center">Chi phí<br />vật liệu</th>
+                                <th colspan="2" style="text-align:center">Chi phí trực tiếp</th>
+                                <th colspan="2" style="text-align:center">Chi phí quản<br />lí chung(Nội nghiệp<br />15%;Ngoại nghiệp 20%)</th>
+                                <th colspan="2" style="text-align:center">Đơn giá</th>
+                                <th rowspan="2" width="5%" style="text-align:center">Thao tác</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align:center">Chi phí<br />năng<br />lượng</th>
+                                <th style="text-align:center">Chi phí<br />khấu hao</th>
+                                <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+                                <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+                                <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+                                <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+                                <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+                                <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in data.OrderBy(x => x.STTSapXep))
+                            {
+                                string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
+                                <tr>
+                                    <td style="@HtmlStyle; text-align:center;">@item.STTHienThi</td>
+                                    <td style="@HtmlStyle; text-align:left;">@item.Noidungcv</td>
+                                    <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiNhanCong)</td>
+                                    <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiDungCu)</td>
+                                    <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiNangLuong)</td>
+                                    <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiKhauHao)</td>
+                                    <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiVatLieu)</td>
+                                    <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiTrucTiepKkh)</td>
+                                    <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiTrucTiepCkh)</td>
+                                    <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiQlChungKkh)</td>
+                                    <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiQlChungCkh)</td>
+                                    <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.DonGiaKkh)</td>
+                                    <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.DonGiaCkh)</td>
+                                    <td>
+                                        @if (item.NhapGia == true)
+                                        {
+                                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                                    onclick="SetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                                <i class="icon-lg la la-edit text-primary"></i>
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!--end: Datatable-->
+                    <hr width="70%" align="center" />
+                }
+            }
+
+
+        }
+    </div>
+</div>
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaDatCuTheVl/DanhSach/Modal.cshtml")

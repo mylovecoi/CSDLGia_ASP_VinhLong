@@ -55,15 +55,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     {
                         model = model.Where(x => x.Thoidiem.Year == Convert.ToInt32(Nam));
                     }
-                        ViewData["DsDonVi"] = model_donvi;
-                        ViewData["Madv"] = Madv;
-                        ViewData["Nam"] = Nam;
-                        ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => x.Level != "X");                       
-                        ViewData["Title"] = " Thông tin hồ sơ giá các loại đất";
-                        ViewData["MenuLv1"] = "menu_giadat";
-                        ViewData["MenuLv2"] = "menu_dgdct";
-                        ViewData["MenuLv3"] = "menu_dgdct_tt";
-                        return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Index.cshtml", model);                   
+                    ViewData["DsDonVi"] = model_donvi;
+                    ViewData["Madv"] = Madv;
+                    ViewData["Nam"] = Nam;
+                    ViewData["DsDiaBan"] = _db.DsDiaBan.Where(x => x.Level != "X");
+                    ViewData["Title"] = " Thông tin hồ sơ giá các loại đất";
+                    ViewData["MenuLv1"] = "menu_giadat";
+                    ViewData["MenuLv2"] = "menu_dgdct";
+                    ViewData["MenuLv3"] = "menu_dgdct_tt";
+                    return View("Views/Admin/Manages/DinhGia/GiaDatPhanLoai/Index.cshtml", model);
                 }
                 else
                 {
@@ -254,7 +254,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     };
                     var model_ct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == model_new.Mahs);
                     model_new.GiaDatPhanLoaiCt = model_ct.ToList();
-                    var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(model.Madiaban);                    
+                    var DsXaPhuong = _IDsDiaBan.GetListDsDiaBan(model.Madiaban);
                     ViewData["DsXaPhuong"] = DsXaPhuong;
                     ViewData["TenDiaBan"] = _db.DsDiaBan.FirstOrDefault(x => x.MaDiaBan == model.Madiaban).TenDiaBan;
                     ViewData["Madv"] = model.Madv;
@@ -299,7 +299,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     };
 
                     //var model_ct = _db.GiaDatPhanLoaiCt.Where(t => t.Mahs == model_new.Mahs);
-                    var model_ct = from gd in _db.GiaDatPhanLoaiCt.Where(x=>x.Mahs== model_new.Mahs)
+                    var model_ct = from gd in _db.GiaDatPhanLoaiCt.Where(x => x.Mahs == model_new.Mahs)
                                    join diaban in _db.DsDiaBan on gd.MaDiaBan equals diaban.MaDiaBan
                                    select new GiaDatPhanLoaiCt()
                                    {
@@ -315,8 +315,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                        Sapxep = gd.Sapxep,
                                        Trangthai = gd.Trangthai,
                                        Madv = gd.Madv,
-                                       MaDiaBan = gd.MaDiaBan,  
-                                       TenDiaBan=diaban.TenDiaBan,
+                                       MaDiaBan = gd.MaDiaBan,
+                                       TenDiaBan = diaban.TenDiaBan,
                                    };
 
                     model_new.GiaDatPhanLoaiCt = model_ct.ToList();
@@ -469,12 +469,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Giacuthe = giact.Giacuthe,
                                      PhanLoai = gia.Phanloai,
                                      Khuvuc = giact.Khuvuc,
-                                     MaDiaBan = giact.MaDiaBan,                                     
-                                     Trangthai=gia.Trangthai,
-                                     Soqd=gia.Soqd,                                     
+                                     MaDiaBan = giact.MaDiaBan,
+                                     Trangthai = gia.Trangthai,
+                                     Soqd = gia.Soqd,
                                  });
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai == phanloaihoso && list_trangthai.Contains(x.Trangthai));                    
+                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai == phanloaihoso && list_trangthai.Contains(x.Trangthai));
                     model = model.Where(t => t.Giacuthe >= beginPrice);
                     if (endPrice > 0)
                     {
@@ -484,17 +484,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                     if (MaDiaBan != "all")
                     {
                         var diaban_search = _dsDonviService.GetListDonvi(MaDiaBan);
-                        List<string> list_diaban_search = diaban_search.Select(t=>t.MaDiaBan).ToList();
+                        List<string> list_diaban_search = diaban_search.Select(t => t.MaDiaBan).ToList();
                         model = model.Where(t => list_diaban_search.Contains(t.MaDiaBan));
-                        
-                    }                                       
+
+                    }
                     ViewBag.beginTime = beginTime;
                     ViewBag.endTime = endTime;
                     ViewBag.beginPrice = beginPrice;
                     ViewBag.endPrice = endPrice;
-                    ViewData["MaDiaBan"] = MaDiaBan;                    
+                    ViewData["MaDiaBan"] = MaDiaBan;
                     ViewData["phanloaihoso"] = phanloaihoso;
-                    ViewData["DsDiaBan"] = _db.DsDiaBan;                   
+                    ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["DsCqcq"] = _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI");
                     ViewData["Maloaidat"] = _db.DmLoaiDat.ToList();
                     ViewData["Title"] = "Tìm kiếm thông tin hồ sơ giá các loại đất";
@@ -538,14 +538,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
                                      Thoidiem = gia.Thoidiem,
                                      Giacuthe = giact.Giacuthe,
                                      PhanLoai = gia.Phanloai,
-                                     Khuvuc = giact.Khuvuc,                                     
-                                     MaDiaBan = giact.MaDiaBan,                                                                         
-                                     Trangthai=gia.Trangthai,
-                                     Soqd=gia.Soqd,
-                                     TenDiaBan=diaban.TenDiaBan,
+                                     Khuvuc = giact.Khuvuc,
+                                     MaDiaBan = giact.MaDiaBan,
+                                     Trangthai = gia.Trangthai,
+                                     Soqd = gia.Soqd,
+                                     TenDiaBan = diaban.TenDiaBan,
                                  });
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai == phanloaihoso && list_trangthai.Contains(x.Trangthai));                                      
+                    model = model.Where(x => x.Thoidiem >= beginTime && x.Thoidiem <= endTime && x.PhanLoai == phanloaihoso && list_trangthai.Contains(x.Trangthai));
                     if (MaDiaBan != "all")
                     {
                         var diaban_search = _dsDonviService.GetListDonvi(MaDiaBan);
@@ -580,7 +580,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatPl
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthe.thongtin", "Index"))
                 {
-                    
+
                     var model = _db.GiaDatPhanLoai.FirstOrDefault(p => p.Mahs == mahs_complete);
                     model.Trangthai = trangthai_complete;
                     model.Updated_at = DateTime.Now;
