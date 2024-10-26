@@ -77,7 +77,6 @@
     <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaThueDN\" />
     <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaDatDiaBan\" />
     <Folder Include="wwwroot\UpLoad\File\DinhGia\GiaThueTn\" />
-    <Folder Include="wwwroot\UpLoad\File\DuLieuTapHuan\" />
     <Folder Include="wwwroot\UpLoad\File\ThongTinGiayTo\" />
     <Folder Include="wwwroot\UpLoad\File\ThamDinhGia\" />
     <Folder Include="wwwroot\UpLoad\File\VbQlNn\" />
