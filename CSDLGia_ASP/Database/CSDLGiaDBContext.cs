@@ -331,6 +331,19 @@ namespace CSDLGia_ASP.Database
         public DbSet<DmSieuThi> DmSieuThi { get; set; }
         public DbSet<DmTaiLieuHuongDanSuDung> DmTaiLieuHuongDanSuDung { get; set; }
 
+
+        public DbSet<DmPhanLoaiHangHoaDichVu> DmPhanLoaiHangHoaDichVu { get; set; }
+        public DbSet<DmPhanLoaiNhomHangHoaDichVu> DmPhanLoaiNhomHangHoaDichVu { get; set; }
+        public DbSet<DmLinhVuc> DmLinhVuc { get; set; }
+        public DbSet<DmPhanLoaiGia> DmPhanLoaiGia { get; set; }
+        public DbSet<DmPhanLoaiTaiSan> DmPhanLoaiTaiSan { get; set; }
+        public DbSet<DmGiaTriTaiSan> DmGiaTriTaiSan { get; set; }
+        public DbSet<DmPhanLoaiGiaDat> DmPhanLoaiGiaDat { get; set; }
+        public DbSet<DmThuocTinh> DmThuocTinh { get; set; }
+        public DbSet<DmLoaiHinhDoanhNghiep> DmLoaiHinhDoanhNghiep { get; set; }
+        public DbSet<DmPhuongPhapThamDinh> DmPhuongPhapThamDinh { get; set; }
+        public DbSet<DmPhanLoaiKhuVuc> DmPhanLoaiKhuVuc { get; set; }
+
         // Danh sách chức năng
 
         public DbSet<DanhMucChucNang> DanhMucChucNang { get; set; }

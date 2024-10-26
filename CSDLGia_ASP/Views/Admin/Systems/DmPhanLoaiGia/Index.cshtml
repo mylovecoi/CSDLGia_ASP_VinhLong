@@ -1,0 +1,367 @@
+﻿@{
+    int SapXep = Int32.Parse(ViewData["SapXep"].ToString()) + 1;
+}
+@model IEnumerable<CSDLGia_ASP.Models.Systems.DmPhanLoaiGia>
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+            $('.select2multi').select2();
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Quản lý thông tin danh mục phân loại giá
+                </span>
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaigia", "Create"))
+            {
+                <button type="button" data-target="#Create_Modal" data-toggle="modal"
+                        class="btn btn-primary font-weight-bolder" title="Create">
+                    <i class="la la-plus"></i>Thêm mới
+                </button>
+                <span>&ensp;</span>
+                <a class="btn btn-success font-weight-bolder" asp-controller="DmPhanLoaiGia" asp-action="NhanExcel">
+                    <i class="la la-file-excel-o"></i>Nhận dữ liệu
+                </a>
+            }
+            <span>&ensp;</span>
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaigia", "Delete"))
+            {
+                <button type="button" data-target="#Remove_Modal" data-toggle="modal"
+                        class="btn btn-danger font-weight-bolder" title="Xóa">
+                    <i class="la la-trash"></i>Xóa dữ liệu
+                </button>
+            }
+
+        </div>
+    </div>
+    <hr />
+    <div class="card-body" id="frm_data">
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="2%">#</th>
+                    <th width="5%">STT</th>
+                    <th>Mã phân loại giá</th>
+                    <th>Tên phân loại giá</th>
+                    <th width="20%">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                        string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
+                        <tr>
+                            <td style="text-align: center">@item.STTSapxep</td>
+                            <td style="text-align: center; @HtmlStyle">@item.STTHienthi</td>
+                            <td style="text-align: left; @HtmlStyle">@item.MaPhanLoaiGia</td>
+                            <td style="text-align: left; @HtmlStyle">@item.TenPhanLoaiGia</td>
+
+                            <td>
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaigia", "Edit"))
+                                {
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
+                                        <i class="icon-lg la la-edit text-warning"></i>
+                                    </button>
+                                }
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaigia", "Delete"))
+                                {
+                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id','@item.MaPhanLoaiGia','@item.TenPhanLoaiGia' )">
+                                        <i class="icon-lg la la-trash text-danger"></i>
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--create Modal-->
+<div class="modal fade" id="Create_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Thêm mới phân loại giá
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="DmPhanLoaiGia" asp-action="Store">
+                    <div class="row">
+                        <div class="col-xl-2">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label style="font-weight:bold;color:blue">Sắp xếp: </label>
+                                <input type="number" id="sapxep_create" name="sapxep_create" class="form-control" step="1" value="@SapXep" />
+                            </div>
+                        </div>
+                        <div class="col-xl-2">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label style="font-weight:bold;color:blue">STT hiển thị:</label>
+                                <input type="text" id="stt_create" name="stt_create" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-8">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label style="font-weight:bold;color:blue">Kiểu in hiển thị:</label>
+                                <select class="form-control select2multi" multiple="multiple" id="style_create" name="style_create" style="width:100%">
+                                    <option value="Chữ in hoa">Chữ in hoa</option>
+                                    <option value="Chữ in đậm">Chữ in đậm</option>
+                                    <option value="Chữ in nghiêng">Chữ in nghiêng</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Mã phân loại giá</b></label>
+                                <input type="text" id="maphanloaigia_create" name="maphanloaigia_create" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="form-group fv-plugins-icon-container">
+                                <label><b>Tên phân loại giá</b></label>
+                                <input type="text" id="tenphanloaigia_create" name="tenphanloaigia_create" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetCreate()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete Modal-->
+<div class="modal fade" id="Delete_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Xóa thông tin danh mục phân loại giá
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold;">Mã phân loại giá</label>
+                            <label type="text" id="maphanloaigia_delete" name="maphanloaigia_delete" class="form-control"></label>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label style="font-weight:bold;">Tên phân loại giá</label>
+                            <label type="text" id="tenphanloaigia_delete" name="tenphanloaigia_delete" class="form-control"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-left">
+                    <input id="id_delete" name="id_delete" type="hidden" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetDelete()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Modal-->
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Chỉnh sửa thông tin danh mục phân loại giá
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="edit_thongtin">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                <button type="button" class="btn btn-primary font-weight-bold" onclick="GetEdit()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Remove Modal-->
+<div class="modal fade" id="Remove_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-label">
+                    @ViewData["Title"]
+                    <span class="d-block text-muted pt-2 font-size-sm">
+                        Xóa dữ liệu danh mục chi tiết
+                    </span>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-danger font-weight-bold" onclick="DataRemove()">Đồng ý xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function GetCreate() {
+        $.ajax({
+            url: '/DmPhanLoaiGia/Store',
+            type: 'POST',
+            data: {
+                MaPhanLoaiGia: $('#maphanloaigia_create').val(),
+                TenPhanLoaiGia: $('#tenphanloaigia_create').val(),
+                STTHienthi: $('#stt_create').val(),
+                STTSapxep: $('#sapxep_create').val(),
+                Style: $('#style_create').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Thêm mới thành công!", "Thành công");
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+    function SetDelete(id, maloaihanghoadichvu, tenloaihanghoadichvu) {
+        document.getElementById("id_delete").value = id;
+        document.getElementById("maphanloaigia_delete").innerHTML = maloaihanghoadichvu;
+        document.getElementById("tenphanloaigia_delete").innerHTML = tenloaihanghoadichvu;
+    }
+    function GetDelete() {
+        $.ajax({
+            url: '/DmPhanLoaiGia/Delete',
+            type: 'POST',
+            data: {
+                Id: $('#id_delete').val(),
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function SetEdit(id_edit) {
+        $.ajax({
+            url: '/DmPhanLoaiGia/Edit',
+            type: 'POST',
+            data: {
+                Id: id_edit
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    $('#edit_thongtin').replaceWith(data.message);
+                    $('.select2multi').select2();
+                } else {
+                    toastr.error(data.message, "Lỗi!!!");
+                }
+            }
+        })
+    }
+
+    function GetEdit() {
+        $.ajax({
+            url: '/DmPhanLoaiGia/Update',
+            type: 'POST',
+            data: {
+                MaPhanLoaiGia: $('#maphanloaigia_edit').val(),
+                TenPhanLoaiGia: $('#tenphanloaigia_edit').val(),
+                STTHienthi: $('#stt_edit').val(),
+                STTSapxep: $('#sapxep_edit').val(),
+                Style: $('#style_edit').val(),
+                Id: $('#id_edit').val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thông tin thành công!", "Thành công");
+                    $('#frm_data').replaceWith(data.message);
+                    $(document).ready(function () {
+                        TableManaged4.init();
+                    });
+                    $('#Edit_Modal').modal("hide");
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+
+    function DataRemove() {
+        $.ajax({
+            url: '/DmPhanLoaiGia/Remove',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr.success("Cập nhật thành công!!!", "Thành công!");
+                    location.reload();
+                } else {
+                    toastr.error(data.message, "Lỗi!");
+                }
+            }
+        })
+    }
+</script>

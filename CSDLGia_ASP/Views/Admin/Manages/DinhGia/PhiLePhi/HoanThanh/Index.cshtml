@@ -118,7 +118,7 @@
 
                                 @if (item.Trangthai == "CD")
                                 {
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Approve"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.xetduyet", "Approve"))
                                     {
                                         <button type="submit" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
                                                 onclick="TraLai('@item.Id')">
@@ -131,14 +131,14 @@
                                 }
                                 @if (item.Trangthai == "DD")
                                 {
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Approve"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.xetduyet", "Approve"))
                                     {
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy duyệt" data-toggle="modal" data-target="#HuyDuyet_Modal"
                                                 onclick="SetHuyDuyet('@item.Mahs','@item.Soqd')">
                                             <i class="icon-lg la la-times text-danger "></i>
                                         </button>
                                     }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Public"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.xetduyet", "Public"))
                                     {
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Công bố" data-toggle="modal" data-target="#CongBo_Modal"
                                                 onclick="CongBo('@item.Mahs','@item.Soqd')">
@@ -148,7 +148,7 @@
                                 }
                                 @if (item.Trangthai == "CB")
                                 {
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.lephi.xetduyet", "Public"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.cacloaigiakhac.philephi.xetduyet", "Public"))
                                     {
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy công bố" data-toggle="modal" data-target="#HuyCongBo_Modal"
                                                 onclick="HuyCongBo('@item.Mahs', '@item.Soqd')">
