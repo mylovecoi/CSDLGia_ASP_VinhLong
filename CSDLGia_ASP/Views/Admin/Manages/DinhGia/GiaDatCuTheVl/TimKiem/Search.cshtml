@@ -1,0 +1,286 @@
+﻿@{
+    var dscqcq = (IEnumerable<DsDonVi>)ViewData["Cqcq"];
+
+    string NgayTu = ((DateTime)ViewData["NgayTu"]).ToString("yyyy-MM-dd");
+    string NgayDen = ((DateTime)ViewData["NgayDen"]).ToString("yyyy-MM-dd");
+   
+
+    var DanhSachHoSo = (IEnumerable<GiaDatCuTheVl>)ViewData["DanhSachHoSo"];
+    var DanhMucPp = ViewData["DanhMucPp"]
+                    as IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlDmPPDGDat>
+                    ?? Enumerable.Empty<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlDmPPDGDat>();
+
+    int record_id = 1;
+
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlCt>
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+     
+        $(document).ready(function () {
+            TableManaged.init();
+            MoneyDecimalMask();
+            $('.select2multi').select2();
+        });
+
+        function ClickSearch() {
+            var fromDate = document.getElementById("NgayTu_Search").value;
+            var toDate = document.getElementById("NgayDen_Search").value;
+            if (fromDate === "" || toDate === "") {
+                toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+            } else {
+                var fromDateObj = new Date(fromDate);
+                var toDateObj = new Date(toDate);
+
+                if (fromDateObj <= toDateObj) {
+                    var current_path_url = '/GiaDatCuTheVl/Search?';
+                    var Madv = '&Madv=' + $('#Madv_Search').val();
+                    var Mapp = '&Mapp=' + $('#Mapp_Search').val();
+                    var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
+                    var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
+                    var Mahs = '&Mahs=' + $('#Mahs_Search').val();
+                    // var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    // var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    // var Noidungcv = '&Noidungcv=' + $('#Noidungcv_Search').val();
+
+                    var url = current_path_url + Madv + Mapp + NgayTu + NgayDen + Mahs;
+                    window.location.href = url;
+                } else {
+                    toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+                }
+            }
+        }
+
+        function Print() {
+            var fromDate = document.getElementById("NgayTu_Search").value;
+            var toDate = document.getElementById("NgayDen_Search").value;
+            if (fromDate === "" || toDate === "") {
+                toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+            } else {
+                var fromDateObj = new Date(fromDate);
+                var toDateObj = new Date(toDate);
+
+                if (fromDateObj <= toDateObj) {
+                    var current_path_url = '/GiaDatCuTheVl/Print?';
+                    var Madv = '&Madv=' + $('#Madv_Search').val();
+                    var Mapp = '&Mapp=' + $('#Mapp_Search').val();
+                    var NgayTu = '&NgayTu=' + $('#NgayTu_Search').val();
+                    var NgayDen = '&NgayDen=' + $('#NgayDen_Search').val();
+                    var Mahs = '&Mahs=' + $('#Mahs_Search').val();
+                    // var DonGiaTu = '&DonGiaTu=' + $('#DonGiaTu_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    // var DonGiaDen = '&DonGiaDen=' + $('#DonGiaDen_Search').val().replace(/\./g, "").replace(/,/g, ".");
+                    // var Noidungcv = '&Noidungcv=' + $('#Noidungcv_Search').val();
+
+                    var url = current_path_url + Madv + Mapp + NgayTu + NgayDen + Mahs
+                    window.location.href = url;
+                } else {
+                    toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+                }
+            }
+        }
+
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                @ViewData["Title"]
+                <span class="d-block text-muted pt-2 font-size-sm">
+                    Thông tin hồ sơ giá đất cụ thể
+                </span>
+            </h3>
+        </div>
+        <div class="col-xl-6" style="text-align:right;margin-top: auto">
+            <button class="btn btn-primary font-weight-bolder" onclick="Print()">
+                <i class="la la-print"></i>Kết xuất
+            </button>
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+        <form asp-controller="GiaDatCuTheVl" asp-action="Print" method="post" target="_blank" id="frm_search">
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight:bold;">Đơn vị</label>
+                        <select class="form-control select2basic" id="Madv_Search" name="Madv_Search">
+                            <option value="all">--Tất cả--</option>
+                            @foreach (var item in dscqcq)
+                            {
+                                <!option value="@item.MaDv" @(ViewData["Madv"].ToString() == item.MaDv ? "selected" : "")>@item.TenDv</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-8">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight:bold;">Danh mục phương pháp:</label>
+                        <select class="form-control select2basic" id="Mapp_Search" name="Mapp_Search">
+                            <option value="all">--Tất cả --</option>
+                            @foreach (var tn in DanhMucPp)
+                            {
+                                <!option value="@tn.Mapp" @(ViewData["Mapp"].ToString() == tn.Mapp ? "selected" : "")>@tn.Tenpp</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label style="font-weight:bold;">Thời gian nhập từ</label>
+                        <input type="date" class="form-control" name="NgayTu_Search" id="NgayTu_Search" value="@NgayTu" onchange="GetList()" />
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label style="font-weight:bold;">Thời gian nhập đến</label>
+                        <input type="date" class="form-control" name="NgayDen_Search" id="NgayDen_Search" value="@NgayDen" onchange="GetList()" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="form-group">
+                        <label style="font-weight:bold;">Thông tin quyết định</label>
+                        <select class="form-control select2basic" id="Mahs_Search" name="Mahs_Search">
+                            <option value="all">--Tất cả---</option>
+                            @foreach (var item in DanhSachHoSo)
+                            {
+                                <!option value="@item.Mahs" @(ViewData["Mahs"].ToString() == item.Mahs ? "selected" : "")>
+                                Số QĐ: @item.Soqd -Thời điểm: @Helpers.ConvertDateToStr(item.Thoidiem)
+                                </!option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                @* <div class="col-xl-3">
+                    <div class="form-group">
+                        <label style="font-weight:bold;">Đơn giá từ</label>
+                        <input type="text" class="form-control money-decimal-mask" name="DonGiaTu_Search" id="DonGiaTu_Search" value="@ViewData["DonGiaTu"]" />
+                    </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="form-group">
+                        <label style="font-weight:bold;">Đơn giá đến</label>
+                        <input type="text" class="form-control money-decimal-mask" name="DonGiaDen_Search" id="DonGiaDen_Search" value="@ViewData["DonGiaDen"]" />
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <label style="font-weight:bold;">Nội dung công việc:</label>
+                    <input id="Noidungcv_Search" name="Noidungcv_Search" class="form-control" value="@ViewData["Noidungcv"]" />
+                </div> *@
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-xl-12" style="text-align:center">
+                <button class="btn btn-danger" onclick="ClickSearch()"><i class="la la-search"></i>Tìm kiếm</button>
+            </div>
+        </div>
+        <hr />
+        <table class="table table-striped table-bordered table-hover" id="sample_3">
+            <thead>
+                <tr>
+                    <th rowspan="2" width="2%" style="text-align:center">STT</th>
+                    <th rowspan="2" width="2%" style="text-align:center">STT Sắp xếp</th>
+                    <th rowspan="2" style="text-align:center">Đơn vị</th>
+                    <th rowspan="2" style="text-align:center">Số QĐ/Thời điểm</th>
+                    <th rowspan="2" style="text-align:center">Phương pháp</th>
+                    <th rowspan="2" style="text-align:center">Nội dung công việc</th>
+                    <th rowspan="2" style="text-align:center">Chi phí<br />nhân<br />công</th>
+                    <th rowspan="2" style="text-align:center">Chi phí<br />dụng cụ</th>
+                    <th colspan="2" style="text-align:center">Chi phí thiết bị</th>
+                    <th rowspan="2" style="text-align:center">Chi phí<br />vật liệu</th>
+                    <th colspan="2" style="text-align:center">Chi phí trực tiếp</th>
+                    <th colspan="2" style="text-align:center">Chi phí quản<br />lí chung(Nội nghiệp<br />15%;Ngoại nghiệp 20%)</th>
+                    <th colspan="2" style="text-align:center">Đơn giá</th>
+                    <th rowspan="2" width="5%" style="text-align:center">Thao tác</th>
+                </tr>
+                <tr>
+                    <th style="text-align:center">Chi phí<br />năng<br />lượng</th>
+                    <th style="text-align:center">Chi phí<br />khấu hao</th>
+                    <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+                    <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+                    <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+                    <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+                    <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+                    <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align: center">@(record_id++)</td>
+                        <td style="text-align:center;">@item.STTHienThi</td>
+                        <td style="text-align:center">@item.Tendv</td>
+                        <td style="text-align:center">@item.Soqd <br />@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                        <td style="text-align:center">@item.Tenpp</td>
+                        <td style="text-align:left;">@item.Noidungcv</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiNhanCong)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiDungCu)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiNangLuong)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiKhauHao)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiVatLieu)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiTrucTiepKkh)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiTrucTiepCkh)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiQlChungKkh)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiQlChungCkh)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.DonGiaKkh)</td>
+                        <td style="text-align:right;">@Helpers.ConvertDbToStr(item.DonGiaCkh)</td>
+                        <td>
+                            <a asp-controller="GiaDatCuTheVl" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết hồ sơ"
+                               target="_blank">
+                                <i class="icon-lg la la-eye text-success"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function GetList() {
+        var fromDate = document.getElementById("NgayTu_Search").value;
+        var toDate = document.getElementById("NgayDen_Search").value;
+        if (fromDate === "" || toDate === "") {
+            toastr.error("Vui lòng nhập đủ ngày từ và ngày đến", "Lỗi!!!");
+        } else {
+            var fromDateObj = new Date(fromDate);
+            var toDateObj = new Date(toDate);
+
+            if (fromDateObj <= toDateObj) {
+
+                $.ajax({
+                    url: '/GiaDatCuTheVl/GetHoSoSearch',
+                    type: 'POST',
+                    data: {
+                        ngaytu: fromDate,
+                        ngayden: toDate,
+                    },
+                    dataType: 'JSON',
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            toastr.success("Thành công!");
+                            $('#Mahs_Search').replaceWith(data.message);
+                        } else {
+                            toastr.error(data.message, "Lỗi!!!");
+                        }
+                    }
+                });
+            } else {
+                toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
+            }
+        }
+    }
+</script>

@@ -1,0 +1,102 @@
+﻿@{
+    Layout = "_LayoutReports";
+    var DonVis = (IEnumerable<DsDonVi>)ViewData["DonVis"];
+    var HoSoCts = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlCt>)ViewData["HoSoCt"];
+    var DanhMucPp = (IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlDmPPDGDat>)ViewData["DanhMucPp"];
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVl>
+<table width="96%" border="0" cellspacing="0" cellpadding="8" style="margin:0 auto 20px; text-align: center;">
+    <tr>
+        <td width="40%" style="vertical-align: top;">
+            <hr style="width: 10%;vertical-align: top;  margin-top: 2px">
+        </td>
+        <td style="vertical-align: top;">
+            <b>
+                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br>
+                Độc lập - Tự do - Hạnh phúc
+            </b>
+            <hr style="width: 15%;vertical-align: top; margin-top: 2px">
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align: top;">Số:......</td>
+        <td style="text-align: right; vertical-align: top"></td>
+    </tr>
+</table>
+<p style="text-align: center; font-weight: bold; font-size: 16px;text-transform:uppercase">
+    TỔNG HỢP GIÁ THUÊ MẶT ĐẤT MẶT NƯỚC
+<p style="text-align: center; font-size: 16px; font-style:italic">
+        @ViewData["ThoiGianKetXuat"]
+</p>
+@foreach (var donvi in DonVis)
+{
+<p style="text-align: center; font-size: 16px; font-style:italic">@donvi.TenDv </p>
+    var HoSos = Model.Where(t => t.Madv == donvi.MaDv);
+    if (HoSos.Any())
+    {
+        @foreach (var hoso in HoSos)
+        {
+        <p>Số QĐ: @hoso.Soqd</p>
+        <p>Thời điểm: @Helpers.ConvertDateToStr(hoso.Thoidiem)</p>
+            @foreach (var dm in DanhMucPp)
+            {
+                var data_dm = HoSoCts.Where(t => t.Mahs == hoso.Mahs && t.Mapp == dm.Mapp);
+                if (data_dm.Any())
+                {
+                <p style="text-align:center; font-size:16px; text-transform:uppercase; font-weight:bold">@dm.Tenpp</p>
+                <table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data">
+                    <thead>
+                        <tr style="text-align:center">
+                            <th rowspan="2" width="2%" style="text-align:center">STT</th>
+                            <th rowspan="2" style="text-align:center">Nội dung công việc</th>
+                            <th rowspan="2" style="text-align:center">Chi phí<br />nhân<br />công</th>
+                            <th rowspan="2" style="text-align:center">Chi phí<br />dụng cụ</th>
+                            <th colspan="2" style="text-align:center">Chi phí thiết bị</th>
+                            <th rowspan="2" style="text-align:center">Chi phí<br />vật liệu</th>
+                            <th colspan="2" style="text-align:center">Chi phí trực tiếp</th>
+                            <th colspan="2" style="text-align:center">Chi phí quản<br />lí chung(Nội nghiệp<br />15%;Ngoại nghiệp 20%)</th>
+                            <th colspan="2" style="text-align:center">Đơn giá</th>
+                            <th rowspan="2" width="5%" style="text-align:center">Thao tác</th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center">Chi phí<br />năng<br />lượng</th>
+                            <th style="text-align:center">Chi phí<br />khấu hao</th>
+                            <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+                            <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+                            <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+                            <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+                            <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+                            <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @foreach (var item in data_dm.OrderBy(x => x.STTSapXep))
+                            {
+                                string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
+                            <tr>
+                                <td style="@HtmlStyle; text-align:center;">@item.STTHienThi</td>
+                                <td style="@HtmlStyle; text-align:left;">@item.Noidungcv</td>
+                                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiNhanCong)</td>
+                                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiDungCu)</td>
+                                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiNangLuong)</td>
+                                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiKhauHao)</td>
+                                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiVatLieu)</td>
+                                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiTrucTiepKkh)</td>
+                                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiTrucTiepCkh)</td>
+                                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiQlChungKkh)</td>
+                                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiQlChungCkh)</td>
+                                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.DonGiaKkh)</td>
+                                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.DonGiaCkh)</td>
+                            </tr>
+                            }
+                    </tbody>
+                </table>
+                <hr width="70%" align="center" />
+                }
+            }
+
+        }
+    }
+
+}
+

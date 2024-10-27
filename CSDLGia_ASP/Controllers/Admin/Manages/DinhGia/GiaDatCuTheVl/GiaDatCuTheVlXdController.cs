@@ -37,7 +37,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
                     }
                     var model_join = from dg in model
                                      join donvi in _db.DsDonVi on dg.Madv equals donvi.MaDv
-                                     select new GiaDatCuTheVl
+                                     select new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVl
                                      {
                                          Id = dg.Id,
                                          Madv = dg.Madv,
@@ -76,17 +76,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.xetduyet", "Approve"))
                 {
-                    var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(p => p.Mahs == mahs_duyet);
+                    var model = _db.GiaDatCuTheVl.FirstOrDefault(p => p.Mahs == mahs_duyet);
 
                     model.Updated_at = DateTime.Now;
                     model.Trangthai = "DD";
 
-                    _db.GiaThueMatDatMatNuoc.Update(model);
+                    _db.GiaDatCuTheVl.Update(model);
                     _db.SaveChanges();
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Duyệt");
-                    return RedirectToAction("Index", "GiaThueDNHt", new { Nam = model.Thoidiem.Year });
+                    return RedirectToAction("Index", "GiaDatCuTheVlXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -107,17 +107,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.xetduyet", "Approve"))
                 {
-                    var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(p => p.Mahs == mahs_huyduyet);
+                    var model = _db.GiaDatCuTheVl.FirstOrDefault(p => p.Mahs == mahs_huyduyet);
 
                     model.Updated_at = DateTime.Now;
                     model.Trangthai = "CD";
 
-                    _db.GiaThueMatDatMatNuoc.Update(model);
+                    _db.GiaDatCuTheVl.Update(model);
                     _db.SaveChanges();
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy duyệt");
-                    return RedirectToAction("Index", "GiaThueDNHt", new { Nam = model.Thoidiem.Year });
+                    return RedirectToAction("Index", "GiaDatCuTheVlXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -138,24 +138,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.xetduyet", "Approve"))
                 {
-                    var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Id == id_tralai);
+                    var model = _db.GiaDatCuTheVl.FirstOrDefault(t => t.Id == id_tralai);
 
                     model.Trangthai = "BTL";
                     model.Lydo = Lydo;
                     model.Updated_at = DateTime.Now;
 
-                    ViewData["MenuLv1"] = "menu_dg";
-                    ViewData["MenuLv2"] = "menu_dgtmdmn";
-                    ViewData["MenuLv3"] = "menu_dgtmdmn_ht";
-
-                    _db.GiaThueMatDatMatNuoc.Update(model);
+                    _db.GiaDatCuTheVl.Update(model);
                     _db.SaveChanges();
-
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Trả lại");
 
-                    return RedirectToAction("Index", "GiaThueDNHt", new { Nam = model.Thoidiem.Year });
+                    return RedirectToAction("Index", "GiaDatCuTheVlXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -176,19 +171,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.xetduyet", "Public"))
                 {
-                    var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == mahs_cb);
+                    var model = _db.GiaDatCuTheVl.FirstOrDefault(t => t.Mahs == mahs_cb);
 
                     model.Updated_at = DateTime.Now;
                     model.Trangthai = "CB";
 
 
-                    _db.GiaThueMatDatMatNuoc.Update(model);
+                    _db.GiaDatCuTheVl.Update(model);
                     _db.SaveChanges();
 
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Công bố");
-                    return RedirectToAction("Index", "GiaThueDNHt");
+                    return RedirectToAction("Index", "GiaDatCuTheVlXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -209,17 +204,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.xetduyet", "Public"))
                 {
-                    var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == mahs_hcb);
+                    var model = _db.GiaDatCuTheVl.FirstOrDefault(t => t.Mahs == mahs_hcb);
 
                     model.Trangthai = "DD";
                     model.Updated_at = DateTime.Now;
 
-                    _db.GiaThueMatDatMatNuoc.Update(model);
+                    _db.GiaDatCuTheVl.Update(model);
                     _db.SaveChanges();
 
                     //Add Log
                     _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hủy công bố");
-                    return RedirectToAction("Index", "GiaThueDNHt");
+                    return RedirectToAction("Index", "GiaDatCuTheVlXd", new { Nam = model.Thoidiem.Year });
                 }
                 else
                 {
@@ -241,17 +236,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuThe
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.giadat.datcuthevinhlong.xetduyet", "Index"))
                 {
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    var model = _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.Trangthai));
+                    var model = _db.GiaDatCuTheVl.Where(t => t.Thoidiem >= ngaytu && t.Thoidiem <= ngayden && list_trangthai.Contains(t.Trangthai));
                     List<string> list_hoso = model.Select(t => t.Mahs).ToList();
                     List<string> list_donvi = model.Select(t => t.Madv).ToList();
-                    var model_ct = _db.GiaThueMatDatMatNuocCt.Where(t => list_hoso.Contains(t.Mahs));
+                    var model_ct = _db.GiaDatCuTheVlCt.Where(t => list_hoso.Contains(t.Mahs));
                     var model_donvi = _db.DsDonVi.Where(t => list_donvi.Contains(t.MaDv));
                     ViewData["ThoiGianKetXuat"] = "Từ ngày " + Helper.Helpers.ConvertDateToStr(ngaytu) + " đến ngày " + Helpers.ConvertDateToStr(ngayden);
                     ViewData["HoSoCt"] = model_ct;
                     ViewData["DonVis"] = model_donvi;
-                    ViewData["DanhMuc"] = _db.GiaThueMatDatMatNuocNhom;
+                    ViewData["DanhMucPp"] = _db.GiaDatCuTheVlDmPPDGDat;
                     ViewData["Title"] = "Tổng hợp";
-                    return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/HoanThanh/Tonghop.cshtml", model);
+                    return View("Views/Admin/Manages/DinhGia/GiaDatCuTheVl/XetDuyet/Tonghop.cshtml", model);
                 }
                 else
                 {

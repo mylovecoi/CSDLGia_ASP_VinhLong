@@ -1,0 +1,71 @@
+﻿@{
+    Layout = "_LayoutReports";
+    int record_id = 1;
+}
+@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlCt>
+
+<p style="text-align: center; font-weight: bold; font-size: 30px;">KẾT QUẢ TÌM KIẾM </p>
+
+<table class="table table-striped table-bordered table-hover class-nosort">
+    <thead>
+        <tr style="text-align:center">
+            <th rowspan="2" width="2%" style="text-align:center">STT</th>
+            <th rowspan="2" width="2%" style="text-align:center">STT Sắp xếp</th>
+            <th rowspan="2" style="text-align:center">Đơn vị</th>
+            <th rowspan="2" style="text-align:center">Số QĐ/Thời điểm</th>
+            <th rowspan="2" style="text-align:center">Phương pháp</th>
+            <th rowspan="2" style="text-align:center">Nội dung công việc</th>
+            <th rowspan="2" style="text-align:center">Chi phí<br />nhân<br />công</th>
+            <th rowspan="2" style="text-align:center">Chi phí<br />dụng cụ</th>
+            <th colspan="2" style="text-align:center">Chi phí thiết bị</th>
+            <th rowspan="2" style="text-align:center">Chi phí<br />vật liệu</th>
+            <th colspan="2" style="text-align:center">Chi phí trực tiếp</th>
+            <th colspan="2" style="text-align:center">Chi phí quản<br />lí chung(Nội nghiệp<br />15%;Ngoại nghiệp 20%)</th>
+            <th colspan="2" style="text-align:center">Đơn giá</th>
+            <th rowspan="2" width="5%" style="text-align:center">Thao tác</th>
+        </tr>
+        <tr>
+            <th style="text-align:center">Chi phí<br />năng<br />lượng</th>
+            <th style="text-align:center">Chi phí<br />khấu hao</th>
+            <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+            <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+            <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+            <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+            <th style="text-align:center">Không có<br />chi phí<br />khấu hao</th>
+            <th style="text-align:center">Có chi<br />phí khấu<br />hao</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderBy(x => x.STTSapXep))
+        {
+            string HtmlStyle = Helpers.ConvertStrToStyle(item.Style);
+            <tr>
+                <td style="text-align: center">@(record_id++)</td>
+                <td style="@HtmlStyle; text-align:center;">@item.STTHienThi</td>
+                <td style="text-align:center">@item.Tendv</td>
+                <td style="text-align:center">@item.Soqd <br />@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                <td style="text-align:center">@item.Tenpp</td>
+                <td style="@HtmlStyle; text-align:left;">@item.Noidungcv</td>
+                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiNhanCong)</td>
+                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiDungCu)</td>
+                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiNangLuong)</td>
+                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiKhauHao)</td>
+                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiVatLieu)</td>
+                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiTrucTiepKkh)</td>
+                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiTrucTiepCkh)</td>
+                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiQlChungKkh)</td>
+                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.ChiPhiQlChungCkh)</td>
+                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.DonGiaKkh)</td>
+                <td style="@HtmlStyle; text-align:right;">@Helpers.ConvertDbToStr(item.DonGiaCkh)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+

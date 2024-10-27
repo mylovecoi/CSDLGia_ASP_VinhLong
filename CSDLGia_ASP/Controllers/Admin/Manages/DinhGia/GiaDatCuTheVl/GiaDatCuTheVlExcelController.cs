@@ -1,41 +1,37 @@
 ﻿using CSDLGia_ASP.Database;
-using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OfficeOpenXml;
 using OfficeOpenXml.Style;
-using System;
+using OfficeOpenXml;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Hosting;
+using System;
+using System.Linq;
 
-namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
+namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDatCuTheVl
 {
-    //2024.03.15 => Xem lại chức năng do thiết kế lại hồ sơ
-
-    public class GiaThueDNExcelController : Controller
+    public class GiaDatCuTheVlExcelController : Controller
     {
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
-        public GiaThueDNExcelController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
+        public GiaDatCuTheVlExcelController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
         }
 
+        [Route("GiaDatCuTheVl/Create/Excel")]
         public IActionResult Index(string Madv)
         {
-            var model_ct_cxd = _db.GiaThueMatDatMatNuocCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv);
+            var model_ct_cxd = _db.GiaDatCuTheVlCt.Where(t => t.Trangthai == "CXD" && t.Madv == Madv);
             if (model_ct_cxd.Any())
             {
-                _db.GiaThueMatDatMatNuocCt.RemoveRange(model_ct_cxd);
+                _db.GiaDatCuTheVlCt.RemoveRange(model_ct_cxd);
                 _db.SaveChanges();
             }
             var model_file_cxd = _db.ThongTinGiayTo.Where(t => t.Status == "CXD" && t.Madv == Madv);
@@ -57,19 +53,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             }
             var model = new VMImportExcel
             {
-                MaDv = Madv,               
+                MaDv = Madv,
                 LineStart = 4,
                 LineStop = 10000,
                 Sheet = 1,
             };
-            ViewData["GiaThueDNNhom"] = _db.GiaThueMatDatMatNuocNhom;
-            ViewData["MenuLv1"] = "menu_dg";
-            ViewData["MenuLv2"] = "menu_dgtmdmn";
-            ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
-            ViewData["Title"] = "Thông tin hồ sơ giá thuê mặt đất mặt nước";
-            return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Excels/Excel.cshtml", model);
+            ViewData["DanhMucPp"] = _db.GiaDatCuTheVlDmPPDGDat;
+            ViewData["Title"] = " Thông tin hồ sơ giá đất cụ thể";
+            ViewData["MenuLv1"] = "menu_giadat";
+            ViewData["MenuLv2"] = "menu_dgdctvl";
+            ViewData["MenuLv3"] = "menu_dgdctvl_tt";
+            return View("Views/Admin/Manages/DinhGia/GiaDatCuTheVl/Excels/Excel.cshtml", model);
         }
-       
+
+        [Route("GiaDatCuTheVl/Create/Excel/Import")]
         [HttpPost]
         public async Task<IActionResult> Import(VMImportExcel requests)
         {
@@ -91,7 +88,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                             var rowcount = worksheet.Dimension.Rows;
                             requests.LineStop = requests.LineStop > rowcount ? rowcount : requests.LineStop;
                             Regex trimmer = new Regex(@"\s\s+"); // Xóa khoảng trắng thừa trong chuỗi
-                            var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocCt>();
+                            var list_add = new List<CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlCt>();
                             int line = 1;
                             for (int row = requests.LineStart; row <= requests.LineStop; row++)
                             {
@@ -103,58 +100,74 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                                 StringBuilder strStyle = new StringBuilder();
                                 if (isBold) { strStyle.Append("Chữ in đậm,"); }
                                 if (isItalic) { strStyle.Append("Chữ in nghiêng,"); }
-                                string str_manhom = requests.MaNhom;
-                                if (requests.MaNhom == "all")
+                                string str_mapp = requests.Mapp;
+                                if (requests.Mapp == "all")
                                 {
-                                    str_manhom = worksheet.Cells[row, 7].Value != null ?
-                                                worksheet.Cells[row, 7].Value.ToString().Trim() : "";
+                                    str_mapp = worksheet.Cells[row, 14].Value != null ?
+                                                worksheet.Cells[row, 14].Value.ToString().Trim() : "";
                                 }
-                                list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuocCt
+
+                                list_add.Add(new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVlCt
                                 {
                                     Mahs = Mahs,
                                     Madv = requests.MaDv,
                                     Trangthai = "CXD",
-                                    SapXep = line,
-                                    HienThi = worksheet.Cells[row, 1].Value != null ?
+                                    STTSapXep = line,
+                                    STTHienThi = worksheet.Cells[row, 1].Value != null ?
                                                 worksheet.Cells[row, 1].Value.ToString().Trim() : "",
-                                    LoaiDat = worksheet.Cells[row, 2].Value != null ?
+                                    Noidungcv = worksheet.Cells[row, 2].Value != null ?
                                                 worksheet.Cells[row, 2].Value.ToString().Trim() : "",
-                                    TyLe1 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 3].Value != null ?
+                                    ChiPhiNhanCong = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 3].Value != null ?
                                                     worksheet.Cells[row, 3].Value.ToString().Trim() : ""),
-                                    TyLe2 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
+                                    ChiPhiDungCu = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
                                                     worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
-                                    TyLe3 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
+                                    ChiPhiNangLuong = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
                                                     worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
-                                    Dongia1 = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
+                                    ChiPhiKhauHao = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
                                                     worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
+                                    ChiPhiVatLieu = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
+                                                    worksheet.Cells[row, 7].Value.ToString().Trim() : ""),
+                                    ChiPhiTrucTiepKkh = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 8].Value != null ?
+                                                    worksheet.Cells[row, 8].Value.ToString().Trim() : ""),
+                                    ChiPhiTrucTiepCkh = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 9].Value != null ?
+                                                    worksheet.Cells[row, 9].Value.ToString().Trim() : ""),
+                                    ChiPhiQlChungKkh = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 10].Value != null ?
+                                                    worksheet.Cells[row, 10].Value.ToString().Trim() : ""),
+                                    ChiPhiQlChungCkh = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 11].Value != null ?
+                                                    worksheet.Cells[row, 11].Value.ToString().Trim() : ""),
+                                    DonGiaKkh = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 12].Value != null ?
+                                                    worksheet.Cells[row, 12].Value.ToString().Trim() : ""),
+                                    DonGiaCkh = Helper.Helpers.ConvertStrToDb(worksheet.Cells[row, 13].Value != null ?
+                                                    worksheet.Cells[row, 13].Value.ToString().Trim() : ""),
                                     Style = strStyle.ToString(),
-                                    MaNhom = str_manhom,
-                                    NhapGia = true,                                
+                                    Mapp = str_mapp,
+                                    NhapGia = true,
                                 });
                                 line++;
                             }
-                            _db.GiaThueMatDatMatNuocCt.AddRange(list_add);
+                            _db.GiaDatCuTheVlCt.AddRange(list_add);
                             _db.SaveChanges();
                         }
                     }
                 }
 
-                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaDatCuTheVl
                 {
                     Madv = requests.MaDv,
                     Thoidiem = DateTime.Now,
                     Mahs = Mahs,
                 };
 
-                var modelct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == Mahs);
-                model.GiaThueMatDatMatNuocCt = modelct.ToList();
+                var modelct = _db.GiaDatCuTheVlCt.Where(t => t.Mahs == Mahs);
+                model.GiaDatCuTheVlCt = modelct.ToList();
                 ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-                ViewData["Title"] = "Thêm mới giá thuê mặt đất mặt nước";
-                ViewData["MenuLv1"] = "menu_dg";
-                ViewData["MenuLv2"] = "menu_dgtmdmn";
-                ViewData["MenuLv3"] = "menu_dgtmdmn_tt";
-                ViewData["GiaThueDNNhom"] = _db.GiaThueMatDatMatNuocNhom;
-                return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Create.cshtml", model);
+                ViewData["DanhMucPp"] = _db.GiaDatCuTheVlDmPPDGDat;
+                ViewData["Title"] = " Thông tin hồ sơ giá đất cụ thể";
+                ViewData["MenuLv1"] = "menu_giadat";
+                ViewData["MenuLv2"] = "menu_dgdctvl";
+                ViewData["MenuLv3"] = "menu_dgdctvl_tt";
+                
+                return View("Views/Admin/Manages/DinhGia/GiaDatCuTheVl/DanhSach/Create.cshtml", model);
             }
             else
             {
