@@ -238,11 +238,11 @@
                                 <label class="control-label">Hồ sơ:</label>
                                 <select class="form-control" id="trangthai_complete" name="trangthai_complete">
                                     <option value="CD">Chờ duyệt</option>
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.xetduyet", "Approve"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.xetduyet", "Approve"))
                                     {
                                         <option value="DD">Đã duyệt</option>
                                     }
-                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.xetduyet", "Public"))
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuetaisancong.xetduyet", "Public"))
                                     {
                                         <option value="CB">Công bố</option>
                                     }

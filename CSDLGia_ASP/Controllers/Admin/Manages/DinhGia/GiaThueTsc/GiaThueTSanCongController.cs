@@ -312,6 +312,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                     _db.GiaThueTaiSanCongCt.RemoveRange(model_ct);
                     _db.SaveChanges();
 
+
+                   
+
                     return RedirectToAction("Index", "GiaThueTSanCong", new { Madv = model.Madv });
                 }
                 else
@@ -344,6 +347,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                         Thoidiem = model.Thoidiem,
                         Thongtin = model.Thongtin,
                     };
+
+                 
 
                     var model_ct = _db.GiaThueTaiSanCongCt.Where(t => t.Mahs == Mahs);
 
@@ -382,6 +387,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                   
                     _db.GiaThueTaiSanCong.Update(model);
                     _db.SaveChanges();
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Hoàn thành");
                     return RedirectToAction("Index", "GiaThueTSanCong", new { Madv = model.Madv, Nam = model.Thoidiem.Year });
                 }
                 else

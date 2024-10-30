@@ -177,7 +177,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaNuocsh
                     var model = new VMImportExcel()
                     {
                         Sheet = 1,
-                        LineStart = 4,
+                        LineStart = 3,
                         LineStop = 1000
                     };
                     ViewData["Title"] = "Danh mục giá nước sạch sinh hoạt";
