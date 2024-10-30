@@ -63,14 +63,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     var data_rolelist = _db.RoleList.Where(t => t.TrangThai == "Active").ToList();
                     
-                    if (ChucNang_create == "QUANTRI")
-                    {
-                        data_rolelist = data_rolelist.Where(t => t.PhanLoai == "QUANTRI").ToList();
-                    }
-                    if (ChucNang_create == "NHAPLIEU")
-                    {
-                        data_rolelist = data_rolelist.Where(t => t.PhanLoai == "NHAPLIEU").ToList();
-                    }
+                    //if (ChucNang_create == "QUANTRI")
+                    //{
+                    //    data_rolelist = data_rolelist.Where(t => t.PhanLoai == "QUANTRI").ToList();
+                    //}
+                    //if (ChucNang_create == "NHAPLIEU")
+                    //{
+                    //    data_rolelist = data_rolelist.Where(t => t.PhanLoai == "NHAPLIEU").ToList();
+                    //}
                     var per = new List<Permissions>();
                     foreach (var item in data_rolelist)
                     {
@@ -156,14 +156,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     };
 
                     var data_rolelist = _db.RoleList.Where(t => t.TrangThai == "Active").ToList();
-                    if (model.ChucNang == "QUANTRI")
-                    {
-                        data_rolelist = data_rolelist.Where(t => t.PhanLoai == "QUANTRI").ToList();
-                    }
-                    if (model.ChucNang == "NHAPLIEU")
-                    {
-                        data_rolelist = _db.RoleList.Where(t => t.TrangThai == "Active").ToList();
-                    }
+
+                    //if (model.ChucNang == "QUANTRI")
+                    //{
+                    //    data_rolelist = data_rolelist.Where(t => t.PhanLoai == "QUANTRI").ToList();
+                    //}
+                    //if (model.ChucNang == "NHAPLIEU")
+                    //{
+                    //    data_rolelist = _db.RoleList.Where(t => t.TrangThai == "Active").ToList();
+                    //}
 
                     ViewData["RoleList"] = data_rolelist;
                     ViewData["Title"] = "Thông tin quyền truy cập";

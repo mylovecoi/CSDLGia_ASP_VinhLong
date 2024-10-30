@@ -4,6 +4,7 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241029083739_Update-Rolelist")]
+    partial class UpdateRolelist
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -17089,10 +17092,7 @@ namespace CSDLGia_ASP.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MaGoc")
+                    b.Property<string>("Level")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -17103,9 +17103,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("STTSapXep")
-                        .HasColumnType("int");
 
                     b.Property<string>("TrangThai")
                         .HasColumnType("nvarchar(max)");
