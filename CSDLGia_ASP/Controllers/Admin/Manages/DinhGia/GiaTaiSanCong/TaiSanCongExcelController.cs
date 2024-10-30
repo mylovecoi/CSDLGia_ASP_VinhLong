@@ -157,16 +157,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TaiSanCong
                                             worksheet.Cells[row, Int16.Parse(request.Dacdiem)].Value.ToString().Trim() : "",
 
 
-                                Giathue = worksheet.Cells[row, Int16.Parse(request.Giathue.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giathue.ToString())].Value) : 0,
-
-
-                                Giapheduyet = worksheet.Cells[row, Int16.Parse(request.Giapheduyet.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giapheduyet.ToString())].Value) : 0,
-
-
-                                Giaban = worksheet.Cells[row, Int16.Parse(request.Giaban.ToString())].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, Int16.Parse(request.Giaban.ToString())].Value) : 0,
+                                Giathue = Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
+                                                    worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
+                                Giapheduyet = Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
+                                                    worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
+                                Giaban = Helpers.ConvertStrToDb(worksheet.Cells[row, 7].Value != null ?
+                                                    worksheet.Cells[row, 7].Value.ToString().Trim() : ""),
 
 
                             });

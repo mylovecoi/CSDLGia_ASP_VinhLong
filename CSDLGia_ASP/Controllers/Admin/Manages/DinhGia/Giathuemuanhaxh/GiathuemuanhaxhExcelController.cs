@@ -123,11 +123,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiathuemuanhaxhExcel
                                 Dvt = worksheet.Cells[row, 3].Value != null ?
                                             worksheet.Cells[row, 3].Value.ToString().Trim() : "",
 
-                                Dongia = worksheet.Cells[row, 4].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, 4].Value) : 0,
+                                Dongia = Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
+                                                    worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
 
-                                Dongiathue = worksheet.Cells[row, 5].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, 5].Value) : 0,
+                                Dongiathue = Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
+                                                    worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
+
                                 Phanloai = worksheet.Cells[row, 6].Value != null ?
                                             worksheet.Cells[row, 6].Value.ToString().Trim() : "",
                             });
