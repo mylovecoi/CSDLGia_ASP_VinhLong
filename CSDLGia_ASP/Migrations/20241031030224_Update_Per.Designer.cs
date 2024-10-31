@@ -4,6 +4,7 @@ using CSDLGia_ASP.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSDLGia_ASP.Migrations
 {
     [DbContext(typeof(CSDLGiaDBContext))]
-    partial class CSDLGiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241031030224_Update_Per")]
+    partial class Update_Per
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3293,9 +3296,6 @@ namespace CSDLGia_ASP.Migrations
 
                     b.Property<int>("Sapxep")
                         .HasColumnType("int");
-
-                    b.Property<string>("Tennhom")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tenspdv")
                         .HasColumnType("nvarchar(max)");
@@ -16926,9 +16926,6 @@ namespace CSDLGia_ASP.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phanloai")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Public")
