@@ -263,7 +263,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                         _db.GiaDvKcb.Update(modelExcel);
 
                         //Add Log
-                        _trangThaiHoSoService.LogHoSo(modelExcel.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
+                        _trangThaiHoSoService.LogHoSo(modelExcel.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Thêm mới");
 
                         return RedirectToAction("Index", "DvKhamChuaBenh", new { Madv = request.Madv });
                     }
@@ -623,9 +623,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
         }
 
         [Route("DinhGiaDvKcb/PrintSearch")]
-        [HttpPost]
-        public IActionResult Print(string Madv_Search, string Manhom_Search, DateTime? NgayTu_Search, DateTime? NgayDen_Search,
-                                    string Mahs_Search, double DonGiaTu_Search, double DonGiaDen_Search, string Tenspdv_Search)
+        [HttpGet]
+        public IActionResult Print(string Madv, string Manhom, DateTime? NgayTu, DateTime? NgayDen,
+                                    string Mahs, double DonGiaTu, double DonGiaDen, string Tenspdv)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -649,17 +649,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs
                                  });
+
+                 
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    model = model.Where(t => t.Thoidiem >= NgayTu_Search && t.Thoidiem <= NgayDen_Search && list_trangthai.Contains(t.Trangthai));
-                    if (Madv_Search != "all") { model = model.Where(t => t.Madv == Madv_Search); }
-                    if (Manhom_Search != "all") { model = model.Where(t => t.Manhom == Manhom_Search); }
-                    if (DonGiaTu_Search > 0) { model = model.Where(t => t.Giadv >= DonGiaTu_Search); }
-                    if (DonGiaDen_Search > 0) { model = model.Where(t => t.Giadv <= DonGiaDen_Search); }
-                    if (Mahs_Search != "all") { model = model.Where(t => t.Mahs == Mahs_Search); }
-                    if (!string.IsNullOrEmpty(Tenspdv_Search))
+                 
+                    model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && list_trangthai.Contains(t.Trangthai));
+                 
+                    if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
+                    if (Manhom != "all") { model = model.Where(t => t.Manhom == Manhom); }
+                    if (DonGiaTu > 0) { model = model.Where(t => t.Giadv >= DonGiaTu); }
+                    if (DonGiaDen > 0) { model = model.Where(t => t.Giadv <= DonGiaDen); }
+                    if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
+                    if (!string.IsNullOrEmpty(Tenspdv))
                     {
-                        model = model.Where(t => t.Tenspdv.ToLower().Contains(Tenspdv_Search.ToLower()));
+                        model = model.Where(t => t.Tenspdv.ToLower().Contains(Tenspdv.ToLower()));
                     }
+
                     ViewData["Title"] = "Kết quả tìm kiếm thông tin định giá khám chữa bệnh";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgkcb";

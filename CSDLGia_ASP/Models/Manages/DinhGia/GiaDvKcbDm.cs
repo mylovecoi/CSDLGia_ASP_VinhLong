@@ -19,6 +19,7 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }
         public string Manhom { get; set; }
+        public string Tennhom { get; set; }
         public string Madichvu { get; set; }
     }
 }

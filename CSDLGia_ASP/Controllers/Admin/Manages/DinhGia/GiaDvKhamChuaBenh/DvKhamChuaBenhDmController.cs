@@ -130,6 +130,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                 result += "<input type='text' id='tenspdv_edit' name='tenspdv_edit' value='" + model.Tenspdv + "' class='form-control' required/>";
                 result += "</div>";
                 result += "</div>";
+
+                result += "<div class='col-xl-12'>";
+                result += "<div class='form-group fv-plugins-icon-container'>";
+                result += "<label><b>Đơn vị tính</b></label>";
+                result += "<input type='text' id='dvt_edit' name='dvt_edit' value='" + model.Dvt + "' class='form-control' required/>";
+                result += "</div>";
+                result += "</div>";
+
                 result += "<div class='col-xl-12'>";
                 result += "<div class='form-group fv-plugins-icon-container'>";
                 result += "<label><b>Ghi chú</b></label>";
@@ -164,12 +172,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
 
         [Route("DanhMucDvKcb/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Tenspdv, string Madichvu, string Ghichu, string Hienthi, int Sapxep)
+        public JsonResult Update(int Id, string Tenspdv, string Madichvu, string Ghichu, string Hienthi, int Sapxep, string Dvt)
         {
             var model = _db.GiaDvKcbDm.FirstOrDefault(t => t.Id == Id);
             model.Tenspdv = Tenspdv;
             model.Madichvu = Madichvu;
             model.Ghichu = Ghichu;
+            model.Dvt = Dvt;
             model.Hienthi = Hienthi;
             model.Sapxep = Sapxep;
             model.Updated_at = DateTime.Now;
@@ -205,6 +214,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
             return Json(data);
         }
 
+
+
+
         [Route("DanhMucDvKcb/Excel")]
         [HttpPost]
         public async Task<JsonResult> Excel(string Manhom, string Madichvu, string Ten, string Phanloai,
@@ -236,18 +248,16 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                                     Updated_at = DateTime.Now,
                                     Maspdv = DateTime.Now.ToString("yyMMddfffssmmHH"),
 
-                                    Madichvu = worksheet.Cells[row, Int16.Parse(Madichvu)].Value.ToString() != null ?
-                                                worksheet.Cells[row, Int16.Parse(Madichvu)].Value.ToString().Trim() : "",
+                                    Madichvu = worksheet.Cells[row, 1].Value != null ?
+                                                worksheet.Cells[row, 1].Value.ToString().Trim() : "",
+                                    Tenspdv = worksheet.Cells[row, 2].Value != null ?
+                                                worksheet.Cells[row,2].Value.ToString().Trim() : "",
 
-                                    Tenspdv = worksheet.Cells[row, Int16.Parse(Ten)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Ten)].Value.ToString().Trim() : "",
+                                    Dvt = worksheet.Cells[row, 3].Value != null ?
+                                                worksheet.Cells[row, 3].Value.ToString().Trim() : "",
 
-                                    Phanloai = worksheet.Cells[row, Int16.Parse(Phanloai)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Phanloai)].Value.ToString().Trim() : "",
-
-                                    Dvt = worksheet.Cells[row, Int16.Parse(Dvt)].Value != null ?
-                                                worksheet.Cells[row, Int16.Parse(Dvt)].Value.ToString().Trim() : "",
-
+                                    Ghichu = worksheet.Cells[row, 4].Value != null ?
+                                                worksheet.Cells[row, 4].Value.ToString().Trim() : "",
 
                                 };
                                 _db.GiaDvKcbDm.Add(list_add);
