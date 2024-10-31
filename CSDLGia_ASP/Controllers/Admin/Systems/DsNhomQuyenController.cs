@@ -57,21 +57,42 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     {
                         if (!string.IsNullOrEmpty(Role))
                         {
-                            var request = new RoleList
+                            if (!string.IsNullOrEmpty(Magoc))
                             {
-                                Name = Name,
-                                Role = Role,
-                                MaGoc = Magoc,
-                                TrangThai = Trangthai,
-                                PhanLoai = Phanloai,
-                                Level = Level + 1,
-                                STTSapXep = Sttsx,
-                            };
-                            _db.RoleList.Add(request);
-                            _db.SaveChanges();
+                                var request = new RoleList
+                                {
+                                    Name = Name,
+                                    Role = Role,
+                                    MaGoc = Magoc,
+                                    TrangThai = Trangthai,
+                                    PhanLoai = Phanloai,
+                                    Level = Level + 1,
+                                    STTSapXep = Sttsx,
+                                };
+                                _db.RoleList.Add(request);
+                                _db.SaveChanges();
 
-                            var data = new { status = "success", message = "Cập nhật thành công!" };
-                            return Json(data);
+                                var data = new { status = "success", message = "Cập nhật thành công!" };
+                                return Json(data);
+                            }
+                            else
+                            {
+                                var request = new RoleList
+                                {
+                                    Name = Name,
+                                    Role = Role,
+                                    MaGoc = Magoc,
+                                    TrangThai = Trangthai,
+                                    PhanLoai = Phanloai,
+                                    Level = Level,
+                                    STTSapXep = Sttsx,
+                                };
+                                _db.RoleList.Add(request);
+                                _db.SaveChanges();
+
+                                var data = new { status = "success", message = "Cập nhật thành công!" };
+                                return Json(data);
+                            }
                         }
                         else
                         {
