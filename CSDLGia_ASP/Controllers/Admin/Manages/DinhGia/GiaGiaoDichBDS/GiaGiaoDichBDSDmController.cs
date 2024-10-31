@@ -278,7 +278,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                 {
                     var model = new GiaGiaoDichBDSDm
                     {
-                        LineStart = 2,
+                        LineStart = 3,
                         LineStop = 1000,
                         Sheet = 1,
                         Manhom = Manhom,    

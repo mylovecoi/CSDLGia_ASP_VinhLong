@@ -320,7 +320,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaGiaoDichBDS
                     viewModel.GiaGiaoDichBDSCt = modelct.ToList();
                     var donvi = _db.DsDonVi.First(x => x.MaDv == model.Madv);
                     ViewData["DanhMucNhom"] = _db.GiaGiaoDichBDSNhom;
-                    ViewData["TenDiaBan"] = _db.DsDiaBan.First(x => x.MaDiaBan == donvi.MaDiaBan).TenDiaBan;
+                    //ViewData["TenDiaBan"] = _db.DsDiaBan.First(x => x.MaDiaBan == donvi.MaDiaBan).TenDiaBan;
+
+                    var diaBan = _db.DsDonVi.FirstOrDefault(x => x.MaDv == donvi.MaDv);
+
+                    if (diaBan != null)
+                    {
+                        ViewData["TenDiaBan"] = diaBan.TenDv;
+                    }
+                    else
+                    {
+                        ViewData["TenDiaBan"] = "Không tìm thấy địa bàn";
+                    }
+
                     ViewData["TenDonVi"] = donvi.TenDv;
                     ViewData["Title"] = "Bảng giá giao dịch bất động sản";
                     return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/DanhSach/Show.cshtml", viewModel);

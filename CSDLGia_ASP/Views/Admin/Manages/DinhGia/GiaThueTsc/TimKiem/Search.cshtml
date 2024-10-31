@@ -6,11 +6,12 @@
 
 
     var DanhSachHoSo = (IEnumerable<GiaThueTaiSanCong>)ViewData["DanhSachHoSo"];
- 
+
 
     int record_id = 1;
 
 }
+
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaThueTaiSanCongCt>
 
 @section custom_style {
@@ -80,6 +81,7 @@
                 } else {
                     toastr.error("Ngày từ phải nhỏ hơn hoặc bằng ngày đến.", "Lỗi!!!");
                 }
+            }
         }
 
     </script>
@@ -116,7 +118,7 @@
                             }
                         </select>
                     </div>
-                </div>              
+                </div>
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label style="font-weight:bold;">Thời gian nhập từ</label>
@@ -186,7 +188,7 @@
                     <td style="text-align:center" width="10%">Thành tiền</td>
                     <td width="5%" style="text-align:center">Thao tác</td>
                 </tr>
-               
+
             </thead>
             <tbody>
                 @foreach (var item in Model)

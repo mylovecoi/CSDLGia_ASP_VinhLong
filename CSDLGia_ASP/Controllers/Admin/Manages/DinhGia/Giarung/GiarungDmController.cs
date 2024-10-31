@@ -34,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.rung.danhmuc", "Index"))
                 {
                     var model = _db.GiaRungDm.ToList();
-                    ViewData["Title"] = "Danh mục giá rừng";
+                    ViewData["Title"] = "Danh mục nhóm giá rừng";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgr";
                     ViewData["MenuLv3"] = "menu_dgr_dm";

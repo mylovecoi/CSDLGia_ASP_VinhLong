@@ -36,7 +36,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                     ViewData["TenNhom"] = _db.GiaRungDm.FirstOrDefault(t => t.Manhom == Manhom)?.Tennhom ?? "";
                     ViewData["SapXep"] = model.Any() ? model.Max(t => t.STTSapXep) : 0;
                     ViewData["Manhom"] = Manhom;
-                    ViewData["Title"] = "Danh mục giá rừng";
+                    ViewData["Title"] = "Danh mục chi tiết giá rừng";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgr";
                     ViewData["MenuLv3"] = "menu_dgr_dm";
@@ -244,14 +244,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.Giarung
                 {
                     var model = new CSDLGia_ASP.ViewModels.VMImportExcel
                     {
-                        LineStart = 5,
+                        LineStart = 4,
                         LineStop = 1000,
                         Sheet = 1,
                         MaNhom = Manhom,
                         TenNhom = _db.GiaRungDm.FirstOrDefault(t => t.Manhom == Manhom)?.Tennhom ?? ""
                     };
 
-                    ViewData["Title"] = "Danh mục giá rừng";
+                    ViewData["Title"] = "Danh mục chi tiết giá rừng";
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgr";
                     ViewData["MenuLv3"] = "menu_dgr_dm";

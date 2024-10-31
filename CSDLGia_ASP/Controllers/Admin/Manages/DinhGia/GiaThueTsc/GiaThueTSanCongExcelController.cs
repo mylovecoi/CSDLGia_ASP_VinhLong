@@ -165,11 +165,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTSanCong
                                 Dvt = worksheet.Cells[row, 7].Value != null ?
                                             worksheet.Cells[row, 7].Value.ToString().Trim() : "",
 
-                                Dongiathue = worksheet.Cells[row, 8].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, 8].Value) : 0,
+                                Dongiathue = Helpers.ConvertStrToDb(worksheet.Cells[row, 8].Value != null ?
+                                                    worksheet.Cells[row, 8].Value.ToString().Trim() : ""),
 
-                                Sotienthuenam = worksheet.Cells[row, 9].Value != null ?
-                                           Convert.ToInt32(worksheet.Cells[row, 9].Value) : 0,
+                                Sotienthuenam = Helpers.ConvertStrToDb(worksheet.Cells[row, 9].Value != null ?
+                                                    worksheet.Cells[row, 9].Value.ToString().Trim() : ""),
 
                             });
                         }

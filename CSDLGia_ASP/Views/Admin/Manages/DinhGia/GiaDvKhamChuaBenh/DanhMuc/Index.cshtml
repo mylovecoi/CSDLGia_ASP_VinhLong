@@ -1,6 +1,7 @@
 ﻿@{
     int record_id = 1;
     var DmDvt = (IEnumerable<DmDvt>)ViewData["DmDvt"];
+   
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvKcbDm>
 
@@ -113,22 +114,7 @@
                             <input type="text" id="tenspdv_create" name="tenspdv_create" class="form-control" required />
                         </div>
                     </div>
-                    @* <div class="col-xl-11">
-                        <label class="form-control-label">Đơn vị tính</label>
-                        <select id="Dvt_create" name="Dvt_create" class="form-control select2me select2-offscreen" tabindex="-1" title="">
-                            <option value="">---Chọn đơn vị tính---</option>
-                            @foreach (var item in DmDvt)
-                            {
-                                <option value="@item.Dvt">@item.Dvt</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="col-md-1" style="padding-left: 0px;">
-                        <label class="control-label">&nbsp;&nbsp;&nbsp;</label>
-                        <button type="button" class="btn btn-default" style="border:rgba(0, 0, 0, 0.1) solid 0.05px" data-target="#Dvt_Modal" data-toggle="modal">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div> *@
+                
                     <div class="col-xl-12">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Ghi chú</b></label>
@@ -139,6 +125,12 @@
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Hiển thị</b></label>
                             <input type="text" id="hienthi_create" name="hienthi_create" class="form-control" />
+                        </div>
+                    </div>
+                     <div class="col-xl-12">
+                        <div class="form-group fv-plugins-icon-container">
+                            <label><b>Đơn vị tính</b></label>
+                            <input type="text" id="dvt_create" name="dvt_create" class="form-control" />
                         </div>
                     </div>
                     <div class="col-xl-12">
@@ -197,7 +189,12 @@
             <br />
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="color: blue;font-weight: bold; text-transform: uppercase; margin-left: 3%">@ViewData["Tennhom"]</label>
+                <a href="~/UpLoad/File/DinhGia/Excel/DanhMucKhamChuaBenhNew.xlsm" target="_blank" class="btn btn-link"
+                   onclick="window.open(this.href, 'mywin','left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                    <span style="font-weight:bold;">(Link tải file mẫu DanhMucKhamChuaBenhNew.xlsm)</span>
+                </a>
             </div>
+
 
             <div class="modal-body">
                 <div class="row">
@@ -239,7 +236,7 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group fv-plugins-icon-container">
-                            <label>Phân loại*</label>
+                            <label>Ghi chú</label>
                             <select id="Phanloai_excel" name="Phanloai_excel" class="form-control">
                                 @foreach (var item in Helpers.GetListColExcel())
                                 {
@@ -252,7 +249,7 @@
                     <div class="col-xl-3">
                         <div class="form-group fv-plugins-icon-container">
                             <label>File dữ liệu:</label><br />
-                            <input type="file" accept=".xls,.xlsx" id="file_excel" name="file_excel" />
+                            <input type="file" accept=".xls,.xlsm" id="file_excel" name="file_excel" />
                         </div>
                     </div>
                     <div class="col-xl-3">
@@ -423,7 +420,7 @@
                 Ghichu: $('#ghichu_create').val(),
                 Hienthi: $('#hienthi_create').val(),
                 Sapxep: $('#sapxep_create').val(),
-                @* Dvt: $('#Dvt_create').val(), *@
+                Dvt: $('#dvt_create').val(),
                 Manhom: $('#manhom_create').val(),
             },
             dataType: 'JSON',
@@ -501,6 +498,7 @@
                 Ghichu: $('#ghichu_edit').val(),
                 Hienthi: $('#hienthi_edit').val(),
                 Sapxep: $('#sapxep_edit').val(),
+                     Dvt: $('#dvt_edit').val(),
                 Id: $('#id_edit').val()
             },
             dataType: 'JSON',

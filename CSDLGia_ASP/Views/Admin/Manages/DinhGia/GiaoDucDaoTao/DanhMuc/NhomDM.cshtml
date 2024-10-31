@@ -64,7 +64,7 @@
                                 <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#Edit_Modal" onclick="SetEdit('@item.Id')">
                                     <i class="icon-lg la la-edit text-warning"></i>
                                 </button>
-                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
+                                <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id', '@item.TenNhom')">
                                     <i class="icon-lg la la-trash text-danger"></i>
                                 </button>
                             </td>
@@ -110,7 +110,7 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label style="font-weight:bold;color:blue">Sắp xếp: </label>
-                                <input type="number" id="stt_create" name="stt_create" class="form-control" step="1" value="@SapXep" />
+                                <input type="number" id="SapXep_create" name="SapXep_create" class="form-control" step="1" value="@SapXep" />
                             </div>
                         </div>
                     </div>
@@ -144,7 +144,8 @@
                     <div class="row">
                         <div class="form-group fv-plugins-icon-container">
                             <label><b>Tên nhóm:</b></label>
-                            <label id="TenNhom_delete" name="TenNhom_delete" class="form-control"></label>
+                            <label id="tennhom_delete" class="form-control"></label>
+
                         </div>
                         <input id="id_delete" name="id_delete" type="hidden" />
                     </div>
@@ -186,9 +187,9 @@
 <script>
 
 
-    function SetDelete(id, tennhom) {
+    function SetDelete(id, tenNhom) {
         document.getElementById("id_delete").value = id;
-        document.getElementById("TenNhom_delete").innerHTML = tennhom
+        document.getElementById("tennhom_delete").innerText = tenNhom;
     }
 
     function SetEdit(id_edit) {
