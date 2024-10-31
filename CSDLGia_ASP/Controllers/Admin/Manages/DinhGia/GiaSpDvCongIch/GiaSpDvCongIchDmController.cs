@@ -315,12 +315,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.nuocsh.danhmuckhung", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.dichvucongich.danhmuc", "Index"))
                 {
                     var model = new VMImportExcel()
                     {
                         Sheet = 1,
-                        LineStart = 2,
+                        LineStart = 6,
                         LineStop = 1000,
                         MaNhom = Manhom,
                         MaDv = Madv,
@@ -382,6 +382,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                                         worksheet.Cells[row, 2].Value.ToString().Trim() : "",
                             Dvt = worksheet.Cells[row, 3].Value != null ?
                                         worksheet.Cells[row, 3].Value.ToString().Trim() : "",
+
+                            LoaiDoThi = worksheet.Cells[row, 4].Value != null ?
+                                        worksheet.Cells[row, 4].Value.ToString().Trim() : "",
+
+                            LoaiDoThi2 = worksheet.Cells[row, 5].Value != null ?
+                                        worksheet.Cells[row, 5].Value.ToString().Trim() : "",
 
                             Style = strStyle.ToString()
                         });
