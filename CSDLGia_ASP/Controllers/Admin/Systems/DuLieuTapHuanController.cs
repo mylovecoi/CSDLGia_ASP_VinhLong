@@ -45,9 +45,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 ViewData["FileHDSD"] = Path.GetExtension(files[0]);
             }
             ViewData["Title"] = "Danh sách dữ liệu tập huấn";
-            ViewData["MenuLv1"] = "menu_hethong";
-            ViewData["MenuLv2"] = "menu_qthethong";
-            ViewData["MenuLv3"] = "menu_dlth";
+            
+            ViewData["MenuLv1"] = "menu_qthethong";
+            ViewData["MenuLv2"] = "menu_dlth";
             return View("Views/Admin/Systems/DuLieuTapHuan/Index.cshtml", model);
             //    }
             //    else
@@ -72,9 +72,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 {
                     ViewData["SapXep"] = _db.DuLieuTapHuan.Any() ? _db.DuLieuTapHuan.Max(t => t.STTSapxep) : 0;
                     ViewData["Title"] = "Thêm mới dữ liệu tập huấn";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_dlth";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_dlth";
                     return View("Views/Admin/Systems/DuLieuTapHuan/Create.cshtml");
                 }
                 else
@@ -162,9 +162,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var model = _db.DuLieuTapHuan.FirstOrDefault(t => t.Id == Id);
 
                     ViewData["Title"] = "Chỉnh sửa dữ liệu tập huấn";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_dlth";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_dlth";
                     return View("Views/Admin/Systems/DuLieuTapHuan/Edit.cshtml", model);
                 }
                 else

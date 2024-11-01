@@ -41,9 +41,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     ViewData["Phanloai"] = Phanloai;
                     ViewData["Title"] = "Danh mục nhóm hàng hóa";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtdanhmuc";
-                    ViewData["MenuLv3"] = "menu_dmnhomhh";
+                    
+                    ViewData["MenuLv1"] = "menu_qtdanhmuc";
+                    ViewData["MenuLv2"] = "menu_dmnhomhh";
                     return View("Views/Admin/Systems/DmNhomHh/Index.cshtml", model);
                 }
                 else

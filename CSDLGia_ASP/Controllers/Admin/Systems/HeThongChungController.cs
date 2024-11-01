@@ -25,9 +25,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             var model = _db.tblHeThong.First();
 
             ViewData["Title"] = "Cấu hình hệ thống";
-            ViewData["MenuLv1"] = "menu_hethong";
-            ViewData["MenuLv2"] = "menu_qthethong";
-            ViewData["MenuLv3"] = "menu_hethongchung";
+            
+            ViewData["MenuLv1"] = "menu_qthethong";
+            ViewData["MenuLv2"] = "menu_hethongchung";
             return View("Views/Admin/Systems/HeThongChung/Index.cshtml", model);
         }
 
@@ -39,9 +39,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 {
                     var model = _db.tblHeThong.FirstOrDefault(t => t.Id == Id);                    
                     ViewData["Title"] = "Cấu hình hệ thống";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_hethongchung";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_hethongchung";
                     return View("Views/Admin/Systems/HeThongChung/Edit.cshtml", model);
                 }
                 else

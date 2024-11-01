@@ -54,10 +54,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                     ViewData["Stt"] = stt;
                     ViewData["Phanloai"] = Phanloai;
                     ViewData["Title"] = "Thiết lập chung kết nối API";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_api";
-                    ViewData["MenuLv4"] = "menu_api_chung";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_api";
+                    ViewData["MenuLv3"] = "menu_api_chung";
                     return View("Views/Admin/Systems/API/ThietLapChung.cshtml", model);
                 }
                 else
@@ -379,9 +379,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                     ViewData["level2"] = _db.DmChucnang.Where(x => x.Capdo == "2");
 
                     ViewData["Title"] = "Danh mục chức năng hệ thống";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "";
-                    ViewData["MenuLv3"] = "menu_dmchucnang";
+                    
+                    ViewData["MenuLv1"] = "";
+                    ViewData["MenuLv2"] = "menu_dmchucnang";
                     return View("Views/Admin/Systems/API/ThietLapChiTiet.cshtml");
                 }
                 else
@@ -417,10 +417,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                     ViewData["Maso"] = Maso;
                     //ViewData["Menu"] = _db.DmChucnang.FirstOrDefault(x => x.Maso == Maso).Menu;
                     ViewData["Title"] = "Thiết lập chung kết nối API";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_api";
-                    ViewData["MenuLv4"] = "menu_api_hoso";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_api";
+                    ViewData["MenuLv3"] = "menu_api_hoso";
                     return View("Views/Admin/Systems/API/ThietLapHoso.cshtml", model);
                 }
                 else
@@ -776,10 +776,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
                     ViewData["Maso"] = Maso;
                     ViewData["Menu"] = _db.DmChucnang.FirstOrDefault(x => x.Maso == Maso).Menu;
                     ViewData["Title"] = "Thiết lập chung kết nối API";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_api";
-                    ViewData["MenuLv4"] = "menu_api_hoso";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_api";
+                    ViewData["MenuLv3"] = "menu_api_hoso";
                     return View("Views/Admin/Systems/API/DanhSachKetNoi.cshtml", model);
                 }
                 else
@@ -916,10 +916,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 
                     var model = _db.KetNoiAPI_DanhSach.ToList();
                     ViewData["Title"] = "Thiết lập chung kết nối API";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_qlketnoi";
-                    ViewData["MenuLv4"] = "menu_dsketnoicsdlquocgia";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_qlketnoi";
+                    ViewData["MenuLv3"] = "menu_dsketnoicsdlquocgia";
                     return View("Views/Admin/Systems/API/DanhSachKetNoi.cshtml", model);
 
                 }

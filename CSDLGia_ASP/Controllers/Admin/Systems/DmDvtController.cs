@@ -19,9 +19,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
         {
             var models = _db.DmDvt;
             ViewData["Title"] = "Thông tin danh mục đơn vị tính";
-            ViewData["MenuLv1"] = "menu_hethong";
-            ViewData["MenuLv2"] = "menu_qtdanhmuc";
-            ViewData["MenuLv3"] = "menu_dmdonvitinh";
+            
+            ViewData["MenuLv1"] = "menu_qtdanhmuc";
+            ViewData["MenuLv2"] = "menu_dmdonvitinh";
             return View("~/Views/Admin/Systems/DmDonViTinh/Index.cshtml", models);
         }
 

@@ -45,10 +45,10 @@ public class DatabaseController : Controller
         ViewData["NgayTu"] = NgayTu;
         ViewData["NgayDen"] = NgayDen;
         ViewData["Title"] = "Sao lưu dữ liệu";
-        ViewData["MenuLv1"] = "menu_hethong";
-        ViewData["MenuLv2"] = "menu_qthethong";
-        ViewData["MenuLv3"] = "menu_dulieu";
-        ViewData["MenuLv4"] = "menu_dulieu_saoluu";
+        
+        ViewData["MenuLv1"] = "menu_qthethong";
+        ViewData["MenuLv2"] = "menu_dulieu";
+        ViewData["MenuLv3"] = "menu_dulieu_saoluu";
         return View("Views/Admin/Systems/Database/SaoLuu.cshtml");
     }
 
@@ -65,10 +65,10 @@ public class DatabaseController : Controller
         ViewData["NgayTu"] = NgayTu;
         ViewData["NgayDen"] = NgayDen;
         ViewData["Title"] = "Sao lưu dữ liệu";
-        ViewData["MenuLv1"] = "menu_hethong";
-        ViewData["MenuLv2"] = "menu_qthethong";
-        ViewData["MenuLv3"] = "menu_dulieu";
-        ViewData["MenuLv4"] = "menu_dulieu_saoluu";
+        
+        ViewData["MenuLv1"] = "menu_qthethong";
+        ViewData["MenuLv2"] = "menu_dulieu";
+        ViewData["MenuLv3"] = "menu_dulieu_saoluu";
         //return View("Views/Admin/Systems/Database/SaoLuu.cshtml");
         return View("Views/Admin/Error/Test.cshtml");
     }
@@ -77,10 +77,10 @@ public class DatabaseController : Controller
     public IActionResult KhoiPhuc()
     {
         ViewData["Title"] = "Khôi phục dữ liệu";
-        ViewData["MenuLv1"] = "menu_hethong";
-        ViewData["MenuLv2"] = "menu_qthethong";
-        ViewData["MenuLv3"] = "menu_dulieu";
-        ViewData["MenuLv4"] = "menu_dulieu_khoiphuc";
+        
+        ViewData["MenuLv1"] = "menu_qthethong";
+        ViewData["MenuLv2"] = "menu_dulieu";
+        ViewData["MenuLv3"] = "menu_dulieu_khoiphuc";
         return View("Views/Admin/Systems/Database/KhoiPhuc.cshtml");
     }
 
@@ -89,10 +89,10 @@ public class DatabaseController : Controller
     {
         ViewBag.Message = "Khôi phục dữ liệu thành công!";
         ViewData["Title"] = "Khôi phục dữ liệu";
-        ViewData["MenuLv1"] = "menu_hethong";
-        ViewData["MenuLv2"] = "menu_qthethong";
-        ViewData["MenuLv3"] = "menu_dulieu";
-        ViewData["MenuLv4"] = "menu_dulieu_khoiphuc";
+        
+        ViewData["MenuLv1"] = "menu_qthethong";
+        ViewData["MenuLv2"] = "menu_dulieu";
+        ViewData["MenuLv3"] = "menu_dulieu_khoiphuc";
         //return View("Views/Admin/Systems/Database/KhoiPhuc.cshtml");
         return View("Views/Admin/Error/Test.cshtml");
     }

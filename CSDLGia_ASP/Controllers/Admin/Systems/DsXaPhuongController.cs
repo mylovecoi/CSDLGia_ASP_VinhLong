@@ -35,9 +35,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["DsDiaBan"] = dsdiaban;
                     ViewData["MaDiaBan"] = MaDiaBan;
                     ViewData["Title"] = "Danh sách xã phường";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_dsxaphuong";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_dsxaphuong";
                     return View("Views/Admin/Systems/DsXaPhuong/Index.cshtml", dsxaphuong);
                 }
                 else

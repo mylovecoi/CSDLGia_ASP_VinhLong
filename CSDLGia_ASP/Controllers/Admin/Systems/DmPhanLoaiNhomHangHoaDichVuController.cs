@@ -37,9 +37,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     int max_sttsapxep = model.Any() ? model.Max(t => t.STTSapxep) : 1;
                     ViewData["Title"] = "Danh mục phân loại nhóm hàng hóa dịch vụ";
                     ViewData["SapXep"] = max_sttsapxep;
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtdanhmuc";
-                    ViewData["MenuLv3"] = "menu_dmphanloainhomhanghoadichvu";
+                    
+                    ViewData["MenuLv1"] = "menu_qtdanhmuc";
+                    ViewData["MenuLv2"] = "menu_dmphanloainhomhanghoadichvu";
                     return View("~/Views/Admin/Systems/DmPhanLoaiNhomHangHoaDichVu/Index.cshtml", model);
                 }
                 else
@@ -195,9 +195,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         LineStop = 1000
                     };
                     ViewData["Title"] = "Danh mục phân loại nhóm hàng hóa dịch vụ";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtdanhmuc";
-                    ViewData["MenuLv3"] = "menu_dmphanloainhomhanghoadichvu";
+                    
+                    ViewData["MenuLv1"] = "menu_qtdanhmuc";
+                    ViewData["MenuLv2"] = "menu_dmphanloainhomhanghoadichvu";
                     return View("~/Views/Admin/Systems/DmPhanLoaiNhomHangHoaDichVu/Excel.cshtml", model);
                 }
                 else
