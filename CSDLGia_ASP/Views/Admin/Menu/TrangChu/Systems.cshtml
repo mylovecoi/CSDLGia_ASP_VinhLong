@@ -8,536 +8,529 @@
         <h4 class="menu-text">HỆ THỐNG</h4>
         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
     </li>
-    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_hethong">
-        <a href="javascript:;" class="menu-link menu-toggle">
-            <span class="svg-icon menu-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                        <rect x="0" y="0" width="24" height="24" />
-                        <path d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z" fill="#000000" opacity="0.3" />
-                        <path d="M11.1750002,14.75 C10.9354169,14.75 10.6958335,14.6541667 10.5041669,14.4625 L8.58750019,12.5458333 C8.20416686,12.1625 8.20416686,11.5875 8.58750019,11.2041667 C8.97083352,10.8208333 9.59375019,10.8208333 9.92916686,11.2041667 L11.1750002,12.45 L14.3375002,9.2875 C14.7208335,8.90416667 15.2958335,8.90416667 15.6791669,9.2875 C16.0625002,9.67083333 16.0625002,10.2458333 15.6791669,10.6291667 L11.8458335,14.4625 C11.6541669,14.6541667 11.4145835,14.75 11.1750002,14.75 Z" fill="#000000" />
-                    </g>
-                </svg>
-            </span>
-            <span class="menu-text">Quản trị hệ thống</span>
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_qtnguoidung">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24" />
+                            <path d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z" fill="#000000" opacity="0.3" />
+                            <path d="M11.1750002,14.75 C10.9354169,14.75 10.6958335,14.6541667 10.5041669,14.4625 L8.58750019,12.5458333 C8.20416686,12.1625 8.20416686,11.5875 8.58750019,11.2041667 C8.97083352,10.8208333 9.59375019,10.8208333 9.92916686,11.2041667 L11.1750002,12.45 L14.3375002,9.2875 C14.7208335,8.90416667 15.2958335,8.90416667 15.6791669,9.2875 C16.0625002,9.67083333 16.0625002,10.2458333 15.6791669,10.6291667 L11.8458335,14.4625 C11.6541669,14.6541667 11.4145835,14.75 11.1750002,14.75 Z" fill="#000000" />
+                        </g>
+                    </svg>
+                </span>
+                <span class="menu-text">Quản trị người dùng</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dsnhomtaikhoan", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dsnhomtaikhoan">
+                            <a asp-controller="DsNhomTaiKhoan" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Danh sách nhóm tài khoản</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dstaikhoan">
+                            <a asp-controller="DsTaiKhoan" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Danh sách tài khoản</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dsdangky", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dsdangky">
+                            <a asp-controller="Register" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Tài khoản DN đăng ký kê khai giá</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </li>
+    }
+
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_qthethong">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24" />
+                            <path d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z" fill="#000000" opacity="0.3" />
+                            <path d="M11.1750002,14.75 C10.9354169,14.75 10.6958335,14.6541667 10.5041669,14.4625 L8.58750019,12.5458333 C8.20416686,12.1625 8.20416686,11.5875 8.58750019,11.2041667 C8.97083352,10.8208333 9.59375019,10.8208333 9.92916686,11.2041667 L11.1750002,12.45 L14.3375002,9.2875 C14.7208335,8.90416667 15.2958335,8.90416667 15.6791669,9.2875 C16.0625002,9.67083333 16.0625002,10.2458333 15.6791669,10.6291667 L11.8458335,14.4625 C11.6541669,14.6541667 11.4145835,14.75 11.1750002,14.75 Z" fill="#000000" />
+                        </g>
+                    </svg>
+                </span>
+                <span class="menu-text">Quản trị hệ thống</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdiaban", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dsdiaban">
+                            <a asp-controller="DsDiaBan" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Danh sách địa bàn</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdonvi", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dsdonvi">
+                            <a asp-controller="DsDonVi" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Danh sách đơn vị sử dụng</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsxaphuong", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dsxaphuong">
+                            <a asp-controller="DsXaPhuong" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Danh sách xã, phường, thị trấn</span>
+                            </a>
+                        </li>
+                    }
+
+                    @* @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dshotro", "Index"))
+            {
+            <li class="menu-item" aria-haspopup="true" id="menu_dshotro">
+            <a asp-controller="Support" asp-action="Index" class="menu-link">
+            <i class="menu-bullet menu-bullet-line">
+            <span></span>
+            </i>
+            <span class="menu-text">Danh sách cán bộ hỗ trợ</span>
+            </a>
+            </li>
+            } *@
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dlth", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dlth">
+                            <a asp-controller="DuLieuTapHuan" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Danh sách dữ liệu tập huấn</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.hethongchung", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_hethongchung">
+                            <a asp-controller="HeThongChung" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Cấu hình hệ thống</span>
+                            </a>
+                        </li>
+                    }
+
+                    @* @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dulieu", "Index"))
+            {
+            <li class="menu-item" aria-haspopup="true" id="menu_dulieu">
+            <a href="javascript:;" class="menu-link menu-toggle">
+            <i class="menu-bullet menu-bullet-line">
+            <span></span>
+            </i>
+            <span class="menu-text" title="Dữ liệu phần mềm">Dữ liệu phần mềm</span>
             <i class="menu-arrow"></i>
-        </a>
-        <div class="menu-submenu">
+            </a>
+            <div class="menu-submenu">
             <i class="menu-arrow"></i>
             <ul class="menu-subnav">
-                <li class="menu-item menu-item-parent" aria-haspopup="true">
-                    <span class="menu-link">
-                        <span class="menu-text"></span>
-                    </span>
-                </li>
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dulieu.saoluu", "Index"))
+            {
+            <li class="menu-item" aria-haspopup="true" id="menu_dulieu_saoluu">
+            <a asp-controller="Database" asp-action="SaoLuu" class="menu-link">
+            <i class="menu-bullet menu-bullet-line">
+            <span></span>
+            </i>
+            <span class="menu-text">Sao lưu dữ liệu</span>
+            </a>
+            </li>
+            }
 
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung", "Index"))
-                {
-                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_qtnguoidung">
-                        <a href="javascript:;" class="menu-link menu-toggle">
-                            <i class="menu-bullet menu-bullet-line">
-                                <span></span>
-                            </i>
-                            <span class="menu-text">Quản trị người dùng</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="menu-submenu">
-                            <i class="menu-arrow"></i>
-                            <ul class="menu-subnav">
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dsnhomtaikhoan", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dsnhomtaikhoan">
-                                        <a asp-controller="DsNhomTaiKhoan" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Danh sách nhóm tài khoản</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dstaikhoan">
-                                        <a asp-controller="DsTaiKhoan" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Danh sách tài khoản</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dsdangky", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dsdangky">
-                                        <a asp-controller="Register" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Tài khoản DN đăng ký kê khai giá</span>
-                                        </a>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </li>
-                }
-
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong", "Index"))
-                {
-                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_qthethong">
-                        <a href="javascript:;" class="menu-link menu-toggle">
-                            <i class="menu-bullet menu-bullet-line">
-                                <span></span>
-                            </i>
-                            <span class="menu-text">Quản trị hệ thống</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="menu-submenu">
-                            <i class="menu-arrow"></i>
-                            <ul class="menu-subnav">
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdiaban", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dsdiaban">
-                                        <a asp-controller="DsDiaBan" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Danh sách địa bàn</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsdonvi", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dsdonvi">
-                                        <a asp-controller="DsDonVi" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Danh sách đơn vị sử dụng</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dsxaphuong", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dsxaphuong">
-                                        <a asp-controller="DsXaPhuong" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Danh sách xã, phường, thị trấn</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @* @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dshotro", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dshotro">
-                                        <a asp-controller="Support" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Danh sách cán bộ hỗ trợ</span>
-                                        </a>
-                                    </li>
-                                } *@
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dlth", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dlth">
-                                        <a asp-controller="DuLieuTapHuan" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Danh sách dữ liệu tập huấn</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.hethongchung", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_hethongchung">
-                                        <a asp-controller="HeThongChung" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Cấu hình hệ thống</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @* @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dulieu", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dulieu">
-                                        <a href="javascript:;" class="menu-link menu-toggle">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text" title="Dữ liệu phần mềm">Dữ liệu phần mềm</span>
-                                            <i class="menu-arrow"></i>
-                                        </a>
-                                        <div class="menu-submenu">
-                                            <i class="menu-arrow"></i>
-                                            <ul class="menu-subnav">
-                                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dulieu.saoluu", "Index"))
-                                                {
-                                                    <li class="menu-item" aria-haspopup="true" id="menu_dulieu_saoluu">
-                                                        <a asp-controller="Database" asp-action="SaoLuu" class="menu-link">
-                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                <span></span>
-                                                            </i>
-                                                            <span class="menu-text">Sao lưu dữ liệu</span>
-                                                        </a>
-                                                    </li>
-                                                }
-
-                                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dulieu.khoiphuc", "Index"))
-                                                {
-                                                    <li class="menu-item" aria-haspopup="true" id="menu_dulieu_khoiphuc">
-                                                        <a asp-controller="Database" asp-action="KhoiPhuc" class="menu-link">
-                                                            <i class="menu-bullet menu-bullet-dot">
-                                                                <span></span>
-                                                            </i>
-                                                            <span class="menu-text">Khôi phục dữ liệu</span>
-                                                        </a>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </div>
-                                    </li>
-                                } *@
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.nhatky", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_nhatky">
-                                        <a asp-controller="NhatKySuDung" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Nhật ký sử dụng</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.nhomquyen", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_nhomquyen">
-                                        <a asp-controller="DsNhomQuyen" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Danh sách nhóm quyền</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @* @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.api", "Index"))
-                        {
-                        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_api">
-                        <a href="javascript:;" class="menu-link menu-toggle">
-                        <i class="menu-bullet menu-bullet-dot">
-                        <span></span>
-                        </i>
-                        <span class="menu-text">Kết nối API</span>
-                        </a>
-                        <div class="menu-submenu">
-                        <i class="menu-arrow"></i>
-                        <ul class="menu-subnav">
-
-                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.api.chung", "Index"))
-                        {
-                        <li class="menu-item" aria-haspopup="true" id="menu_api_chung">
-                        <a asp-controller="API" asp-action="ThietLapChung" class="menu-link">
-                        <i class="menu-bullet menu-bullet-dot">
-                        <span></span>
-                        </i>
-                        <span class="menu-text">Thông điệp chung</span>
-                        </a>
-                        </li>
-                        }
-
-                        @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.api.chitiet", "Index"))
-                        {
-                        <li class="menu-item" aria-haspopup="true" id="menu_api_chitiet">
-                        <a asp-controller="API" asp-action="ThietLapChiTiet" class="menu-link">
-                        <i class="menu-bullet menu-bullet-dot">
-                        <span></span>
-                        </i>
-                        <span class="menu-text">Thông điệp chi tiết</span>
-                        </a>
-                        </li>
-                        }
-                        </ul>
-                        </div>
-                        </li>
-                        } *@
-                            </ul>
-                        </div>
-                    </li>
-                }
-
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc", "Index"))
-                {
-                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_qtdanhmuc">
-                        <a href="javascript:;" class="menu-link menu-toggle">
-                            <i class="menu-bullet menu-bullet-line">
-                                <span></span>
-                            </i>
-                            <span class="menu-text">Quản trị danh mục</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="menu-submenu">
-                            <i class="menu-arrow"></i>
-                            <ul class="menu-subnav">
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaihanghoadichvu", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmphanloaihanghoadichvu">
-                                        <a asp-controller="DmPhanLoaiHangHoaDichVu" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text" title="Danh mục loại hàng hóa dịch vụ">Danh mục loại hàng hóa dịch vụ</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloainhomhanghoadichvu", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmphanloainhomhanghoadichvu">
-                                        <a asp-controller="DmPhanLoaiNhomHangHoaDichVu" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text" title="Danh mục phân loại nhóm hàng hóa dịch vụ">Danh mục phân loại nhóm hàng hóa dịch vụ</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmlinhvuc", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmlinhvuc">
-                                        <a asp-controller="DmLinhVuc" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text" title="Danh mục lĩnh vực">Danh mục lĩnh vực</span>
-                                        </a>
-                                    </li>
-                                }
-
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaigia", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmphanloaigia">
-                                        <a asp-controller="DmPhanLoaiGia" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text" title="Danh mục phân loại giá">Danh mục phân loại giá</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaitaisan", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmphanloaitaisan">
-                                        <a asp-controller="DmPhanLoaiTaiSan" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text" title="Danh mục phân loại tài sản">Danh mục phân loại tài sản</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmgiatritaisan", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmgiatritaisan">
-                                        <a asp-controller="DmGiaTriTaiSan" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text" title="Danh mục giá trị tài sản">Danh mục giá trị tài sản</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaigiadat", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmphanloaigiadat">
-                                        <a asp-controller="DmPhanLoaiGiaDat" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text" title="Danh mục phân loại giá đất">Danh mục phân loại giá đất</span>
-                                        </a>
-                                    </li>
-                                }
-
-
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmthuoctinh", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmthuoctinh">
-                                        <a asp-controller="DmThuocTinh" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text" title="Danh mục thuộc tính">Danh mục thuộc tính</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmloaihinhdoanhnghiep", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmloaihinhdoanhnghiep">
-                                        <a asp-controller="DmLoaiHinhDoanhNghiep" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text" title="Loại hình doanh nghiệp">Loại hình doanh nghiệp</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphuongphapthamdinh", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmphuongphapthamdinh">
-                                        <a asp-controller="DmPhuongPhapThamDinh" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text" title="Danh mục phương pháp thẩm định">Danh mục phương pháp thẩm định</span>
-                                        </a>
-                                    </li>
-                                }
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaikhuvuc", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="dm_phanloaikhuvuc">
-                                        <a asp-controller="DmPhanLoaiKhuVuc" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text" title="Danh mục phân loại khu vực">Danh mục phân loại khu vực</span>
-                                        </a>
-                                    </li>
-                                }
-
-
-
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmkkdkg", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmkkdkg">
-                                        <a asp-controller="DanhMucKkDkg" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text" title="Danh mục Kê khai - Đăng ký giá">Danh mục Kê khai - Đăng ký giá</span>
-                                        </a>
-                                    </li>
-                                }
-
-
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmnhomhh", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmnhomhh">
-                                        <a asp-controller="DmNhomHh" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Danh mục hàng hóa</span>
-                                        </a>
-                                    </li>
-                                }
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmctktvm", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmctktvm">
-                                        <a asp-controller="DmChiTieuKinhTeViMo" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Danh mục chỉ tiêu kinh tế vĩ mô</span>
-                                        </a>
-                                    </li>
-                                }
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmdonvitinh", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dmdonvitinh">
-                                        <a asp-controller="DmDvt" asp-action="Index" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Danh mục đơn vị tính</span>
-                                        </a>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </li>
-                }
-
-                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.api", "Index"))
-                {
-                    <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_qlketnoi">
-                        <a href="javascript:;" class="menu-link menu-toggle">
-                            <i class="menu-bullet menu-bullet-line">
-                                <span></span>
-                            </i>
-                            <span class="menu-text">Quản lý kết nối API</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="menu-submenu">
-                            <i class="menu-arrow"></i>
-                            <ul class="menu-subnav">
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.api.doanhngiepdvlt", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dsdoanhnghiepdvlt">
-                                        <a asp-controller="KetNoiGiaDichVu" asp-action="DanhSachDoanhNghiep" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Nhận danh sách doanh nghiệp</span>
-                                        </a>
-                                    </li>
-                                }
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.api.hosodvlt", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dshosokekhaigiadvlt">
-                                        <a asp-controller="KetNoiGiaDichVu" asp-action="DanhSachHoSoKeKhaiDVLT" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Nhận danh sách hồ sơ</span>
-                                        </a>
-                                    </li>
-                                }
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.api.csdlqg", "Index"))
-                                {
-                                    <li class="menu-item" aria-haspopup="true" id="menu_dsketnoicsdlquocgia">
-                                        <a asp-controller="API" asp-action="DanhSachCSDLQuocGia" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Danh sách API kết nối CSDL quốc gia</span>
-                                        </a>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </li>
-                }
-
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.dulieu.khoiphuc", "Index"))
+            {
+            <li class="menu-item" aria-haspopup="true" id="menu_dulieu_khoiphuc">
+            <a asp-controller="Database" asp-action="KhoiPhuc" class="menu-link">
+            <i class="menu-bullet menu-bullet-line">
+            <span></span>
+            </i>
+            <span class="menu-text">Khôi phục dữ liệu</span>
+            </a>
+            </li>
+            }
             </ul>
-        </div>
-    </li>
+            </div>
+            </li>
+            } *@
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.nhatky", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_nhatky">
+                            <a asp-controller="NhatKySuDung" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Nhật ký sử dụng</span>
+                            </a>
+                        </li>
+                    }
+
+                    @* @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.nhomquyen", "Index"))
+            {
+            <li class="menu-item" aria-haspopup="true" id="menu_nhomquyen">
+            <a asp-controller="DsNhomQuyen" asp-action="Index" class="menu-link">
+            <i class="menu-bullet menu-bullet-line">
+            <span></span>
+            </i>
+            <span class="menu-text">Danh sách nhóm quyền</span>
+            </a>
+            </li>
+            } *@
+
+                    @* @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.api", "Index"))
+            {
+            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_api">
+            <a href="javascript:;" class="menu-link menu-toggle">
+            <i class="menu-bullet menu-bullet-line">
+            <span></span>
+            </i>
+            <span class="menu-text">Kết nối API</span>
+            </a>
+            <div class="menu-submenu">
+            <i class="menu-arrow"></i>
+            <ul class="menu-subnav">
+
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.api.chung", "Index"))
+            {
+            <li class="menu-item" aria-haspopup="true" id="menu_api_chung">
+            <a asp-controller="API" asp-action="ThietLapChung" class="menu-link">
+            <i class="menu-bullet menu-bullet-line">
+            <span></span>
+            </i>
+            <span class="menu-text">Thông điệp chung</span>
+            </a>
+            </li>
+            }
+
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.hethong.api.chitiet", "Index"))
+            {
+            <li class="menu-item" aria-haspopup="true" id="menu_api_chitiet">
+            <a asp-controller="API" asp-action="ThietLapChiTiet" class="menu-link">
+            <i class="menu-bullet menu-bullet-line">
+            <span></span>
+            </i>
+            <span class="menu-text">Thông điệp chi tiết</span>
+            </a>
+            </li>
+            }
+            </ul>
+            </div>
+            </li>
+            } *@
+                </ul>
+            </div>
+        </li>
+    }
+
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_qtdanhmuc">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24" />
+                            <path d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z" fill="#000000" opacity="0.3" />
+                            <path d="M11.1750002,14.75 C10.9354169,14.75 10.6958335,14.6541667 10.5041669,14.4625 L8.58750019,12.5458333 C8.20416686,12.1625 8.20416686,11.5875 8.58750019,11.2041667 C8.97083352,10.8208333 9.59375019,10.8208333 9.92916686,11.2041667 L11.1750002,12.45 L14.3375002,9.2875 C14.7208335,8.90416667 15.2958335,8.90416667 15.6791669,9.2875 C16.0625002,9.67083333 16.0625002,10.2458333 15.6791669,10.6291667 L11.8458335,14.4625 C11.6541669,14.6541667 11.4145835,14.75 11.1750002,14.75 Z" fill="#000000" />
+                        </g>
+                    </svg>
+                </span>
+                <span class="menu-text">Quản trị danh mục</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaihanghoadichvu", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmphanloaihanghoadichvu">
+                            <a asp-controller="DmPhanLoaiHangHoaDichVu" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text" title="Danh mục loại hàng hóa dịch vụ">Danh mục loại hàng hóa dịch vụ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloainhomhanghoadichvu", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmphanloainhomhanghoadichvu">
+                            <a asp-controller="DmPhanLoaiNhomHangHoaDichVu" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text" title="Danh mục phân loại nhóm hàng hóa dịch vụ">Danh mục phân loại nhóm hàng hóa dịch vụ</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmlinhvuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmlinhvuc">
+                            <a asp-controller="DmLinhVuc" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text" title="Danh mục lĩnh vực">Danh mục lĩnh vực</span>
+                            </a>
+                        </li>
+                    }
+
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaigia", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmphanloaigia">
+                            <a asp-controller="DmPhanLoaiGia" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text" title="Danh mục phân loại giá">Danh mục phân loại giá</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaitaisan", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmphanloaitaisan">
+                            <a asp-controller="DmPhanLoaiTaiSan" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text" title="Danh mục phân loại tài sản">Danh mục phân loại tài sản</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmgiatritaisan", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmgiatritaisan">
+                            <a asp-controller="DmGiaTriTaiSan" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text" title="Danh mục giá trị tài sản">Danh mục giá trị tài sản</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaigiadat", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmphanloaigiadat">
+                            <a asp-controller="DmPhanLoaiGiaDat" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text" title="Danh mục phân loại giá đất">Danh mục phân loại giá đất</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmthuoctinh", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmthuoctinh">
+                            <a asp-controller="DmThuocTinh" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text" title="Danh mục thuộc tính">Danh mục thuộc tính</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmloaihinhdoanhnghiep", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmloaihinhdoanhnghiep">
+                            <a asp-controller="DmLoaiHinhDoanhNghiep" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text" title="Loại hình doanh nghiệp">Loại hình doanh nghiệp</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphuongphapthamdinh", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmphuongphapthamdinh">
+                            <a asp-controller="DmPhuongPhapThamDinh" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text" title="Danh mục phương pháp thẩm định">Danh mục phương pháp thẩm định</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmphanloaikhuvuc", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="dm_phanloaikhuvuc">
+                            <a asp-controller="DmPhanLoaiKhuVuc" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text" title="Danh mục phân loại khu vực">Danh mục phân loại khu vực</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmkkdkg", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmkkdkg">
+                            <a asp-controller="DanhMucKkDkg" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text" title="Danh mục Kê khai - Đăng ký giá">Danh mục Kê khai - Đăng ký giá</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmnhomhh", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmnhomhh">
+                            <a asp-controller="DmNhomHh" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Danh mục hàng hóa</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmctktvm", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmctktvm">
+                            <a asp-controller="DmChiTieuKinhTeViMo" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Danh mục chỉ tiêu kinh tế vĩ mô</span>
+                            </a>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.danhmuc.dmdonvitinh", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dmdonvitinh">
+                            <a asp-controller="DmDvt" asp-action="Index" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Danh mục đơn vị tính</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </li>
+    }
+
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.api", "Index"))
+    {
+        <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_qlketnoi">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="svg-icon menu-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24" />
+                            <path d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z" fill="#000000" opacity="0.3" />
+                            <path d="M11.1750002,14.75 C10.9354169,14.75 10.6958335,14.6541667 10.5041669,14.4625 L8.58750019,12.5458333 C8.20416686,12.1625 8.20416686,11.5875 8.58750019,11.2041667 C8.97083352,10.8208333 9.59375019,10.8208333 9.92916686,11.2041667 L11.1750002,12.45 L14.3375002,9.2875 C14.7208335,8.90416667 15.2958335,8.90416667 15.6791669,9.2875 C16.0625002,9.67083333 16.0625002,10.2458333 15.6791669,10.6291667 L11.8458335,14.4625 C11.6541669,14.6541667 11.4145835,14.75 11.1750002,14.75 Z" fill="#000000" />
+                        </g>
+                    </svg>
+                </span>
+                <span class="menu-text">Quản lý kết nối API</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu">
+                <i class="menu-arrow"></i>
+                <ul class="menu-subnav">
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.api.doanhngiepdvlt", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dsdoanhnghiepdvlt">
+                            <a asp-controller="KetNoiGiaDichVu" asp-action="DanhSachDoanhNghiep" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Nhận danh sách doanh nghiệp</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.api.hosodvlt", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dshosokekhaigiadvlt">
+                            <a asp-controller="KetNoiGiaDichVu" asp-action="DanhSachHoSoKeKhaiDVLT" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Nhận danh sách hồ sơ</span>
+                            </a>
+                        </li>
+                    }
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.api.csdlqg", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_dsketnoicsdlquocgia">
+                            <a asp-controller="API" asp-action="DanhSachCSDLQuocGia" class="menu-link">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Danh sách API kết nối CSDL quốc gia</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </li>
+    }
 }
 
 

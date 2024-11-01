@@ -31,9 +31,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                     ViewData["Manganh"] = Manganh;
                     ViewData["Title"] = "Danh mục nghề kinh doanh";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtdanhmuc";
-                    ViewData["MenuLv3"] = "menu_dmnganhnghekd";
+                    
+                    ViewData["MenuLv1"] = "menu_qtdanhmuc";
+                    ViewData["MenuLv2"] = "menu_dmnganhnghekd";
                     return View("Views/Admin/Systems/DmNganhNgheKd/Show.cshtml", dmnghekd);
                 }
                 else

@@ -19,7 +19,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         public IActionResult Index()
         {
-
             var dschitieu = _db.DmChiTieuKinhTeViMo.ToList();
             ViewData["DsChiTieu"] = dschitieu;
             return View("~/Views/Admin/Systems/DmChiTieuKinhTeViMo/Index.cshtml", dschitieu);

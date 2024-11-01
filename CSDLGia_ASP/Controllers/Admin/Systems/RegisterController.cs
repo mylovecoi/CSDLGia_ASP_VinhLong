@@ -58,9 +58,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                     ViewData["Title"] = "Xét duyệt tài khoản đăng ký";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtnguoidung";
-                    ViewData["MenuLv3"] = "menu_dsdangky";
+                    
+                    ViewData["MenuLv1"] = "menu_qtnguoidung";
+                    ViewData["MenuLv2"] = "menu_dsdangky";
                     return View("Views/Admin/Systems/Register/Index.cshtml", model_join);
                 }
                 else
@@ -278,9 +278,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["DmNgheKd"] = _db.DmNgheKd;
                     ViewData["DsDonVi"] = _db.DsDonVi.Where(t => t.ChucNang == "NHAPLIEU");
                     ViewData["Title"] = "Chi tiết doanh nghiệp đăng ký";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtnguoidung";
-                    ViewData["MenuLv3"] = "menu_dsdangky";
+                    
+                    ViewData["MenuLv1"] = "menu_qtnguoidung";
+                    ViewData["MenuLv2"] = "menu_dsdangky";
                     return View("Views/Admin/Systems/Register/Show.cshtml", user_join);
                 }
                 else

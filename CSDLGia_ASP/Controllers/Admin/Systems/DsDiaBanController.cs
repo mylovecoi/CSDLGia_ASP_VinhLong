@@ -27,9 +27,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 {
                     var dsdiaban = _db.DsDiaBan.ToList();
                     ViewData["Title"] = "Danh sách địa bàn";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_dsdiaban";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_dsdiaban";
                     return View("Views/Admin/Systems/DsDiaBan/Index.cshtml", dsdiaban);
                 }
                 else

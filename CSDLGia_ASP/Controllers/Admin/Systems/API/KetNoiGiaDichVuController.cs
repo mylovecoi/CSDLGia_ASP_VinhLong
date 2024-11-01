@@ -27,9 +27,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
             //Kiểm tra doanh nghiệp trên hệ thống
             var sDMadv= _db.Company.Select(Company=>Company.Madv).ToList();
             ViewData["Title"] = "Danh sách doanhnghiep";
-            ViewData["MenuLv1"] = "menu_hethong";
-            ViewData["MenuLv2"] = "menu_qlketnoi";
-            ViewData["MenuLv3"] = "menu_dsdoanhnghiepdvlt";
+            
+            ViewData["MenuLv1"] = "menu_qlketnoi";
+            ViewData["MenuLv2"] = "menu_dsdoanhnghiepdvlt";
             foreach(var item in doanhNghiepDVLTs)
             {
                 if (sDMadv.Contains(item.masothue))
@@ -154,9 +154,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.API
             //Kiểm tra doanh nghiệp trên hệ thống
 
             ViewData["Title"] = "Danh sách doanhnghiep";
-            ViewData["MenuLv1"] = "menu_hethong";
-            ViewData["MenuLv2"] = "menu_qlketnoi";
-            ViewData["MenuLv3"] = "menu_dsdoanhnghiepdvlt";
+            
+            ViewData["MenuLv1"] = "menu_qlketnoi";
+            ViewData["MenuLv2"] = "menu_dsdoanhnghiepdvlt";
             return View("Views/Admin/Systems/KetNoiGiaDichVu/Index_HoSo.cshtml", hoSoKeKhai);
         }
 
