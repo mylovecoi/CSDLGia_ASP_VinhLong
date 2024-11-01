@@ -25,7 +25,7 @@
             <tbody>
                 @if (Model.GiaHhDvkCt != null)
                 {
-                    @foreach (var item in Model.GiaHhDvkCt)
+                    @foreach (var item in Model.GiaHhDvkCt.OrderBy(x => x.Tenhhdv))
                     {
                         <tr>
                             <td class="text-center">@(record_id++)</td>
