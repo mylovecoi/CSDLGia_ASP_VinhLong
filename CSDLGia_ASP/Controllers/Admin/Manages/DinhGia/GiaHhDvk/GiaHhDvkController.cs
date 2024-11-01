@@ -935,7 +935,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
             result += "</thead>";
             result += "<tbody>";
 
-            foreach (var item in model)
+            foreach (var item in model.OrderBy(x => x.Tenhhdv))
             {
                 result += "<tr>";
                 result += "<td class='text-center'>" + record++ + "</td>";
