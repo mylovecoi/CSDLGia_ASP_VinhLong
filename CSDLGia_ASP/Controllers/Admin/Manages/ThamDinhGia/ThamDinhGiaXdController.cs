@@ -393,7 +393,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                 {
                     var model = _db.ThamDinhGia.FirstOrDefault(t => t.Mahs == mahs_cb);
 
-                    model.Trangthai_ad = "CB";
+                    model.Trangthai = "CB";
                     model.Congbo = "DACONGBO";
 
                     _db.ThamDinhGia.Update(model);
