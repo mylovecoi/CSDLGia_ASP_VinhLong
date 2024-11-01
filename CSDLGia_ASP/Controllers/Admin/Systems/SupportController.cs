@@ -27,9 +27,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 {
                     var model = _db.Supports.ToList();
                     ViewData["Title"] = "Danh sách hỗ trợ";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_dshotro";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_dshotro";
                     return View("Views/Admin/Systems/Support/Index.cshtml", model);
                 }
                 else

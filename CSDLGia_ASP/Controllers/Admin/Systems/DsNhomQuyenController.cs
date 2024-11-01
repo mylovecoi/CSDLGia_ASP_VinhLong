@@ -28,9 +28,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var model = _db.RoleList.OrderBy(t => t.STTSapXep);
 
                     ViewData["Title"] = "Danh sách nhóm quyền";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_nhomquyen";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_nhomquyen";
                     return View("Views/Admin/Systems/DsNhomQuyen/Index.cshtml", model);
                 }
                 else

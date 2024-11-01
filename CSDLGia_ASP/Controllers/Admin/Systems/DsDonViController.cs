@@ -47,9 +47,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     //ViewData["MaDiaBan"] = MaDiaBan;
                     //ViewData["TenDiaBan"] = dsdiaban.Where(t => t.MaDiaBan == MaDiaBan).ToList();
                     ViewData["Title"] = "Danh sách đơn vị";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_dsdonvi";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_dsdonvi";
                     return View("Views/Admin/Systems/DsDonVi/Index.cshtml", dsdonvi);
                 }
                 else
@@ -75,9 +75,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["DsDonvi"] = _db.DsDonVi;
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
                     ViewData["Title"] = "Thêm mới Danh sách đơn vị";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_dsdonvi";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_dsdonvi";
                     ViewData["DsDiaBanApDung"] = _db.DsDiaBan.Where(x => x.Level == "H" || x.Level == "ADMIN").ToList();
                     return View("Views/Admin/Systems/DsDonVi/Create.cshtml");
                 }
@@ -141,9 +141,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.MaDiaBan == request.MaDiaBan).ToList();
                         ViewData["MaDiaBan"] = request.MaDiaBan;
                         ViewData["Title"] = "Thêm mới Danh sách đơn vị";
-                        ViewData["MenuLv1"] = "menu_hethong";
-                        ViewData["MenuLv2"] = "menu_qthethong";
-                        ViewData["MenuLv3"] = "menu_dsdonvi";
+                        
+                        ViewData["MenuLv1"] = "menu_qthethong";
+                        ViewData["MenuLv2"] = "menu_dsdonvi";
 
                         return View("Views/Admin/Systems/DsDonVi/Create.cshtml", request);
                     }
@@ -177,9 +177,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     ViewData["MaDiaBan"] = model.MaDiaBan;
                     ViewData["Title"] = "Chỉnh sửa Danh sách đơn vị";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qthethong";
-                    ViewData["MenuLv3"] = "menu_dsdonvi";
+                    
+                    ViewData["MenuLv1"] = "menu_qthethong";
+                    ViewData["MenuLv2"] = "menu_dsdonvi";
 
                     return View("Views/Admin/Systems/DsDonVi/Edit.cshtml", model);
                 }

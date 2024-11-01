@@ -30,9 +30,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 {
                     var model = _db.GroupPermissions;
                     ViewData["Title"] = "Danh sách nhóm tài khoản";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtnguoidung";
-                    ViewData["MenuLv3"] = "menu_dsnhomtaikhoan";
+                    
+                    ViewData["MenuLv1"] = "menu_qtnguoidung";
+                    ViewData["MenuLv2"] = "menu_dsnhomtaikhoan";
                     return View("Views/Admin/Systems/DsNhomTaiKhoan/Index.cshtml", model);
                 }
                 else
@@ -91,9 +91,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["ChucNang"] = ChucNang_create;
                     ViewData["RoleList"] = data_rolelist;
                     ViewData["Title"] = "Danh sách nhóm tài khoản";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtnguoidung";
-                    ViewData["MenuLv3"] = "menu_dsnhomtaikhoan";
+                    
+                    ViewData["MenuLv1"] = "menu_qtnguoidung";
+                    ViewData["MenuLv2"] = "menu_dsnhomtaikhoan";
                     return View("Views/Admin/Systems/DsNhomTaiKhoan/Create.cshtml", model);
                 }
                 else
@@ -155,9 +155,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     ViewData["RoleList"] = data_rolelist;
                     ViewData["Title"] = "Thông tin quyền truy cập";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtnguoidung";
-                    ViewData["MenuLv3"] = "menu_dsnhomtaikhoan";
+                    
+                    ViewData["MenuLv1"] = "menu_qtnguoidung";
+                    ViewData["MenuLv2"] = "menu_dsnhomtaikhoan";
                     return View("Views/Admin/Systems/DsNhomTaiKhoan/Edit.cshtml", model);
                 }
                 else
@@ -183,9 +183,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     this.GroupPermission(requests);
                     this.Permission(requests.KeyLink);
                     ViewData["Title"] = "Thông tin quyền truy cập";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtnguoidung";
-                    ViewData["MenuLv3"] = "menu_dsnhomtaikhoan";
+                    
+                    ViewData["MenuLv1"] = "menu_qtnguoidung";
+                    ViewData["MenuLv2"] = "menu_dsnhomtaikhoan";
                     return RedirectToAction("Index", "DsNhomTaiKhoan");
                 }
                 else
@@ -214,9 +214,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     _db.GroupPermissions.Remove(model_del);
                     _db.SaveChanges();
                     ViewData["Title"] = "Thông tin quyền truy cập";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtnguoidung";
-                    ViewData["MenuLv3"] = "menu_dsnhomtaikhoan";
+                    
+                    ViewData["MenuLv1"] = "menu_qtnguoidung";
+                    ViewData["MenuLv2"] = "menu_dsnhomtaikhoan";
                     return RedirectToAction("Index", "DsNhomTaiKhoan");
                 }
                 else

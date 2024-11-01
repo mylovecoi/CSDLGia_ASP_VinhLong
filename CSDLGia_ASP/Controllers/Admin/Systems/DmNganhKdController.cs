@@ -28,9 +28,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var dmnganhkd = _db.DmNganhKd.ToList();
 
                     ViewData["Title"] = "Danh mục ngành kinh doanh";
-                    ViewData["MenuLv1"] = "menu_hethong";
-                    ViewData["MenuLv2"] = "menu_qtdanhmuc";
-                    ViewData["MenuLv3"] = "menu_dmnganhnghekd";
+                    
+                    ViewData["MenuLv1"] = "menu_qtdanhmuc";
+                    ViewData["MenuLv2"] = "menu_dmnganhnghekd";
                     return View("Views/Admin/Systems/DmNganhNgheKd/Index.cshtml", dmnganhkd);
                 }
                 else
