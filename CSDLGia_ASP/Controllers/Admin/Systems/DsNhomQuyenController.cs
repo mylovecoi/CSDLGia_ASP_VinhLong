@@ -207,7 +207,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DsNhomQuyen/Update")]
         [HttpPost]
-        public JsonResult Update(int Id, string Name, string Role, string Trangthai, string Phanloai)
+        public JsonResult Update(int Id, string Name, string Role, string Trangthai, string Phanloai, int Sttsx)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -222,6 +222,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             model.Role = Role;
                             model.TrangThai = Trangthai;
                             model.PhanLoai = Phanloai;
+                            model.STTSapXep = Sttsx;
 
                             _db.RoleList.Update(model);
                             _db.SaveChanges();

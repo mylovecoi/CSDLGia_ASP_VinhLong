@@ -122,7 +122,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
                     result += "<div class='col-xl-4'>";
                     result += "<div class='form-group fv-plugins-icon-container'>";
-                    result += "<label>Chức năng: /label>";
+                    result += "<label>Chức năng: </label>";
                     result += "</div>";
                     result += "</div>";
                     result += "<div class='col-xl-8'>";
