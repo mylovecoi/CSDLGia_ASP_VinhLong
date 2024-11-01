@@ -84,12 +84,12 @@
                         <textarea class="form-control" rows="2" asp-for="Ghichu"></textarea>
                     </div>
                 </div>
-                <div class="col-xl-6">
+                @* <div class="col-xl-6">
                     <div class="form-group">
                         <label>File đính kèm</label>
                         <input type="file" asp-for="Ipf1" accept=".xlsm" class="form-control" />
                     </div>
-                </div>
+                </div> *@
             </div>
 
             <div class="mb-3 font-weight-bold font-size-lg">
@@ -117,7 +117,7 @@
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label>File dữ liệu</label> <br />
-                        <input class="form-group" type="file" accept=".xls,.xlsx" asp-for="FormFile" required/>
+                        <input class="form-group" type="file" accept=".xls,.xlsm" asp-for="FormFile" required/>
                         <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                     </div>
                 </div>
