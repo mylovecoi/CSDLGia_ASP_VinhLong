@@ -1176,6 +1176,114 @@
                         </li>
                     }
 
+                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_giaqg_bds">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Giá bất động sản </span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+
+                                    <li class="menu-item" aria-haspopup="true" id="menu_giaqg_bds_thietlap">
+                                        <a asp-controller="KetNoiGiaBDS" asp-action="ThietLap" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Thiết lập hệ thống</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="menu-item" aria-haspopup="true" id="menu_giaqg_bds_khaithac">
+                                        <a asp-controller="KetNoiGiaBDS" asp-action="KhaiThac" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Khai thác dữ liệu</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="menu-item" aria-haspopup="true" id="menu_giaqg_bds_danhmuc">
+                                        <a asp-controller="KetNoiGiaBDS" asp-action="DanhMuc" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Truyền danh mục</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item" aria-haspopup="true" id="menu_giaqg_bds_hoso">
+                                        <a asp-controller="KetNoiGiaBDS" asp-action="HoSo" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Truyền hồ sơ kê khai</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "", "Index"))
+                    {
+                        <li class="menu-item" aria-haspopup="true" id="menu_giaqg_tieudung">
+                            <a href="javascript:;" class="menu-link menu-toggle">
+                                <i class="menu-bullet menu-bullet-line">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Giá tiêu dùng </span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="menu-submenu">
+                                <i class="menu-arrow"></i>
+                                <ul class="menu-subnav">
+
+                                    <li class="menu-item" aria-haspopup="true" id="menu_giaqg_tieudung_thietlap">
+                                        <a asp-controller="KetNoiGiaTieuDung" asp-action="ThietLap" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Thiết lập hệ thống</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="menu-item" aria-haspopup="true" id="menu_giaqg_tieudung_khaithac">
+                                        <a asp-controller="KetNoiGiaTieuDung" asp-action="KhaiThac" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Khai thác dữ liệu</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="menu-item" aria-haspopup="true" id="menu_giaqg_tieudung_danhmuc">
+                                        <a asp-controller="KetNoiGiaTieuDung" asp-action="DanhMuc" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Truyền danh mục</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item" aria-haspopup="true" id="menu_giaqg_tieudung_hoso">
+                                        <a asp-controller="KetNoiGiaTieuDung" asp-action="HoSo" class="menu-link">
+                                            <i class="menu-bullet menu-bullet-dot">
+                                                <span></span>
+                                            </i>
+                                            <span class="menu-text">Truyền hồ sơ kê khai</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                    }
+
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "", "Index"))
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_giaqg_kekhai">
