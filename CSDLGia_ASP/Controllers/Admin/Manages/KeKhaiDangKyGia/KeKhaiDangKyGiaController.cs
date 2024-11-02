@@ -15,10 +15,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
     public class KeKhaiDangKyGiaController : Controller
     {
         private readonly CSDLGiaDBContext _db;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public KeKhaiDangKyGiaController(CSDLGiaDBContext db)
+        public KeKhaiDangKyGiaController(CSDLGiaDBContext db, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
+            
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [HttpGet("KeKhaiDangKyGia")]
@@ -226,6 +229,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
                     LoggingHelper.LogAction(HttpContext, _db, "UPDATE", $"Update kê khai giá - {tennghe}");
 
+                  
+
+
                     return RedirectToAction("Index", "KeKhaiDangKyGia", new { MaCsKd = request.MaCsKd, MaNghe = request.MaNghe });
                 }
                 else
@@ -262,6 +268,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     var tennghe = GetTenNghe(model.MaNghe);
                     // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
                     LoggingHelper.LogAction(HttpContext, _db, "Delete", $"Xóa kê khai giá - {tennghe}");
+
+
 
                     return RedirectToAction("Index", "KeKhaiDangKyGia", new { MaCsKd = MaCsKd, MaNghe = MaNghe });
                 }
@@ -300,6 +308,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
 
                     // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
                     LoggingHelper.LogAction(HttpContext, _db, "Chuyen", $"Chuyển hồ sơ kê khai giá - {tennghe}");
+
+
+                    //return Ok(Helpers.GetSsAdmin(HttpContext.Session, "Name"));
+                    //Add Log
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Chuyển");
 
                     return RedirectToAction("Index", "KeKhaiDangKyGia", new { MaCsKd = model.MaCsKd, MaNghe = model.MaNghe });
                 }
