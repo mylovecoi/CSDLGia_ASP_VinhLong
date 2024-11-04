@@ -127,7 +127,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     result += "</div>";
                     result += "<div class='col-xl-8'>";
                     result += "<div class='form-group fv-plugins-icon-container'>";
-                    result += "<span style='font-weight:bold; color:blue'>" + model.Roles + "</span>";
+                    result += "<span style='font-weight:bold; color:blue'>" + model.Name + "</span>";
                     result += "</div>";
                     result += "</div>";
 

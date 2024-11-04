@@ -22,10 +22,11 @@
         });
 
         $(function () {
-            $('#Phanloai').change(function () {
+            $('#MaDv, #Phanloai').change(function () {
                 var current_path_url = '/DsTaiKhoan?';
+                var madv = '&Madv=' + $('#MaDv').val();
                 var phanloai = '&Phanloai=' + $('#Phanloai').val();
-                var url = current_path_url + phanloai;
+                var url = current_path_url + madv + phanloai;
                 window.location.href = url;
             })
         });
@@ -46,39 +47,36 @@
                     <i class="la la-plus"></i>Thêm mới
                 </a>
             }
-
+            <span>&ensp;</span>
+            @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Index"))
+            {
+                <a class="btn btn-primary font-weight-bolder" target="_blank" asp-controller="DsTaiKhoan" asp-action="Printf" asp-route-Madv="@ViewData["Madv"]" asp-route-Phanloai="@ViewData["Phanloai"]">
+                    <i class="la la-print"></i>In Trang 
+                </a>
+            }
         </div>
     </div>
     <hr />
     <div class="card-body">
         <div class="mb-12">
-            @*<div class="row">
-            <div class="col-xl-3">
-            <div class="form-group fv-plugins-icon-container">
-            <label style="font-weight:bold; color:blue">Đơn vị</label>
-            <select class="form-control select2basic" id="MaDv" name="MaDv">
-            @foreach (var db in dsdiaban)
-            {
-            <optgroup label="@db.TenDiaBan">
-            @{
-            var dsdv = dsdonvi.Where(t => t.MaDiaBan == db.MaDiaBan).ToList();
-            }
-            @foreach (var dv in dsdv)
-            {
-            <!option value="@dv.MaDv" @((string)ViewData["MaDv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
-            }
-            </optgroup>
-            }
-            </select>
-            </div>
-            </div>
-            </div> *@
             <div class="row">
+                <div class="col-xl-3">
+                    <div class="form-group fv-plugins-icon-container">
+                        <label style="font-weight:bold; color:blue">Đơn vị</label>
+                        <select class="form-control select2basic" id="MaDv" name="MaDv">
+                            <option value="all">--Tất cả--</option>
+                            @foreach (var dv in dsdonvi)
+                            {
+                                <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
+                            }
+                        </select>
+                    </div>
+                </div>
                 <div class="col-xl-3">
                     <div class="form-group fv-plugins-icon-container">
                         <label style="font-weight:bold; color:blue">Phân loại</label>
                         <select class="form-control " id="Phanloai" name="Phanloai">
-                            <!option value="" @((string)ViewData["Phanloai"] == "" ? "selected" : "") >Đơn vị quản lý</!option>
+                            <!option value="DVQL" @((string)ViewData["Phanloai"] == "" ? "selected" : "")>Đơn vị quản lý</!option>
                             <!option value="DN" @((string)ViewData["Phanloai"] == "DN" ? "selected" : "")>Doanh nghiệp</!option>
                         </select>
                     </div>
@@ -196,15 +194,15 @@
                                     </button>
                                 }
                                 @* @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan.phanquyen", "Index"))
-                                {
-                                    var tenchucnang = gp.Where(t => t.KeyLink == item.Chucnang).Select(t => t.ChucNang).FirstOrDefault();
-                                    @if (string.IsNullOrEmpty(tenchucnang))
-                                    {
-                                        <a asp-controller="DsTaiKhoan" asp-action="Permissions" asp-route-Username="@item.Username" asp-route-Madv="@item.Madv" asp-route-Chucnang="@item.Chucnang" class="btn btn-sm btn-clean btn-icon" title="Phân quyền">
-                                            <i class="icon-lg la la-user-cog text-dark"></i>
-                                        </a>
-                                    }
-                                } *@
+                            {
+                            var tenchucnang = gp.Where(t => t.KeyLink == item.Chucnang).Select(t => t.ChucNang).FirstOrDefault();
+                            @if (string.IsNullOrEmpty(tenchucnang))
+                            {
+                            <a asp-controller="DsTaiKhoan" asp-action="Permissions" asp-route-Username="@item.Username" asp-route-Madv="@item.Madv" asp-route-Chucnang="@item.Chucnang" class="btn btn-sm btn-clean btn-icon" title="Phân quyền">
+                            <i class="icon-lg la la-user-cog text-dark"></i>
+                            </a>
+                            }
+                            } *@
                             </td>
                         </tr>
                     }
