@@ -50,10 +50,10 @@
                 </div>
                 </div> *@
                 @* <div class="col-xl-4">
-                    <div class="form-group">
-                        <label>Mã đơn vị</label>
-                        <input type="text" class="form-control" asp-for="MaDv" required />
-                    </div>
+                <div class="form-group">
+                <label>Mã đơn vị</label>
+                <input type="text" class="form-control" asp-for="MaDv" required />
+                </div>
                 </div> *@
                 <div class="col-xl-4">
                     <div class="form-group">
@@ -149,14 +149,14 @@
                                 else
                                 {
                                     <!option value="@item.MaDiaBan" @(Model.DiaBanApDung.Contains(item.MaDiaBan) ? "selected" : "") >@item.TenDiaBan</!option>
-                                }                                
+                                }
                             }
                         </select>
                     </div>
                 </div>
             </div>
 
-            <div class="row">               
+            <div class="row">
                 <div class="col-xl-3">
                     <div class="form-group">
                         <label>Nhập liệu</label>
@@ -242,6 +242,117 @@
                     </div>
                 </div>
             </div>
+
+            <table class="table table-striped table-bordered table-hover class-nosort">
+                <thead>
+                    <tr style="text-align:center">
+                        <th width="5%">STT</th>
+                        <th>Lĩnh vực hàng hoá, dịch vụ</th>
+                        <th>Đơn vị xét duyệt</th>
+                        <th width="10%">Thao tác</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td style="text-align:center;">1</td>
+                        <td>Giá thuê đất đối với đất có mặt nước trên địa bàn tỉnh</td>
+                        <td style="text-align:center;">Sở Tài nguyên và Môi trường</td>
+                        <td>
+                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                    onclick="SetEdit()" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                <i class="icon-lg la la-edit text-primary"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align:center;">2</td>
+                        <td>Giá thuế tài nguyên</td>
+                        <td style="text-align:center;">Sở Tài chính</td>
+                        <td>
+                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                    onclick="SetEdit()" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                <i class="icon-lg la la-edit text-primary"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align:center;">3</td>
+                        <td>Giá cho thuê, thuê mua nhà ở xã hội</td>
+                        <td style="text-align:center;">Sở Xây dựng</td>
+                        <td>
+                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                    onclick="SetEdit()" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                <i class="icon-lg la la-edit text-primary"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align:center;">4</td>
+                        <td>Giá lệ phí trước bạ</td>
+                        <td style="text-align:center;">Sở Tài chính</td>
+                        <td>
+                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                    onclick="SetEdit()" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                <i class="icon-lg la la-edit text-primary"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align:center;">5</td>
+                        <td>Giá dịch vụ tối đa</td>
+                        <td style="text-align:center;">Sở Xây dựng</td>
+                        <td>
+                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                    onclick="SetEdit()" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                <i class="icon-lg la la-edit text-primary"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align:center;">6</td>
+                        <td>Giá hàng hoá, dịch vụ thị trường</td>
+                        <td style="text-align:center;">Sở Tài chính</td>
+                        <td>
+                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                    onclick="SetEdit()" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                <i class="icon-lg la la-edit text-primary"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align:center;">7</td>
+                        <td>Bảng giá đất</td>
+                        <td style="text-align:center;">Sở Tài chính</td>
+                        <td>
+                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                    onclick="SetEdit()" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                <i class="icon-lg la la-edit text-primary"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align:center;">8</td>
+                        <td>Giá tài sản công</td>
+                        <td style="text-align:center;">Sở Tài chính</td>
+                        <td>
+                            <button type="button" data-target="#Edit_Modal" data-toggle="modal"
+                                    onclick="SetEdit()" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                <i class="icon-lg la la-edit text-primary"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
         <div class="card-footer" style="text-align:center">
             <a asp-controller="DsDonVi" asp-action="Index" asp-route-MaDiaBan="@ViewData["MaDiaBan"]" class="btn btn-danger">
@@ -253,8 +364,46 @@
     </form>
     <!--end::Form-->
 </div>
+
+<div class="modal fade" id="Edit_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="" asp-action="" id="frm_tralai" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin đơn vị xét duyệt
+                    </h3>
+                </div>
+                <div class="modal-body">                    
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <label>Lĩnh vực hàng hoá, dịch vụ</label>
+                            <select class="form-control">
+                                <option value="Giá thuê đất đối với đất có mặt nước trên địa bàn tỉnh">Giá thuê đất đối với đất có mặt nước trên địa bàn tỉnh</option>                                
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <label>Đơn vị xét duyệt</label>
+                            <select class="form-control">
+                                <option value="Sở Tài chính">Sở Tài chính</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input hidden id="id_tralai" name="id_tralai" />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Cập nhật</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <script>
-    function chkDaTa(){
+    function chkDaTa() {
         $('#DiaBanApDung').val($('#DiaBanApDung_mul').val());
     }
 </script>
