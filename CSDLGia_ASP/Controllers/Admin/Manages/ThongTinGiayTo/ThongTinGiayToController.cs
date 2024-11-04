@@ -334,7 +334,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThongTinGiayTo
         }
 
         [Route("ThongTinGiayTo/DuLieuWord")]
-        public async Task<IActionResult> DuLieuWord(string fileName)
+        public IActionResult DuLieuWord(string fileName)
         {
             string path = _env.WebRootPath + "/UpLoad/File/ThongTinGiayTo/" + fileName;
             if (string.IsNullOrEmpty(path))
