@@ -1,5 +1,6 @@
 ﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,7 +29,7 @@ namespace CSDLGia_ASP
             services.AddDbContext<CSDLGiaDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CSDLGia_ASPConnection"), sqlOptions =>
                 {
-                    sqlOptions.CommandTimeout(1800); // 30 minutes
+                    sqlOptions.CommandTimeout(180); // 3 minutes
                 })
             );
 
@@ -38,18 +39,29 @@ namespace CSDLGia_ASP
             });
 
             services.AddRazorPages();
+
+            //Cookie Authentication
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(options =>
+               {
+                   options.Cookie.Name = "Life_CSDLGia";                    // Tên của cookie
+                   options.LoginPath = "/DangNhap";                         // Đường dẫn đến trang đăng nhập
+                   options.LogoutPath = "/DangXuat";                        // Đường dẫn đến trang đăng xuất
+                   options.AccessDeniedPath = "/AccessDenied";              // Trang truy cập bị từ chối
+                   options.ExpireTimeSpan = TimeSpan.FromHours(1);          // Thời gian sống của cookie
+                   options.SlidingExpiration = true;                        // Cập nhật thời gian hết hạn khi người dùng hoạt động
+                   options.Cookie.HttpOnly = true;                          // Đặt HttpOnly để bảo vệ cookie khỏi truy cập JavaScript
+                   //options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Chỉ gửi qua HTTPS
+               });
+
+
             services.AddControllersWithViews();
             services.AddTransient<BackupService>();
-            services.AddScoped<ISessionTimeoutService, SessionTimeoutService>();
-
-            // Get the session timeout value from the database
-            var serviceProvider = services.BuildServiceProvider();
-            var sessionTimeoutService = serviceProvider.GetRequiredService<ISessionTimeoutService>();
-            int timeoutMinutes = sessionTimeoutService.GetSessionTimeout();
+            services.AddTransient<EmailService>();
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(timeoutMinutes); // Set the timeout from the database
+                options.IdleTimeout = TimeSpan.FromHours(1); // Set the timeout from the database
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
@@ -79,7 +91,11 @@ namespace CSDLGia_ASP
             app.UseStaticFiles();
             app.UseRouting();
             app.UseSession();
-            app.UseAuthorization();
+
+            app.UseMiddleware<SessionManagementMiddleware>();
+
+            app.UseAuthentication(); // Kích hoạt xác thực cookie
+            app.UseAuthorization();  // Kích hoạt ủy quyền
 
             app.UseEndpoints(endpoints =>
             {
@@ -93,36 +109,6 @@ namespace CSDLGia_ASP
                     pattern: "database/backup",
                     defaults: new { controller = "Database", action = "Backup" });
             });
-
-
-        }
-    }
-
-    public interface ISessionTimeoutService
-    {
-        int GetSessionTimeout();
-    }
-
-    public class SessionTimeoutService : ISessionTimeoutService
-    {
-        private readonly CSDLGiaDBContext _db;
-
-        public SessionTimeoutService(CSDLGiaDBContext db)
-        {
-            _db = db;
-        }
-
-        public int GetSessionTimeout()
-        {
-            int timeoutMinutes = 30; // Default timeout
-            var timeoutSetting = _db.tblHeThong.FirstOrDefault();
-
-            if (timeoutSetting != null && int.TryParse(timeoutSetting.TimeOut, out int parsedTimeout))
-            {
-                timeoutMinutes = parsedTimeout;
-            }
-
-            return timeoutMinutes;
         }
     }
 }

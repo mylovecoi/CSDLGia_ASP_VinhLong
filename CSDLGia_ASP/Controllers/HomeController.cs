@@ -138,7 +138,7 @@ namespace CSDLGia_ASP.Controllers
                                 model.Password = new_md5_password;
                                 _db.SaveChanges();
 
-                                return RedirectToAction("Login", "Login");
+                                return RedirectToAction("Login", "Auth");
                             }
                             else
                             {
