@@ -136,7 +136,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     result += "<div class='row'>";
                     result += "<div class='col-xl-4'>";
                     result += "<div class='form-group fv-plugins-icon-container'>";
-                    result += "<label>Tương tác với dữ liệu: </label>";
+                    result += "<label>Tương tác với dữ liệu: </label>" + model.Phanloai;
                     result += "</div>";
                     result += "</div>";
 
@@ -154,8 +154,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         result += "<input type='checkbox' id='Index_edit' name='Index_edit'/><span></span>Xem";
                         result += "</label>";
                     }
-                    //if (model.Phanloai == "Chức năng")
-                    //{
+                    if (model.Phanloai == "Chức năng")
+                    {
                         if (model.Create)
                         {
                             result += "<label class='checkbox'>";
@@ -216,7 +216,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             result += "<input type='checkbox' id='Public_edit' name='Public_edit'/><span></span>Công bố";
                             result += "</label>";
                         }
-                    //}
+                    }
                     result += "</div>";
 
                     result += "<input hidden id='Id_edit' name='Id_edit' value='" + model.Id + "'>";
@@ -658,7 +658,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                             }
                                             result += "</td>";
                                             result += "<td>";
-                                            result += "<button type='button' onclick='editId(`" + item2.Id + "`)' data-target='#Edit_Modal' data-toggle='modal'";
+                                            result += "<button type='button' onclick='editId(`" + item3.Id + "`)' data-target='#Edit_Modal' data-toggle='modal'";
                                             result += " class='btn btn-sm btn-clean btn-icon' title='Chỉnh sửa'><i class='icon-lg la la-edit text-primary'></i></button>";
                                             result += "</td>";
                                             result += "</tr>";
