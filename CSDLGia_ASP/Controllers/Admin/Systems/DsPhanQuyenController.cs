@@ -154,8 +154,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         result += "<input type='checkbox' id='Index_edit' name='Index_edit'/><span></span>Xem";
                         result += "</label>";
                     }
-                    if (model.Phanloai == "Chức năng")
-                    {
+                    //if (model.Phanloai == "Chức năng")
+                    //{
                         if (model.Create)
                         {
                             result += "<label class='checkbox'>";
@@ -216,7 +216,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                             result += "<input type='checkbox' id='Public_edit' name='Public_edit'/><span></span>Công bố";
                             result += "</label>";
                         }
-                    }
+                    //}
                     result += "</div>";
 
                     result += "<input hidden id='Id_edit' name='Id_edit' value='" + model.Id + "'>";
