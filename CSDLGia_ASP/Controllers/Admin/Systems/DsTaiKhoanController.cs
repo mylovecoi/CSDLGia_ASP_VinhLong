@@ -23,7 +23,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DsTaiKhoan")]
         [HttpGet]
-        public IActionResult Index(string Phanloai)
+        public IActionResult Index(string Madv, string Phanloai)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
@@ -31,13 +31,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                 {
                     var dsdiaban = _db.DsDiaBan.ToList();
                     var dsdonvi = _db.DsDonVi.ToList();
-
+                    Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
                     var model = _db.Users.Where(t => !t.Sadmin);
-                    if (string.IsNullOrEmpty(Phanloai))
+                    if (Madv != "all")
                     {
-                        model = model.Where(t => t.Level != "DN");
+                        model = model.Where(t => t.Madv == Madv);
                     }
-                    else
+
+                    if (Phanloai == "DN")
                     {
                         model = model.Where(t => t.Level == "DN");
                     }
@@ -45,12 +46,56 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["DsDonVi"] = dsdonvi;
                     ViewData["DsDiaBan"] = dsdiaban;
                     ViewData["Phanloai"] = Phanloai;
+                    ViewData["Madv"] = Madv;
                     ViewData["GroupPer"] = _db.GroupPermissions;
                     ViewData["Title"] = "Danh sách tài khoản đơn vị";
-                    
                     ViewData["MenuLv1"] = "menu_qtnguoidung";
                     ViewData["MenuLv2"] = "menu_dstaikhoan";
                     return View("Views/Admin/Systems/DsTaiKhoan/Index.cshtml", model);
+                }
+                else
+                {
+                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
+                    return View("Views/Admin/Error/Page.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("DsTaiKhoan/Printf")]
+        [HttpGet]
+        public IActionResult Printf(string Madv, string Phanloai)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Index"))
+                {
+                    var dsdiaban = _db.DsDiaBan.ToList();
+                    var dsdonvi = _db.DsDonVi.ToList();
+                    Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
+                    var model = _db.Users.Where(t => !t.Sadmin);
+                    if (Madv != "all")
+                    {
+                        model = model.Where(t => t.Madv == Madv);
+                    }
+
+                    if (Phanloai == "DN")
+                    {
+                        model = model.Where(t => t.Level == "DN");
+                    }
+
+                    ViewData["DsDonVi"] = dsdonvi;
+                    ViewData["DsDiaBan"] = dsdiaban;
+                    ViewData["Phanloai"] = Phanloai;
+                    ViewData["Madv"] = Madv;
+                    ViewData["GroupPer"] = _db.GroupPermissions;
+                    ViewData["Title"] = "In danh sách tài khoản đơn vị";
+                    ViewData["MenuLv1"] = "menu_qtnguoidung";
+                    ViewData["MenuLv2"] = "menu_dstaikhoan";
+                    return View("Views/Admin/Systems/DsTaiKhoan/Printf.cshtml", model);
                 }
                 else
                 {

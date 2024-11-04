@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "_LayoutReports";
+    int record_id = 1;
+}
+<br />
+<br />
+@model IEnumerable<CSDLGia_ASP.Models.Systems.Users>
+
+<p style="text-align: center; font-weight: bold; font-size: 30px;">DANH SÁCH TÀI KHOẢN</p>
+<br />
+<table cellspacing="0" cellpadding="0" border="1" style="margin: 20px auto; border-collapse: collapse;font:normal 14px Times, serif;" id="data_render">
+
+    <thead>
+        <tr style="text-align:center">
+            <th width="5%">#</th>
+            <th>Phân loại</th>
+            <th>Tên tài khoản</th>
+            <th>Tài khoản truy cập</th>
+            <th>Trạng thái</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align:center" width="5%">@(record_id++)</td>
+                <td style="text-align:center">
+                    <span style="width: 112px;">
+                        @if (item.Level == "DN")
+                        {
+                            <span class="label font-weight-bold label-lg  label-primary label-inline">Doanh nghiệp</span>
+                        }
+                        else
+                        {
+                            <span class="label font-weight-bold label-lg  label-danger label-inline">Đơn vị quản lý</span>
+                        }
+                    </span>
+                </td>
+                <td>@item.Name</td>
+                <td class="active text-center">@item.Username</td>
+                <td style="text-align:center">
+                    <span style="width: 112px;">
+                        @if (item.Status == "Kích hoạt")
+                        {
+                            <span class="label font-weight-bold label-lg  label-primary label-inline">@item.Status</span>
+                        }
+                        else if (item.Status == "Vô hiệu")
+                        {
+                            <span class="label font-weight-bold label-lg label-danger label-inline">@item.Status</span>
+                        }
+                        else
+                        {
+                            <span class="label font-weight-bold label-lg  label-info label-inline">@item.Status</span>
+                        }
+                    </span>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
