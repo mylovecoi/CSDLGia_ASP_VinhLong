@@ -154,7 +154,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
             }
         }
 
-        [HttpGet("LogOut")]
+        [HttpPost("LogOut")]
         public async Task<IActionResult> LogOut()
         {
             // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
