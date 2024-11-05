@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace CSDLGia_ASP
 {
@@ -26,6 +27,10 @@ namespace CSDLGia_ASP
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // Cấu hình Data Protection với khóa mã hóa
+            services.AddDataProtection()
+                .SetApplicationName("Life_CSDLGia"); // Tên chung cho tất cả server sử dụng chung khóa
+
             services.AddDbContext<CSDLGiaDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CSDLGia_ASPConnection"), sqlOptions =>
                 {
@@ -45,8 +50,8 @@ namespace CSDLGia_ASP
                .AddCookie(options =>
                {
                    options.Cookie.Name = "Life_CSDLGia";                    // Tên của cookie
-                   options.LoginPath = "/DangNhap";                         // Đường dẫn đến trang đăng nhập
-                   options.LogoutPath = "/DangXuat";                        // Đường dẫn đến trang đăng xuất
+                   options.LoginPath = "/LogIn";                            // Đường dẫn đến trang đăng nhập
+                   options.LogoutPath = "/LogOut";                          // Đường dẫn đến trang đăng xuất
                    options.AccessDeniedPath = "/AccessDenied";              // Trang truy cập bị từ chối
                    options.ExpireTimeSpan = TimeSpan.FromHours(1);          // Thời gian sống của cookie
                    options.SlidingExpiration = true;                        // Cập nhật thời gian hết hạn khi người dùng hoạt động
@@ -61,7 +66,7 @@ namespace CSDLGia_ASP
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromHours(1); // Set the timeout from the database
+                options.IdleTimeout = TimeSpan.FromMinutes(1); // Set the timeout from the database
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
@@ -92,10 +97,10 @@ namespace CSDLGia_ASP
             app.UseRouting();
             app.UseSession();
 
-            app.UseMiddleware<SessionManagementMiddleware>();
 
             app.UseAuthentication(); // Kích hoạt xác thực cookie
             app.UseAuthorization();  // Kích hoạt ủy quyền
+            app.UseMiddleware<SessionManagementMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
