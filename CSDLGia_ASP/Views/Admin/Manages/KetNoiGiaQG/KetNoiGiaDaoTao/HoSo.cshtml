@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvGdDtNhom>
+﻿@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvGdDt>
 @{
     var record_id = 1;
     var ketNoiAPI = ViewData["KetNoiAPI_DanhSach"] as CSDLGia_ASP.Models.Systems.API.KetNoiAPI_DanhSach;
@@ -35,8 +35,9 @@
                     <thead>
                         <tr style="text-align:center">
                             <th width="10%">STT</th>
-                            <th>Mã nhóm</th>
-                            <th>Tên nhóm</th>
+                            <th>Số quyết định</th>
+                            <th>Thời gian</th>
+                            <th>Nội dung trích yếu</th>
                             <th>Trạng thái kết nối</th>
                             <th>Thời gian kết nối</th>
                             <th width="15%">Thao tác</th>
@@ -49,14 +50,18 @@
                             {
                                 <tr>
                                     <td style="text-align: center">@(record_id++)</td>
-                                    <td style="text-align: center">@item.MaNhom</td>
-                                    <td style="text-align: left">@item.TenNhom</td>
+                                    <td style="text-align: center">@item.Soqd</td>
+                                    <td style="text-align: left">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                                    <td style="text-align: left">@item.Mota</td>
                                     <td style="text-align: left"></td>
                                     <td style="text-align: left"></td>
                                     <td style="text-align: center">
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#TruyenDuLieu_Modal" onclick="setTruyenDL('DANHMUC','@ketNoiAPI.Maso','@item.MaNhom','@ketNoiAPI.LinkTruyenPost','@ketNoiAPI.MaDiaBan','@ketNoiAPI.MaDonVi','@ketNoiAPI.NguoiTao','@ketNoiAPI.NguoiDuyet','@ketNoiAPI.MaBM')">
-                                            <i class="icon-lg la la-mail-forward text-primary"></i>
-                                        </button>                                       
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xem dữ liệu" data-toggle="modal" data-target="#XemDuLieu_Modal" onclick="setXemDuLieu('@ketNoiAPI.Maso','@item.Mahs','@ketNoiAPI.LinkTruyenPost','@ketNoiAPI.MaDiaBan','@ketNoiAPI.MaDonVi','@ketNoiAPI.NguoiTao','@ketNoiAPI.NguoiDuyet','@ketNoiAPI.MaBM')">
+                                            <i class="icon-lg la la-eye text-primary"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Truyền dữ liệu" data-toggle="modal" data-target="#TruyenDuLieu_Modal" onclick="setTruyenDL('@ketNoiAPI.Maso','@item.Mahs','@ketNoiAPI.MaDiaBan','@ketNoiAPI.MaDonVi','@ketNoiAPI.NguoiTao','@ketNoiAPI.NguoiDuyet','@ketNoiAPI.MaBM')">
+                                            <i class="icon-lg la fas fa-paper-plane text-primary"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             }
@@ -68,110 +73,5 @@
 
     </div>
 </div>
-
-
-<!--Create Modal-->
-<div class="modal fade" id="TruyenDuLieu_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <form asp-controller="API" asp-action="TruyenDuLieuCSDLQG" method="post" enctype="multipart/form-data" id="frm_truyendulieu">
-            <input type="hidden" name="MaKetNoiAPI" />
-            <input type="hidden" name="Mahs" />
-            <input type="hidden" name="PhanLoaiDL" />
-
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="card-label">
-                        Thông tin chi tiết
-                    </h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i aria-hidden="true" class="ki ki-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body">                    
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label>Link truyền dữ liệu</label>
-                                <input type="text" class="form-control" name="LinkAPIKetNoi" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label>Mã địa bàn</label>
-                                <input type="text" class="form-control" name="MaDiaBan" />
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label>Mã đơn vị</label>
-                                <input type="text" class="form-control" name="MaDonVi" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label>Người tạo</label>
-                                <input type="text" class="form-control" name="NguoiTao" />
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label>Người duyệt</label>
-                                <input type="text" class="form-control" name="NguoiDuyet" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label>Link API token<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="LinkAPIXacthuc" required />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label>Mã Token Access<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="TokenLGSP" required />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Chức năng</label>
-                                <select name="THAO_TAC" class="form-control">
-                                    <option value="true">Truyền dữ liệu</option>
-                                    <option value="false">Xem dữ liệu</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-<script>
-    function setThietLap(phanLoai, maso, mahs, linkTruyen, maDiaBan, maDonVi, nguoiTao, nguoiDuyet, maBM) {
-        var form = $('#frm_truyendulieu');
-        form.find("[name='MaKetNoiAPI']").val(maso);
-        form.find("[name='PhanLoai']").val(phanLoai);
-        form.find("[name='Mahs']").val(mahs);
-        form.find("[name='LinkTruyenPost']").val(linkTruyen);
-        form.find("[name='MaDiaBan']").val(maDiaBan);
-        form.find("[name='MaDonVi']").val(maDonVi);
-        form.find("[name='NguoiTao']").val(nguoiTao);
-        form.find("[name='NguoiDuyet']").val(nguoiDuyet);
-        form.find("[name='MaBM']").val(maBM);
-    }   
-</script>
+@await Html.PartialAsync("~/Views/Admin/Manages/KetNoiGiaQG/DungChung/modal_TruyenDuLieu.cshtml")
 

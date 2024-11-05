@@ -17,63 +17,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KetNoiGiaQG
         public KetNoiGiaDaoTaoController(CSDLGiaDBContext db)
         {
             _db = db;
-        }
-
-        [Route("KetNoiGiaDaoTao/ThietLap")]
-        [HttpGet]
-        public IActionResult ThietLap()
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-
-                ViewData["Maso"] = "giadaotao";
-                var chk = _db.KetNoiAPI_DanhSach.FirstOrDefault(t => t.Maso == (string)ViewData["Maso"]);
-                if (chk == null)
-                {
-                    var ketnoi = new KetNoiAPI_DanhSach
-                    {
-                        Maso = (string)ViewData["Maso"],
-                    };
-                    _db.KetNoiAPI_DanhSach.Add(ketnoi);
-                    _db.SaveChanges();
-                }
-                var model = _db.KetNoiAPI_DanhSach.FirstOrDefault(t => t.Maso == (string)ViewData["Maso"]);
-                ViewData["Title"] = "Thiết lập giá dịch vụ đào tạo";
-                ViewData["MenuLv1"] = "menu_giaqg";
-                ViewData["MenuLv2"] = "menu_giaqg_giaoduc";
-                ViewData["MenuLv3"] = "menu_giaqg_giaoduc_thietlap";
-
-                return View("Views/Admin/Manages/KetNoiGiaQG/KetNoiGiaDaoTao/ThietLap.cshtml", model);
-
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
-
-        [Route("KetNoiGiaDaoTao/LuuThietLap")]
-        [HttpPost]
-        public IActionResult Update(KetNoiAPI_DanhSach request)
-        {
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
-            {
-                var model = _db.KetNoiAPI_DanhSach.FirstOrDefault(t => t.Maso == request.Maso);
-                model.LinkNhanGet = request.LinkNhanGet;
-                model.LinkTruyenPost = request.LinkTruyenPost;
-                model.NguoiDuyet = request.NguoiDuyet;
-                model.NguoiTao = request.NguoiTao;
-                model.MaDonVi = request.MaDonVi;
-                model.MaDiaBan = request.MaDiaBan;
-                _db.KetNoiAPI_DanhSach.Update(model);
-                _db.SaveChanges();
-                return RedirectToAction("ThietLap", "KetNoiGiaDaoTao");
-            }
-            else
-            {
-                return View("Views/Admin/Error/SessionOut.cshtml");
-            }
-        }
+        }       
 
         [Route("KetNoiGiaDaoTao/KhaiThac")]
         [HttpGet]
@@ -128,9 +72,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KetNoiGiaQG
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                ViewData["Maso"] = "giadaotao";
+                ViewData["Maso"] = "giadaotaodm";
                 var model = _db.GiaDvGdDtNhom.ToList();
-                ViewData["KetNoiAPI_DanhSach"] = _db.KetNoiAPI_DanhSach.FirstOrDefault(t => t.Maso == (string)ViewData["Maso"]);
+                var chk = _db.KetNoiAPI_DanhSach.FirstOrDefault(t => t.Maso == (string)ViewData["Maso"]);
+
+                if (chk == null)
+                {
+                    var a_chucnang = Helpers.getDSChucNangCSDLQG();
+                    var tenCN = a_chucnang.ContainsKey((string)ViewData["Maso"]) ? a_chucnang[(string)ViewData["Maso"]] : (string)ViewData["Maso"];
+
+                    ViewData["Messages"] = "Hệ thống chưa thiết lập kết nối cho: "+ tenCN;
+                    return View("Views/Admin/Error/Error.cshtml");
+                }
+                ViewData["KetNoiAPI_DanhSach"] = chk;
                 ViewData["Title"] = "Giá dịch vụ đào tạo";
                 ViewData["MenuLv1"] = "menu_giaqg";
                 ViewData["MenuLv2"] = "menu_giaqg_giaoduc";
@@ -151,7 +105,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KetNoiGiaQG
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 ViewData["Maso"] = "giadaotao";
-                var model = _db.GiaDvGdDtNhom.ToList();
+                var model = _db.GiaDvGdDt.ToList();
                 ViewData["KetNoiAPI_DanhSach"] = _db.KetNoiAPI_DanhSach.FirstOrDefault(t => t.Maso == (string)ViewData["Maso"]);
                 ViewData["Title"] = "Giá dịch vụ đào tạo";
                 ViewData["MenuLv1"] = "menu_giaqg";

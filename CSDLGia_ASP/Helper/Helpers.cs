@@ -12,6 +12,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Drawing;
+using CSDLGia_ASP.Models.Manages.DinhGia;
+using DocumentFormat.OpenXml.Math;
 
 namespace CSDLGia_ASP.Helper
 {
@@ -328,7 +330,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.thongtin", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Thông tin" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.xetduyet", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Xét duyệt" });
             roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.timkiem", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Tìm kiếm" });
-            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.baocao", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Báo cáo"});
+            roldelist.Add(new VMRoleList { Role = "csdlmucgiahhdv.muataisan.baocao", Name = "Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu - Báo cáo" });
 
             // Giá HH-DV khác
 
@@ -431,7 +433,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmnhomhh", Name = "Danh mục nhóm hàng hóa" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmctktvm", Name = "Danh mục chỉ tiêu kinh tế vĩ mô" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmdonvitinh", Name = "Danh mục đơn vị tính" });
-           
+
             //API
             roldelist.Add(new VMRoleList { Role = "hethong.api", Name = "Quản lí kết nối API" });
             roldelist.Add(new VMRoleList { Role = "hethong.api.doanhngiepdvlt", Name = "Danh sách doanh nghiệp kê khai dịch vụ lưu trú" });
@@ -472,7 +474,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmnhomhh", Name = "Danh mục nhóm hàng hóa" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmctktvm", Name = "Danh mục chỉ tiêu kinh tế vĩ mô" });
             roldelist.Add(new VMRoleList { Role = "hethong.danhmuc.dmdonvitinh", Name = "Danh mục đơn vị tính" });
-         
+
             //API
             roldelist.Add(new VMRoleList { Role = "hethong.api", Name = "Quản trị kết nối API" });
             roldelist.Add(new VMRoleList { Role = "hethong.api.doanhngiepdvlt", Name = "Danh sách doanh nghiệp kê khai dịch vụ lưu trú" });
@@ -736,7 +738,7 @@ namespace CSDLGia_ASP.Helper
             roldelist.Add(new VMRoleList { Role = "vbqlnnvegiaplp", Name = "VĂN BẢN QUẢN LÝ NHÀ NƯỚC VỀ GIÁ, PHÍ, LỆ PHÍ" });
             roldelist.Add(new VMRoleList { Role = "vbqlnnvegiaplp.vbqlnn", Name = "Văn bản quản lý nhà nước về giá - phí, lệ phí" });
             roldelist.Add(new VMRoleList { Role = "vbqlnnvegiaplp.vbqlnn.ds", Name = "Danh sách văn bản quản lý nhà nước về giá - phí, lệ phí" });
-          
+
 
             return roldelist;
         }
@@ -1614,28 +1616,37 @@ namespace CSDLGia_ASP.Helper
             return csg;
         }
 
-        public static KeyValuePair<string, string>[] getDSChucNangCSDLQG()
+        public static Dictionary<string, string> getDSChucNangCSDLQG()
         {
-            return new[]
+            Dictionary<string, string> keyValuePairs = new Dictionary<string, string>
             {
-                new KeyValuePair<string, string>("giahhdvk", "Giá thị trường hàng hóa, dịch vụ"),
-                new KeyValuePair<string, string>("giahhdvkdm", "Danh mục hàng hóa, dịch vụ thu thập giá thị trường của Tỉnh"),
-                new KeyValuePair<string, string>("giathuetainguyen", "Giá tính thuế tài nguyên do UBND tỉnh ban hành"),
-                new KeyValuePair<string, string>("giathuetainguyendm", "Danh mục tài nguyên do UBND tỉnh ban hành"),
-                new KeyValuePair<string, string>("giaspdvcongichdm", "Danh mục dịch vụ thu gom rác thải của Tỉnh"),
-                new KeyValuePair<string, string>("giaspdvcongich", "Dịch vụ thu gom, vận chuyển rác thải sinh hoạt tại sử dụng nguồn vốn ngân sách Nhà nước tại địa phương"),
-                new KeyValuePair<string, string>("gialephidm", "Danh mục đối tượng tính lệ phí trước bạ do UBND Tỉnh quy định"),
-                new KeyValuePair<string, string>("gialephi", "Giá tính lệ phí trước bạ do UBND Tỉnh quy định"),
-                new KeyValuePair<string, string>("thamdinhgia", "Dữ liệu giá trị tài sản thẩm định giá Nhà nước do Hội đồng thẩm định giá Nhà nước định giá"),
-                new KeyValuePair<string, string>("dkg", "Hồ sơ đăng ký giá tại địa phương"),
-                new KeyValuePair<string, string>("dkgdm", "Danh mục hàng hóa, dịch vụ đăng ký giá"),
-                new KeyValuePair<string, string>("dkgkh", "Danh mục kho hàng của doanh nghiệp đăng ký giá"),
-                new KeyValuePair<string, string>("dkgdt", "Danh mục đối tượng áp dụng của doanh nghiệp đăng ký giá"),
-                new KeyValuePair<string, string>("kkg", "Hồ sơ kê khai giá tại địa phương"),
-                new KeyValuePair<string, string>("kkgdm", "Danh mục hàng hóa, dịch vụ kê khai giá"),
-                new KeyValuePair<string, string>("kkgkh", "Danh mục kho hàng của doanh nghiệp kê khai giá"),
-                new KeyValuePair<string, string>("kkgdt", "Danh mục đối tượng áp dụng của doanh nghiệp kê khai giá"),
+                {"giahhdvk", "Giá thị trường hàng hóa, dịch vụ" },
+                {"giahhdvkdm", "Danh mục hàng hóa, dịch vụ thu thập giá thị trường của Tỉnh" },
+                {"giathuetainguyen", "Giá tính thuế tài nguyên do UBND tỉnh ban hành"},
+                {"giathuetainguyendm", "Danh mục tài nguyên do UBND tỉnh ban hành"},
+                {"giaspdvcongichdm", "Danh mục dịch vụ thu gom rác thải của Tỉnh"},
+                {"giaspdvcongich", "Dịch vụ thu gom, vận chuyển rác thải sinh hoạt tại sử dụng nguồn vốn ngân sách Nhà nước tại địa phương"},
+                {"gialephidm", "Danh mục đối tượng tính lệ phí trước bạ do UBND Tỉnh quy định"},
+                {"gialephi", "Giá tính lệ phí trước bạ do UBND Tỉnh quy định"},
+                {"thamdinhgia", "Dữ liệu giá trị tài sản thẩm định giá Nhà nước do Hội đồng thẩm định giá Nhà nước định giá"},
+                {"thamdinhgiahd", "Thông tin Hội đồng thẩm định giá của Tỉnh"},
+                {"dkg", "Hồ sơ đăng ký giá tại địa phương"},
+                {"dkgdm", "Danh mục hàng hóa, dịch vụ đăng ký giá"},
+                {"dkgkh", "Danh mục kho hàng của doanh nghiệp đăng ký giá"},
+                {"dkgdt", "Danh mục đối tượng áp dụng của doanh nghiệp đăng ký giá"},
+                {"dkgdn", "Danh sách doanh nghiệp đăng ký giá"},
+                {"kkg", "Hồ sơ kê khai giá tại địa phương"},
+                {"kkgdm", "Danh mục hàng hóa, dịch vụ kê khai giá"},
+                {"kkgkh", "Danh mục kho hàng của doanh nghiệp kê khai giá"},
+                {"kkgdt", "Danh mục đối tượng áp dụng của doanh nghiệp kê khai giá"},
+                {"giadaotaodm", "Danh mục giá dịch vụ giáo dục mầm non và giáo dục phổ thông công lập"},
+                {"giadaotao", "Giá dịch vụ giáo dục mầm non và giáo dục phổ thông công lập"},
+                {"giachuyennganhdm", "Damh mục hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành"},
+                 {"giachuyennganh", "Hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành"},
+                 {"giabatdongsan", "Giá bất động sản"},
+                 {"giatieudung", "Giá hàng hoá, dịch vụ tiêu dùng"},
             };
+            return keyValuePairs;
         }
 
         /*public static string checkManhom(int tiento, int hauto)

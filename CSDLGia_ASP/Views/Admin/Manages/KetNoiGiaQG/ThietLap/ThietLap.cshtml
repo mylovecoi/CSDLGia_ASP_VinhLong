@@ -1,0 +1,179 @@
+﻿@model IEnumerable<CSDLGia_ASP.Models.Systems.API.KetNoiAPI_DanhSach>
+@{
+    var a_chucnang = Helpers.getDSChucNangCSDLQG();
+    int record_id = 1;
+}
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                THÔNG TIN THIẾT LẬP KẾT NỐI
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            <button type="button" data-target="#ThietLap_Modal" onclick="setThietLap()" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thiết lập">
+                <i class="la la-plus"></i>Thiết lập
+            </button>
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-xl-12">
+                <table class="table table-striped table-bordered table-hover" id="sample_3">
+                    <thead>
+                        <tr style="text-align:center">
+                            <th width="5%">STT</th>
+                            <th>Mã số</th>
+                            <th>Tên chức năng</th>
+                            <th>Mã địa bàn</th>
+                            <th>Mã đơn vị</th>
+                            <th>Người tạo</th>
+                            <th>Người duyệt</th>
+                            <th>Mã biểu mẫu</th>
+                            <th>Thời gian kết nối</th>
+                            <th width="10%">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                var maCN = item.Maso;
+                                var tenCN = a_chucnang.ContainsKey(maCN) ? a_chucnang[maCN] : "";
+
+                                <tr>
+                                    <td style="text-align: center">@(record_id++)</td>
+                                    <td style="text-align: center">@item.Maso</td>
+                                    <td style="text-align: center">@tenCN</td>
+                                    <td style="text-align: left">@item.LinkTruyenPost</td>
+                                    <td style="text-align: left">@item.MaDiaBan</td>
+                                    <td style="text-align: left">@item.MaDonVi</td>
+                                    <td style="text-align: left">@item.NguoiTao</td>
+                                    <td style="text-align: left">@item.NguoiDuyet</td>
+                                    <td style="text-align: left">@item.MaBM</td>
+                                    <td style="text-align: center">
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Sửa" data-toggle="modal" data-target="#ThietLap_Modal" onclick="setThietLap('@item.Maso','@item.LinkTruyenPost','@item.MaDiaBan','@item.MaDonVi','@item.NguoiTao','@item.NguoiDuyet','@item.MaBM')">
+                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--Create Modal-->
+<div class="modal fade kt_select2_modal" id="ThietLap_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="KetNoiQG" asp-action="LuuThietLap" method="post" id="frm_thietlap">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin thiết lập
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label>Chức năng kết nối</label>
+                                <select name="Maso" class="form-control kt_select2_1_modal">
+                                    @foreach (var item in a_chucnang)
+                                    {
+                                        <option value="@item.Key">@item.Value</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label>Link truyền dữ liệu</label>
+                                <input type="text" class="form-control" name="LinkTruyenPost" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Mã địa bàn</label>
+                                <input type="text" class="form-control" name="MaDiaBan" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Mã đơn vị</label>
+                                <input type="text" class="form-control" name="MaDonVi" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Người tạo</label>
+                                <input type="text" class="form-control" name="NguoiTao" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Người duyệt</label>
+                                <input type="text" class="form-control" name="NguoiDuyet" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Mã biểu mẫu</label>
+                                <input type="text" class="form-control" name="MaBM" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function setThietLap(maso, linkTruyen, maDiaBan, maDonVi, nguoiTao, nguoiDuyet, maBM) {
+        var form = $('#frm_thietlap');
+        form.find("[name='Maso']").val(maso).trigger('change');
+        form.find("[name='LinkTruyenPost']").val(linkTruyen);
+        form.find("[name='MaDiaBan']").val(maDiaBan);
+        form.find("[name='MaDonVi']").val(maDonVi);
+        form.find("[name='NguoiTao']").val(nguoiTao);
+        form.find("[name='NguoiDuyet']").val(nguoiDuyet);
+        form.find("[name='MaBM']").val(maBM);
+    }
+</script>

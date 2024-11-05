@@ -1,0 +1,159 @@
+﻿<!--Truyền dữ liệu Modal-->
+<div class="modal fade" id="TruyenDuLieu_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="KetNoiQG" asp-action="TruyenDuLieuCSDLQG" method="post" enctype="multipart/form-data" id="frm_truyendulieu">
+            <input type="hidden" name="MaKetNoiAPI" />
+            <input type="hidden" name="Mahs" />
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin chi tiết
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label>Link truyền dữ liệu</label>
+                                <input type="text" class="form-control" name="LinkAPIKetNoi" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Mã địa bàn</label>
+                                <input type="text" class="form-control" name="MaDiaBan" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Mã đơn vị</label>
+                                <input type="text" class="form-control" name="MaDonVi" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Người tạo</label>
+                                <input type="text" class="form-control" name="NguoiTao" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Người duyệt</label>
+                                <input type="text" class="form-control" name="NguoiDuyet" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label>Link API token<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="LinkAPIXacthuc" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label>Mã Token Access<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="TokenLGSP" required />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--Xem dữ liệu Modal-->
+<div class="modal fade" id="XemDuLieu_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="KetNoiQG" asp-action="XemDuLieuCSDLQG" method="post" enctype="multipart/form-data" id="frm_xemdulieu">
+            <input type="hidden" name="MaKetNoiAPI" />
+            <input type="hidden" name="Mahs" />
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin chi tiết
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Mã địa bàn</label>
+                                <input type="text" class="form-control" name="MaDiaBan" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Mã đơn vị</label>
+                                <input type="text" class="form-control" name="MaDonVi" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Người tạo</label>
+                                <input type="text" class="form-control" name="NguoiTao" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label>Người duyệt</label>
+                                <input type="text" class="form-control" name="NguoiDuyet" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function setThietLap(maso, mahs, linkTruyen, maDiaBan, maDonVi, nguoiTao, nguoiDuyet, maBM) {
+        var form = $('#frm_truyendulieu');
+        form.find("[name='MaKetNoiAPI']").val(maso);
+        form.find("[name='Mahs']").val(mahs);
+        form.find("[name='LinkTruyenPost']").val(linkTruyen);
+        form.find("[name='MaDiaBan']").val(maDiaBan);
+        form.find("[name='MaDonVi']").val(maDonVi);
+        form.find("[name='NguoiTao']").val(nguoiTao);
+        form.find("[name='NguoiDuyet']").val(nguoiDuyet);
+        form.find("[name='MaBM']").val(maBM);
+    }
+
+    function setXemDuLieu(maso, mahs, linkTruyen, maDiaBan, maDonVi, nguoiTao, nguoiDuyet, maBM) {
+        var form = $('#frm_xemdulieu');
+        form.find("[name='MaKetNoiAPI']").val(maso);
+        form.find("[name='Mahs']").val(mahs);
+        form.find("[name='MaDiaBan']").val(maDiaBan);
+        form.find("[name='MaDonVi']").val(maDonVi);
+        form.find("[name='NguoiTao']").val(nguoiTao);
+        form.find("[name='NguoiDuyet']").val(nguoiDuyet);
+        form.find("[name='MaBM']").val(maBM);
+    }
+</script>
