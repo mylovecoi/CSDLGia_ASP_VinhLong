@@ -1,0 +1,97 @@
+﻿@model CSDLGia_ASP.Models.Systems.API.KetNoiAPI_DanhSach
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                THÔNG TIN THIẾT LẬP KẾT NỐI
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            <button type="button" data-target="#ThietLap_Modal" onclick="setThietLap('@Model.Maso','@Model.LinkNhanGet','@Model.LinkTruyenPost','@Model.MaDiaBan','@Model.MaDonVi','@Model.NguoiTao','@Model.NguoiDuyet','@Model.MaBM')" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thiết lập">
+                <i class="la la-plus"></i>Thiết lập
+            </button>
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-xl-12">
+                <table class="table table-striped table-bordered table-hover">
+                    <tbody>
+
+                        <tr>
+                            <td colspan="2" style="text-align: center;color: #5b9bd1"><b>Thông tin hiện tại</b></td>
+                        </tr>
+                        <tr>
+                            <td style="width:30%"> <b>Link nhận dữ liệu</b></td>
+                            <td style="width:70%">@Model.LinkNhanGet </td>
+                        </tr>
+                        <tr>
+                            <td style="width:30%"> <b>Link truyền dữ liệu</b></td>
+                            <td style="width:70%">@Model.LinkTruyenPost </td>
+                        </tr>
+                        <tr>
+                            <td style="width:30%"> <b>Mã địa bàn</b></td>
+                            <td style="width:70%">@Model.MaDiaBan </td>
+                        </tr>
+                        <tr>
+                            <td style="width:30%"> <b>Mã đơn vị gửi liệu</b></td>
+                            <td style="width:70%">@Model.MaDonVi </td>
+                        </tr>
+                        <tr>
+                            <td style="width:30%"> <b>Người tạo</b></td>
+                            <td style="width:70%">@Model.NguoiTao </td>
+                        </tr>
+                        <tr>
+                            <td style="width:30%"> <b>Người duyệt</b></td>
+                            <td style="width:70%">@Model.NguoiDuyet </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--Create Modal-->
+<div class="modal fade" id="ThietLap_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="KetNoiGiaDaoTao" asp-action="LuuThietLap" method="post" id="frm_thietlap">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin thiết lập
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @await Html.PartialAsync("~/Views/Admin/Manages/KetNoiGiaQG/DungChung/rowThietLapChung.cshtml", Model)
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@await Html.PartialAsync("~/Views/Admin/Manages/KetNoiGiaQG/DungChung/modalThietLap.cshtml")
