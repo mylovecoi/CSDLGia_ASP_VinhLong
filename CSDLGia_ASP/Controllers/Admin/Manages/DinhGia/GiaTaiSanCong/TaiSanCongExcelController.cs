@@ -157,8 +157,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TaiSanCong
                                 Dacdiem = worksheet.Cells[row, Int16.Parse(request.Dacdiem)].Value != null ?
                                             worksheet.Cells[row, Int16.Parse(request.Dacdiem)].Value.ToString().Trim() : "",
 
-
-                                Giathue = Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
+                                Giathue = Helpers.ConvertStrToDb(worksheet.Cells[row, 4].Value != null ?
+                                                    worksheet.Cells[row, 4].Value.ToString().Trim() : ""),
+                                Giaconlai = Helpers.ConvertStrToDb(worksheet.Cells[row, 5].Value != null ?
                                                     worksheet.Cells[row, 5].Value.ToString().Trim() : ""),
                                 Giapheduyet = Helpers.ConvertStrToDb(worksheet.Cells[row, 6].Value != null ?
                                                     worksheet.Cells[row, 6].Value.ToString().Trim() : ""),
