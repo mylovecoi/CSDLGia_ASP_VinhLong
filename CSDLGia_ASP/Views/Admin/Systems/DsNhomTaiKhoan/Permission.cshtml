@@ -524,6 +524,17 @@
     </div>
 </div>
 <script>
+    let isSelectAll = false;
+
+    function toggleSelectAll() {
+        isSelectAll = !isSelectAll;  // Toggle trạng thái
+        const checkboxes = document.querySelectorAll(".itemCheckbox");  // Lấy tất cả checkbox có class "itemCheckbox"
+
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = isSelectAll;  // Đặt trạng thái của mỗi checkbox theo isSelectAll
+        });
+    }
+
     function ClearFrmCreate() {
         document.getElementById("roles").value = '';
         document.getElementById("Index").checked = false;
