@@ -1642,9 +1642,9 @@ namespace CSDLGia_ASP.Helper
                 {"giadaotaodm", "Danh mục giá dịch vụ giáo dục mầm non và giáo dục phổ thông công lập"},
                 {"giadaotao", "Giá dịch vụ giáo dục mầm non và giáo dục phổ thông công lập"},
                 {"giachuyennganhdm", "Damh mục hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành"},
-                 {"giachuyennganh", "Hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành"},
-                 {"giabatdongsan", "Giá bất động sản"},
-                 {"giatieudung", "Giá hàng hoá, dịch vụ tiêu dùng"},
+                {"giachuyennganh", "Hàng hóa, dịch vụ khác theo quy định của pháp luật chuyên ngành"},
+                {"giabatdongsan", "Giá bất động sản"},
+                {"giatieudung", "Giá hàng hoá, dịch vụ tiêu dùng"},
             };
             return keyValuePairs;
         }
