@@ -136,7 +136,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     result += "<div class='row'>";
                     result += "<div class='col-xl-4'>";
                     result += "<div class='form-group fv-plugins-icon-container'>";
-                    result += "<label>Tương tác với dữ liệu: </label>" + model.Phanloai;
+                    result += "<label>Tương tác với dữ liệu: </label>";
                     result += "</div>";
                     result += "</div>";
 
@@ -145,13 +145,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     if (model.Index)
                     {
                         result += "<label class='checkbox'>";
-                        result += "<input type='checkbox' checked id='Index_edit' name='Index_edit' /><span></span>Xem";
+                        result += "<input type='checkbox' checked id='Index_edit' name='Index_edit' class='itemCheckbox'/><span></span>Xem";
                         result += "</label>";
                     }
                     else
                     {
                         result += "<label class='checkbox'>";
-                        result += "<input type='checkbox' id='Index_edit' name='Index_edit'/><span></span>Xem";
+                        result += "<input type='checkbox' id='Index_edit' name='Index_edit' class='itemCheckbox'/><span></span>Xem";
                         result += "</label>";
                     }
                     if (model.Phanloai == "Chức năng")
@@ -159,64 +159,69 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         if (model.Create)
                         {
                             result += "<label class='checkbox'>";
-                            result += "<input type='checkbox' checked id='Create_edit' name='Create_edit' /><span></span>Thêm";
+                            result += "<input type='checkbox' checked id='Create_edit' name='Create_edit' class='itemCheckbox'/><span></span>Thêm";
                             result += "</label>";
                         }
                         else
                         {
                             result += "<label class='checkbox'>";
-                            result += "<input type='checkbox' id='Create_edit' name='Create_edit'/><span></span>Thêm";
+                            result += "<input type='checkbox' id='Create_edit' name='Create_edit' class='itemCheckbox'/><span></span>Thêm";
                             result += "</label>";
                         }
                         if (model.Edit)
                         {
                             result += "<label class='checkbox'>";
-                            result += "<input type='checkbox' checked id='Edit_edit' name='Edit_edit' /><span></span>Sửa";
+                            result += "<input type='checkbox' checked id='Edit_edit' name='Edit_edit' class='itemCheckbox'/><span></span>Sửa";
                             result += "</label>";
                         }
                         else
                         {
                             result += "<label class='checkbox'>";
-                            result += "<input type='checkbox' id='Edit_edit' name='Edit_edit'/><span></span>Sửa";
+                            result += "<input type='checkbox' id='Edit_edit' name='Edit_edit' class='itemCheckbox'/><span></span>Sửa";
                             result += "</label>";
                         }
                         if (model.Delete)
                         {
                             result += "<label class='checkbox'>";
-                            result += "<input type='checkbox' checked id='Delete_edit' name='Delete_edit' /><span></span>Xóa";
+                            result += "<input type='checkbox' checked id='Delete_edit' name='Delete_edit' class='itemCheckbox'/><span></span>Xóa";
                             result += "</label>";
                         }
                         else
                         {
                             result += "<label class='checkbox'>";
-                            result += "<input type='checkbox' id='Delete_edit' name='Delete_edit'/><span></span>Xóa";
+                            result += "<input type='checkbox' id='Delete_edit' name='Delete_edit' class='itemCheckbox'/><span></span>Xóa";
                             result += "</label>";
                         }
                         if (model.Approve)
                         {
                             result += "<label class='checkbox'>";
-                            result += "<input type='checkbox' checked id='Approve_edit' name='Approve_edit' /><span></span>Chuyển/Xét duyệt";
+                            result += "<input type='checkbox' checked id='Approve_edit' name='Approve_edit' class='itemCheckbox'/><span></span>Chuyển/Xét duyệt";
                             result += "</label>";
                         }
                         else
                         {
                             result += "<label class='checkbox'>";
-                            result += "<input type='checkbox' id='Approve_edit' name='Approve_edit'/><span></span>Xét duyệt";
+                            result += "<input type='checkbox' id='Approve_edit' name='Approve_edit' class='itemCheckbox'/><span></span>Xét duyệt";
                             result += "</label>";
                         }
                         if (model.Public)
                         {
                             result += "<label class='checkbox'>";
-                            result += "<input type='checkbox' checked id='Public_edit' name='Public_edit' /><span></span>Công bố";
+                            result += "<input type='checkbox' checked id='Public_edit' name='Public_edit' class='itemCheckbox'/><span></span>Công bố";
                             result += "</label>";
                         }
                         else
                         {
                             result += "<label class='checkbox'>";
-                            result += "<input type='checkbox' id='Public_edit' name='Public_edit'/><span></span>Công bố";
+                            result += "<input type='checkbox' id='Public_edit' name='Public_edit' class='itemCheckbox'/><span></span>Công bố";
                             result += "</label>";
                         }
                     }
+
+
+                    result += "<label class='checkbox' style='font-weight: bold; text-decoration: underline;'>";
+                    result += "<input type='checkbox' onclick='toggleSelectAll()'/><span></span>Chọn tất cả<br/>";
+                    result += "</label>";
                     result += "</div>";
 
                     result += "<input hidden id='Id_edit' name='Id_edit' value='" + model.Id + "'>";

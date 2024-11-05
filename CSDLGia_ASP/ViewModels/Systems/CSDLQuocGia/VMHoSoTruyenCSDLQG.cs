@@ -11,6 +11,7 @@
         public string NGUON_SO_LIEU { get; set; }
         public string NGUOI_TAO { get; set; }
         public string NGUOI_DUYET { get; set; }
+        public string MaBM { get; set; }
         public bool THAO_TAC { get; set; }
 
     }
