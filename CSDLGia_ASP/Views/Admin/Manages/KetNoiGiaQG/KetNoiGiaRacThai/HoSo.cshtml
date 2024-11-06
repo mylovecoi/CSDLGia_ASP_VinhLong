@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaDvGdDtNhom>
+﻿@model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaSpDvToiDa>
 @{
     var record_id = 1;
     var ketNoiAPI = ViewData["KetNoiAPI_DanhSach"] as CSDLGia_ASP.Models.Systems.API.KetNoiAPI_DanhSach;
@@ -19,7 +19,7 @@
     <div class="card-header flex-wrap border-0 pt-6 pb-0">
         <div class="card-title">
             <h3 class="card-label">
-                THÔNG TIN DỮ LIỆU GIÁ DỊCH VỤ GIÁO DỤC MẦM NON VÀ GIÁO DỤC PHỔ THÔNG CÔNG LẬP
+                THÔNG TIN DỮ LIỆU GIÁ DỊCH VỤ THU GOM RÁC THẢI
             </h3>
         </div>
         <div class="card-toolbar">
@@ -35,8 +35,9 @@
                     <thead>
                         <tr style="text-align:center">
                             <th width="10%">STT</th>
-                            <th>Mã nhóm</th>
-                            <th>Tên nhóm</th>
+                            <th>Số quyết định</th>
+                            <th>Thời gian</th>
+                            <th>Nội dung trích yếu</th>
                             <th>Trạng thái kết nối</th>
                             <th>Thời gian kết nối</th>
                             <th width="15%">Thao tác</th>
@@ -49,15 +50,16 @@
                             {
                                 <tr>
                                     <td style="text-align: center">@(record_id++)</td>
-                                    <td style="text-align: center">@item.MaNhom</td>
-                                    <td style="text-align: left">@item.TenNhom</td>
+                                    <td style="text-align: center">@item.Soqd</td>
+                                    <td style="text-align: left">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
+                                    <td style="text-align: left">@item.Thongtin</td>
                                     <td style="text-align: left"></td>
                                     <td style="text-align: left"></td>
                                     <td style="text-align: center">
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xem dữ liệu" data-toggle="modal" data-target="#XemDuLieu_Modal" onclick="setXemDuLieu('@ketNoiAPI.Maso','@item.MaNhom','@ketNoiAPI.LinkTruyenPost','@ketNoiAPI.MaDiaBan','@ketNoiAPI.MaDonVi','@ketNoiAPI.NguoiTao','@ketNoiAPI.NguoiDuyet','@ketNoiAPI.MaBM')">
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xem dữ liệu" data-toggle="modal" data-target="#XemDuLieu_Modal" onclick="setXemDuLieu('@ketNoiAPI.Maso','@item.Mahs','@ketNoiAPI.LinkTruyenPost','@ketNoiAPI.MaDiaBan','@ketNoiAPI.MaDonVi','@ketNoiAPI.NguoiTao','@ketNoiAPI.NguoiDuyet','@ketNoiAPI.MaBM')">
                                             <i class="icon-lg la la-eye text-primary"></i>
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Truyền dữ liệu" data-toggle="modal" data-target="#TruyenDuLieu_Modal" onclick="setTruyenDL('@ketNoiAPI.Maso','@item.MaNhom','@ketNoiAPI.MaDiaBan','@ketNoiAPI.MaDonVi','@ketNoiAPI.NguoiTao','@ketNoiAPI.NguoiDuyet','@ketNoiAPI.MaBM')">
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Truyền dữ liệu" data-toggle="modal" data-target="#TruyenDuLieu_Modal" onclick="setTruyenDL('@ketNoiAPI.Maso','@item.Mahs','@ketNoiAPI.MaDiaBan','@ketNoiAPI.MaDonVi','@ketNoiAPI.NguoiTao','@ketNoiAPI.NguoiDuyet','@ketNoiAPI.MaBM')">
                                             <i class="icon-lg la fas fa-paper-plane text-primary"></i>
                                         </button>
                                     </td>
@@ -71,5 +73,5 @@
 
     </div>
 </div>
-
 @await Html.PartialAsync("~/Views/Admin/Manages/KetNoiGiaQG/DungChung/modal_TruyenDuLieu.cshtml")
+

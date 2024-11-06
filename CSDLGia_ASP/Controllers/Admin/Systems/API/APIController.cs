@@ -20,12 +20,12 @@ using Microsoft.Extensions.Hosting;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems.API
 {
-    public class APIController : Controller
+    public class KetNoiQGController : Controller
     {
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _env;
 
-        public APIController(CSDLGiaDBContext db, IWebHostEnvironment hostingEnv)
+        public KetNoiQGController(CSDLGiaDBContext db, IWebHostEnvironment hostingEnv)
         {
             _db = db;
             _env = hostingEnv;

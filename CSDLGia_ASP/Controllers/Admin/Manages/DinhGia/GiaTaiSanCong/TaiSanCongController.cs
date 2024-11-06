@@ -45,11 +45,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                     {
                         model = model.Where(t => t.Madv == Madv);
                     }
-
+         
                     if (Nam != 0)
                     {
                         model = model.Where(t => t.Thoidiem.Year == Nam);
                     }
+
                     ViewData["Madv"] = Madv;
                     ViewData["Nam"] = Nam;
                     ViewData["DsDonvi"] = model_donvi;
