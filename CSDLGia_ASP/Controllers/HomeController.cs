@@ -187,6 +187,49 @@ namespace CSDLGia_ASP.Controllers
             }
         }
 
+        [Route("ChangeEmail")]
+        [HttpGet]
+        public IActionResult ChangeEmail()
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                ViewData["Title"] = "Thay đổi Email";
+                return View("Views/Admin/Home/ChangeEmail.cshtml");
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
+        [Route("ChangeEmail")]
+        [HttpPost]
+        public IActionResult ChangeEmail(string new_email)
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
+            {
+                if (!string.IsNullOrEmpty(new_email))
+                {
+                    var model = _db.Users.FirstOrDefault(u => u.Username == Helpers.GetSsAdmin(HttpContext.Session, "Username"));
+                    model.Email = new_email;
+                    _db.SaveChanges();
+
+                    return RedirectToAction("Login", "Auth");
+                }
+                else
+                {
+                    ViewData["Title"] = "Thay đổi Email";
+                    ModelState.AddModelError("error", "Thông tin không được bỏ trống");
+                    ViewData["new_email"] = new_email;
+                    return View("Views/Admin/Home/ChangeEmail.cshtml");
+                }
+            }
+            else
+            {
+                return View("Views/Admin/Error/SessionOut.cshtml");
+            }
+        }
+
         [Route("MobileApp")]
         [HttpGet]
         public IActionResult MobileApp()
