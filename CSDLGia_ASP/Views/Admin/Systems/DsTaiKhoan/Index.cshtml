@@ -51,7 +51,7 @@
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Index"))
             {
                 <a class="btn btn-primary font-weight-bolder" target="_blank" asp-controller="DsTaiKhoan" asp-action="Printf" asp-route-Madv="@ViewData["Madv"]" asp-route-Phanloai="@ViewData["Phanloai"]">
-                    <i class="la la-print"></i>In Trang 
+                    <i class="la la-print"></i>In Trang
                 </a>
             }
         </div>
@@ -89,16 +89,9 @@
                         <th>Phân loại</th>
                         <th>Tên tài khoản</th>
                         <th>Tài khoản truy cập</th>
-                        @*  <th colspan="4">Chức năng</th> *@
                         <th>Trạng thái</th>
                         <th>Thao tác</th>
                     </tr>
-                    @*   <tr style="text-align:center">
-                    <th>Nhập liệu</th>
-                    <th>Tổng hợp</th>
-                    <th>Quản trị</th>
-                    <th>Khác</th>
-                    </tr> *@
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
@@ -119,51 +112,6 @@
                             </td>
                             <td>@item.Name</td>
                             <td class="active text-center">@item.Username</td>
-                            @*<td style="text-align:center">
-                        @if (item.Chucnang == "NHAPLIEU;" || item.Chucnang == "NHAPLIEU;TONGHOP;")
-                        {
-                        <i class="la la-check icon-2x text-info mr-5"></i>
-                        }
-                        </td>
-                        <td style="text-align:center">
-                        @if (item.Chucnang == "TONGHOP;" || item.Chucnang == "NHAPLIEU;TONGHOP;")
-                        {
-                        <i class="la la-check icon-2x text-info mr-5"></i>
-                        }
-                        </td>
-                        <td style="text-align:center">
-                        @if (item.Chucnang == "QUANTRI;")
-                        {
-                        <i class="la la-check icon-2x text-info mr-5"></i>
-                        }
-                        </td>
-                        @{
-                        var tenchucnang = gp.Where(t => t.KeyLink == item.Chucnang).Select(t => t.ChucNang).FirstOrDefault();
-                        }
-                        <td style="text-align:center">
-                        @if (tenchucnang == "NHAPLIEU")
-                        {
-                        <i class="la la-check icon-2x text-info mr-5"></i>
-                        }
-                        </td>
-                        <td style="text-align:center">
-                        @if (tenchucnang == "TONGHOP")
-                        {
-                        <i class="la la-check icon-2x text-info mr-5"></i>
-                        }
-                        </td>
-                        <td style="text-align:center">
-                        @if (tenchucnang == "QUANTRI")
-                        {
-                        <i class="la la-check icon-2x text-info mr-5"></i>
-                        }
-                        </td>
-                        <td style="text-align:center">
-                        @if (string.IsNullOrEmpty(tenchucnang))
-                        {
-                        <i class="la la-check icon-2x text-info mr-5"></i>
-                        }
-                        </td> *@
                             <td style="text-align:center">
                                 <span style="width: 112px;">
                                     @if (item.Status == "Kích hoạt")
@@ -193,16 +141,16 @@
                                         <i class="icon-lg la la-trash text-danger"></i>
                                     </button>
                                 }
-                                @* @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan.phanquyen", "Index"))
-                            {
-                            var tenchucnang = gp.Where(t => t.KeyLink == item.Chucnang).Select(t => t.ChucNang).FirstOrDefault();
-                            @if (string.IsNullOrEmpty(tenchucnang))
-                            {
-                            <a asp-controller="DsTaiKhoan" asp-action="Permissions" asp-route-Username="@item.Username" asp-route-Madv="@item.Madv" asp-route-Chucnang="@item.Chucnang" class="btn btn-sm btn-clean btn-icon" title="Phân quyền">
-                            <i class="icon-lg la la-user-cog text-dark"></i>
-                            </a>
-                            }
-                            } *@
+                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dstaikhoan.phanquyen", "Index"))
+                                {
+                                    var tenchucnang = gp.Where(t => t.KeyLink == item.Chucnang).Select(t => t.ChucNang).FirstOrDefault();
+                                    @if (string.IsNullOrEmpty(tenchucnang))
+                                    {
+                                        <a asp-controller="DsTaiKhoan" asp-action="Permissions" asp-route-Username="@item.Username" asp-route-Madv="@item.Madv" asp-route-Chucnang="@item.Chucnang" class="btn btn-sm btn-clean btn-icon" title="Phân quyền">
+                                            <i class="icon-lg la la-user-cog text-dark"></i>
+                                        </a>
+                                    }
+                                }
                             </td>
                         </tr>
                     }

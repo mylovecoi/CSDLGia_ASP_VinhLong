@@ -384,22 +384,66 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dstaikhoan", "Index"))
                 {
-                    /*var check = _db.Permissions.Where(t => t.Status == "Disable");
-                    if (check != null)
-                    {
-                        _db.Permissions.RemoveRange(check);
-                        _db.SaveChanges();
-                    }*/
-                    var model = _db.Permissions.Where(t => t.Username == Chucnang && t.Tendangnhap == Username && t.Madv == Madv).ToList();
+                    var model_del = _db.Permissions.Where(t => t.Status == "Disable");
+                    _db.Permissions.RemoveRange(model_del);
+                    _db.SaveChanges();
 
-                    ViewData["Username"] = Username;
-                    ViewData["Madv"] = Madv;
-                    ViewData["Chucnang"] = Chucnang;
-                    ViewData["Title"] = "Thông tin quyền truy cập";
+                    var model = _db.Permissions.Where(t => t.Username == Chucnang);
                     
-                    ViewData["MenuLv1"] = "menu_qtnguoidung";
-                    ViewData["MenuLv2"] = "menu_dstaikhoan";
-                    return View("Views/Admin/Systems/DsTaiKhoan/PermissionCustom.cshtml", model);
+                    var data_rolelist = _db.RoleList.Where(t => t.TrangThai == "Active").ToList();
+
+                    if (model.Any())
+                    {
+                        ViewData["Username"] = Username;
+                        ViewData["Madv"] = Madv;
+                        ViewData["Chucnang"] = Chucnang;
+                        ViewData["RoleList"] = data_rolelist;
+                        ViewData["Title"] = "Thông tin quyền truy cập";
+
+                        ViewData["MenuLv1"] = "menu_qtnguoidung";
+                        ViewData["MenuLv2"] = "menu_dstaikhoan";
+                        return View("Views/Admin/Systems/DsTaiKhoan/PermissionCustom.cshtml", model);
+                    }
+                    else
+                    {
+                        var per = new List<Permissions>();
+                        foreach (var item in data_rolelist)
+                        {
+                            per.Add(new Permissions
+                            {
+                                Username = Chucnang,
+                                Roles = item.Role,
+                                Name = item.Name,
+                                Index = true,
+                                Create = false,
+                                Edit = false,
+                                Delete = false,
+                                Approve = false,
+                                Public = false,
+                                Status = "Disable",
+                                Magoc = item.MaGoc,
+                                Level = item.Level,
+                                Sttsx = item.STTSapXep,
+                                Phanloai = item.PhanLoai,
+                            });
+                        }
+                        _db.Permissions.AddRange(per);
+                        _db.SaveChanges();
+
+                        ViewData["Username"] = Username;
+                        ViewData["Madv"] = Madv;
+                        ViewData["Chucnang"] = Chucnang;
+                        ViewData["RoleList"] = data_rolelist;
+                        ViewData["Title"] = "Thông tin quyền truy cập";
+
+                        ViewData["MenuLv1"] = "menu_qtnguoidung";
+                        ViewData["MenuLv2"] = "menu_dstaikhoan";
+                        return View("Views/Admin/Systems/DsTaiKhoan/PermissionCustom.cshtml", per);
+                        
+                    }
+                        
+
+                    
                 }
                 else
                 {
@@ -415,13 +459,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
         [Route("DsTaiKhoan/Permission/Update")]
         [HttpPost]
-        public IActionResult UpdatePermissions(string KeyLink, string Username, string Madv)
+        public IActionResult UpdatePermissions(string KeyLink)
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "hethong.nguoidung.dsnhomtaikhoan", "Edit"))
                 {
-                    var model = _db.Permissions.Where(t => t.Username == KeyLink && t.Tendangnhap == Username && t.Madv == Madv);
+                    var model = _db.Permissions.Where(t => t.Username == KeyLink);
                     foreach (var item in model)
                     {
                         item.Status = "Enable";
@@ -432,7 +476,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     
                     ViewData["MenuLv1"] = "menu_qtnguoidung";
                     ViewData["MenuLv2"] = "menu_dstaikhoan";
-                    return RedirectToAction("Index", "DsTaiKhoan", new { Madv = Madv });
+                    return RedirectToAction("Index", "DsTaiKhoan");
                 }
                 else
                 {
