@@ -218,7 +218,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         }
                     }
 
-
                     result += "<label class='checkbox' style='font-weight: bold; text-decoration: underline;'>";
                     result += "<input type='checkbox' onclick='toggleSelectAll()'/><span></span>Chọn tất cả<br/>";
                     result += "</label>";
