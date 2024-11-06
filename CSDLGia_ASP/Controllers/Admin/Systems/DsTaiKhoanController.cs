@@ -388,9 +388,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     _db.Permissions.RemoveRange(model_del);
                     _db.SaveChanges();
 
-                    var model = _db.Permissions.Where(t => t.Username == Chucnang);
+                    var model = _db.Permissions.Where(t => t.Username == Chucnang).ToList();
                     
                     var data_rolelist = _db.RoleList.Where(t => t.TrangThai == "Active").ToList();
+
+                    var per = new List<Permissions>();
 
                     if (model.Any())
                     {
@@ -398,15 +400,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         ViewData["Madv"] = Madv;
                         ViewData["Chucnang"] = Chucnang;
                         ViewData["RoleList"] = data_rolelist;
-                        ViewData["Title"] = "Thông tin quyền truy cập";
-
+                        ViewData["Title"] = "Thông tin truy cập";
                         ViewData["MenuLv1"] = "menu_qtnguoidung";
                         ViewData["MenuLv2"] = "menu_dstaikhoan";
                         return View("Views/Admin/Systems/DsTaiKhoan/PermissionCustom.cshtml", model);
                     }
                     else
                     {
-                        var per = new List<Permissions>();
                         foreach (var item in data_rolelist)
                         {
                             per.Add(new Permissions
@@ -430,20 +430,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                         _db.Permissions.AddRange(per);
                         _db.SaveChanges();
 
+                        var permission = per.Where(t => t.Username == Chucnang);
+
                         ViewData["Username"] = Username;
                         ViewData["Madv"] = Madv;
                         ViewData["Chucnang"] = Chucnang;
                         ViewData["RoleList"] = data_rolelist;
-                        ViewData["Title"] = "Thông tin quyền truy cập";
-
+                        ViewData["Title"] = "Thông tin truy cập";
                         ViewData["MenuLv1"] = "menu_qtnguoidung";
                         ViewData["MenuLv2"] = "menu_dstaikhoan";
-                        return View("Views/Admin/Systems/DsTaiKhoan/PermissionCustom.cshtml", per);
-                        
+                        return View("Views/Admin/Systems/DsTaiKhoan/PermissionCustom.cshtml", permission);
                     }
-                        
-
-                    
                 }
                 else
                 {
@@ -472,8 +469,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     }
                     _db.Permissions.UpdateRange(model);
                     _db.SaveChanges();
+
                     ViewData["Title"] = "Thông tin quyền truy cập";
-                    
                     ViewData["MenuLv1"] = "menu_qtnguoidung";
                     ViewData["MenuLv2"] = "menu_dstaikhoan";
                     return RedirectToAction("Index", "DsTaiKhoan");

@@ -34,9 +34,9 @@
         </div>
     </div>
     <hr />
-    <form asp-controller="DsTaiKhoan" asp-action="UpdatePermissions" method="post" enctype="multipart/form-data">
+    <form asp-controller="DsTaiKhoan" asp-action="UpdatePermissions" method="post">
         <div class="card-body" id="thongtins_permission">
-            <input id="KeyLink" name="KeyLink" value="@ViewData["Chucnang"]"/>
+            <input hidden id="KeyLink" name="KeyLink" value="@ViewData["Chucnang"]" />
             <table class="table table-striped table-bordered table-hover table-responsive" id="sample_3">
                 <thead>
                     <tr style="text-align:center">
@@ -422,9 +422,8 @@
 
 
 <script>
-    let isSelectAll = false;
-
     function toggleSelectAll() {
+        let isSelectAll = false;
         isSelectAll = !isSelectAll;  // Toggle trạng thái
         const checkboxes = document.querySelectorAll(".itemCheckbox");  // Lấy tất cả checkbox có class "itemCheckbox"
 
@@ -453,7 +452,6 @@
     }
 
     function UpdatePermissionSingle() {
-        //alert($('#KeyLink').val())
         $.ajax({
             url: '/Permissions/Update/Single',
             type: 'POST',
@@ -482,10 +480,5 @@
                 }
             }
         })
-    }
-
-    function getId(id, roles) {
-        document.getElementById("id_delete").value = id;
-        document.getElementById("roles_delete").innerHTML = roles;
     }
 </script>
