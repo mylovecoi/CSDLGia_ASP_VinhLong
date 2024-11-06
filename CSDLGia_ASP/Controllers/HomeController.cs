@@ -223,7 +223,7 @@ namespace CSDLGia_ASP.Controllers
                     ViewData["new_email"] = new_email;
                     return View("Views/Admin/Home/ChangeEmail.cshtml");
                 }
-            }m
+            }
             else
             {
                 return View("Views/Admin/Error/SessionOut.cshtml");
