@@ -4,8 +4,9 @@
     {
         public int countGiaThueDatNuocHT { get; set; }
         public int countGiaThueDatNuocCHT { get; set; }
-        public int countGiaRungHT { get; set; }
-        public int countGiaRungCHT { get; set; }
+        public int countGiaThueDatNuocHTthang { get; set; }
+        public int countGiaThueDatNuocCHTthang { get; set; }
+
 
     }
 }
