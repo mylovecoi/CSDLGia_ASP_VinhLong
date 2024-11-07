@@ -32,7 +32,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var dsdiaban = _db.DsDiaBan.ToList();
                     var dsdonvi = _db.DsDonVi.ToList();
                     Madv = string.IsNullOrEmpty(Madv) ? "all" : Madv;
-                    var model = _db.Users.Where(t => !t.Sadmin);
+                    var model = _db.Users.Where(t => !t.Sadmin && t.Status == "Kích hoạt");
+
                     if (Madv != "all")
                     {
                         model = model.Where(t => t.Madv == Madv);

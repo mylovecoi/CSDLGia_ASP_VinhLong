@@ -515,8 +515,10 @@
     </div>
 </div>
 <script>
+    let isSelectAll = false;
+
     function toggleSelectAll() {
-        let isSelectAll = false;
+
         isSelectAll = !isSelectAll;  // Toggle trạng thái
         const checkboxes = document.querySelectorAll(".itemCheckbox");  // Lấy tất cả checkbox có class "itemCheckbox"
 

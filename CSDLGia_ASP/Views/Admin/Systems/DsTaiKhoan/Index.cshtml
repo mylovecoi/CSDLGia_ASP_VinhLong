@@ -89,6 +89,7 @@
                         <th>Phân loại</th>
                         <th>Tên tài khoản</th>
                         <th>Tài khoản truy cập</th>
+                        <th>Nhóm quyền</th>
                         <th>Trạng thái</th>
                         <th>Thao tác</th>
                     </tr>
@@ -112,6 +113,12 @@
                             </td>
                             <td>@item.Name</td>
                             <td class="active text-center">@item.Username</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.Chucnang))
+                                {
+                                    @gp.FirstOrDefault(x => x.KeyLink == item.Chucnang)?.TenNhomQ
+                                }
+                            </td>
                             <td style="text-align:center">
                                 <span style="width: 112px;">
                                     @if (item.Status == "Kích hoạt")
