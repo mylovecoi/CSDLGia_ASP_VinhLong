@@ -3,6 +3,7 @@ using CSDLGia_ASP.Helper;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using CSDLGia_ASP.Models.Systems;
 using CSDLGia_ASP.Models.Systems.KetNoiGiaDichVu;
+using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Systems;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,11 +25,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
     {
         private readonly CSDLGiaDBContext _db;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IDsDonviService _dsDonviService;
+        private readonly ITrangThaiHoSoService _trangThaiHoSoService;
 
-        public GiaHhDvkThController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment)
+        public GiaHhDvkThController(CSDLGiaDBContext db, IWebHostEnvironment hostEnvironment, IDsDonviService dsDonviService, ITrangThaiHoSoService trangThaiHoSoService)
         {
             _db = db;
             _hostEnvironment = hostEnvironment;
+            _dsDonviService = dsDonviService;
+            _trangThaiHoSoService = trangThaiHoSoService;
         }
 
         [Route("GiaHhDvk/TongHop")]
@@ -49,9 +54,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     var dsDonVi = dsDonViQuery.ToList();
                     Nam = Nam ?? Helpers.ConvertYearToStr(DateTime.Now.Year);
                     Thang = Thang ?? Helpers.ConvertYearToStr(DateTime.Now.Month);
-                    maDV = maDV ?? dsDonVi.FirstOrDefault().MaDv;
-
-                    var model = _db.GiaHhDvkTh.Where(t => t.Madv == maDV);
+                    //maDV = maDV ?? dsDonVi.FirstOrDefault().MaDv;
+                    //var model = _db.GiaHhDvkTh.Where(t => t.Madv == maDV);
+                    maDV = string.IsNullOrEmpty(maDV) ? Helpers.GetSsAdmin(HttpContext.Session, "Madv") : maDV;
+                    var model_donvi = _dsDonviService.GetListDonvi(Helpers.GetSsAdmin(HttpContext.Session, "Madv"));
+                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+                    IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvkTh> model = _db.GiaHhDvkTh.Where(t => list_madv.Contains(t.Madv));
+                    
                     if (Nam != "all")
                     {
                         model = model.Where(t => t.Nam == Nam);
@@ -62,48 +71,48 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     }
                     //Lấy danh sách hồ sơ đơn vị cấp dưới gửi lên
 
-                    var dsdonvi = _db.DsDonVi;
-                    var dsdiaban = _db.DsDiaBan;
-                    var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == maDV)
-                                    join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
-                                    select new VMDsDonVi
-                                    {
-                                        Id = dv.Id,
-                                        MaDiaBan = dv.MaDiaBan,
-                                        MaDv = dv.MaDv,
-                                        TenDv = dv.TenDv,
-                                        ChucNang = dv.ChucNang,
-                                        Level = db.Level,
-                                    }).First();
+                    //var dsdonvi = _db.DsDonVi;
+                    //var dsdiaban = _db.DsDiaBan;
+                    //var getdonvi = (from dv in dsdonvi.Where(t => t.MaDv == maDV)
+                    //                join db in dsdiaban on dv.MaDiaBan equals db.MaDiaBan
+                    //                select new VMDsDonVi
+                    //                {
+                    //                    Id = dv.Id,
+                    //                    MaDiaBan = dv.MaDiaBan,
+                    //                    MaDv = dv.MaDv,
+                    //                    TenDv = dv.TenDv,
+                    //                    ChucNang = dv.ChucNang,
+                    //                    Level = db.Level,
+                    //                }).First();
 
 
-                    switch (getdonvi.Level)
-                    {
-                        case "H":
-                            {
-                                var dsHoSo = _db.GiaHhDvk.Where(t => t.Madv_h == maDV && t.Thang == Thang);
-                                ViewData["Hoso"] = dsHoSo;
-                                break;
-                            }
-                        case "T":
-                            {
-                                var dsHoSo = _db.GiaHhDvk.Where(t => t.Madv_t == maDV && t.Thang == Thang);
-                                ViewData["Hoso"] = dsHoSo;
-                                break;
-                            }
-                        case "ADMIN":
-                            {
-                                var dsHoSo = _db.GiaHhDvk.Where(t => t.Madv_ad == maDV && t.Thang == Thang);
-                                ViewData["Hoso"] = dsHoSo;
-                                break;
-                            }
-                    }
+                    //switch (getdonvi.Level)
+                    //{
+                    //    case "H":
+                    //        {
+                    //            var dsHoSo = _db.GiaHhDvk.Where(t => t.Madv_h == maDV && t.Thang == Thang);
+                    //            ViewData["Hoso"] = dsHoSo;
+                    //            break;
+                    //        }
+                    //    case "T":
+                    //        {
+                    //            var dsHoSo = _db.GiaHhDvk.Where(t => t.Madv_t == maDV && t.Thang == Thang);
+                    //            ViewData["Hoso"] = dsHoSo;
+                    //            break;
+                    //        }
+                    //    case "ADMIN":
+                    //        {
+                    //            var dsHoSo = _db.GiaHhDvk.Where(t => t.Madv_ad == maDV && t.Thang == Thang);
+                    //            ViewData["Hoso"] = dsHoSo;
+                    //            break;
+                    //        }
+                    //}
 
-
+                    var dsHoSo = _db.GiaHhDvk.Where(t => t.Madv == maDV && t.Thang == Thang);
+                    ViewData["Hoso"] = dsHoSo;
                     ViewData["dsnhom"] = _db.GiaHhDvkNhom;
-                    /*ViewData["model"] = model_join;*/
                     ViewData["DsDiaBan"] = _db.DsDiaBan;
-                    ViewData["DsDonVi"] = dsdonvi;
+                    ViewData["DsDonVi"] = _db.DsDonVi;
                     ViewData["thang"] = Thang;
                     ViewData["nam"] = Nam;
                     ViewData["maDV"] = maDV;
@@ -111,7 +120,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHhDvk
                     ViewData["Title"] = "Tổng hợp giá hàng hóa dịch vụ khác";
                     ViewData["MenuLv1"] = "menu_hhdvk";
                     ViewData["MenuLv2"] = "menu_hhdvk_th";
-                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/TongHop/Index.cshtml", model.ToList());
+                    return View("Views/Admin/Manages/DinhGia/GiaHhDvk/TongHop/Index.cshtml", model);
                 }
                 else
                 {

@@ -34,7 +34,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
             _trangThaiHoSoService = trangThaiHoSoService;
         }
 
-        [Route("GiaThueMatDatMatNuoc")]
+        [Route("GiaThueMatDatMatNuoc/DanhSach")]
         [HttpGet]
         public IActionResult Index(string Madv, int Nam)
         {

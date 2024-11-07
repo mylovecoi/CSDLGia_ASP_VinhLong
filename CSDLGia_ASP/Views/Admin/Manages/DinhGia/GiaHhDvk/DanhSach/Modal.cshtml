@@ -5,8 +5,8 @@
     var nhomhhdvk = (IEnumerable<GiaHhDvkNhom>)ViewData["Nhomhhdvk"];
     var hoso = (IEnumerable<GiaHhDvkTh>)ViewData["Hoso"];
     int record_id = 1;
-    var nam_start = DateTime.Now.Year - 5;
-    var nam_stop = DateTime.Now.Year + 1;
+    int nam_start = DateTime.Now.Year - 5;
+    int nam_stop = DateTime.Now.Year + 1;
 }
 
 <!--Tổng hợp HH-DV Modal-->
@@ -41,9 +41,9 @@
                             <div class="form-group">
                                 <label>Tháng</label>
                                 <select class="form-control" id="ThangTh" name="ThangTh">
-                                    @for (var i = 1; i <= 12; i++)
+                                    @for (int i = 1; i <= 12; i++)
                                     {
-                                        <!option value="@i" @((string)ViewData["Thang"] == i.ToString() ? "selected" : "")>@i</!option>
+                                        <!option value="@i" @(Int16.Parse(ViewData["Thang"].ToString()) == i ? "selected" : "") > @i </!option>
                                     }
                                 </select>
                             </div>
@@ -52,12 +52,12 @@
                             <div class="form-group">
                                 <label>Năm</label>
                                 <select class="form-control" id="NamTh" name="NamTh">
-                                        
-                                        @for (var i = nam_start; i <= nam_stop; i++)
-                                        {
-                                            <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
-                                        }
-                                    
+
+                                    @for (int i = nam_start; i <= nam_stop; i++)
+                                    {
+                                        <!option value="@i" @(Int16.Parse(ViewData["Nam"].ToString()) == i ? "selected" : "")>@i</!option>
+                                    }
+
                                 </select>
                             </div>
                         </div>
@@ -84,6 +84,7 @@
                                         <td style="text-align: center">
                                             @if (!string.IsNullOrEmpty(item.Matt))
                                                 @nhomhhdvk.FirstOrDefault(x => x.Matt == item.Matt).Tentt
+
 
                                         </td>
                                         <td style="text-align: center">@item.Sobc</td>
@@ -123,12 +124,11 @@
                 </div>
                 <hr />
                 <div class="modal-body">
-                    <div class="row">                       
+                    <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Đơn vị báo cáo</label>
                                 <select id="MadvBc" name="MadvBc" class="form-control">
-                                    @* @foreach (var dv in dsdonvi.Where(t => t.Level != "ADMIN")) *@
                                     @foreach (var dv in dsdonvi)
                                     {
                                         <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
@@ -151,9 +151,9 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Tháng</label>
                                 <select class="form-control" id="ThangBc" name="ThangBc">
-                                    @for (var i = 1; i <= 12; i++)
+                                    @for (int i = 1; i <= 12; i++)
                                     {
-                                        <!option value="@i" @((string)ViewData["Thang"] == i.ToString() ? "selected" : "")>@i</!option>
+                                        <!option value="@i" @(Int16.Parse(ViewData["Thang"].ToString()) == i ? "selected" : "") > @i </!option>
                                     }
                                 </select>
                             </div>
@@ -162,12 +162,12 @@
                             <div class="form-group fv-plugins-icon-container">
                                 <label>Năm</label>
                                 <select class="form-control" id="NamBc" name="NamBc">
-                                    
-                                        @for (var i = nam_start; i <= nam_stop; i++)
-                                        {
-                                            <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
-                                        }
-                                    
+
+                                    @for (int i = nam_start; i <= nam_stop; i++)
+                                    {
+                                        <!option value="@i" @(Int16.Parse(ViewData["Nam"].ToString()) == i ? "selected" : "")>@i</!option>
+                                    }
+
                                 </select>
                             </div>
                         </div>
@@ -232,43 +232,46 @@
 </div>
 
 <!--Chuyển Modal-->
-<div class="modal fade kt_select2_modal" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="Chuyen_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form asp-controller="GiaHhDvk" asp-action="Complete">
-            <div class="modal-content">
+        <div class="modal-content">
+            <form asp-controller="GiaHhDvk" asp-action="Chuyen">
                 <div class="modal-header">
                     <h3 class="card-label">
-                        Đồng ý hoàn thành hồ sơ?
+                        Đồng ý chuyển hồ sơ lên đơn vị chủ quản?
                     </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p style="color:blue">Hồ sơ đã hoàn thành sẽ được chuyển lên đơn vị tiếp nhận. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
+                    <p style="color:blue">Hồ sơ sẽ được chuyển lên đơn vị chủ quản. Bạn cần liên hệ đơn vị chủ quản để chỉnh sửa hồ sơ nếu cần!</p>
                     <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group fv-plugins-icon-container">
-                                <label>Cơ quan tiếp nhận*</label>
-                                <select class="form-control select2basic" id="macqcq_chuyen" name="macqcq_chuyen">
-
-                                    @foreach (var item in dsdonvith)
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Hồ sơ:</label>
+                                <select class="form-control" id="trangthai_complete" name="trangthai_complete">
+                                    <option value="CD">Chờ duyệt</option>
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Approve"))
                                     {
-                                        <!option value="@item.MaDv">@item.TenDv</!option>
+                                        <option value="DD">Đã duyệt</option>
                                     }
-
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Public"))
+                                    {
+                                        <option value="CB">Công bố</option>
+                                    }
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <input hidden id="mahs_chuyen" name="mahs_chuyen" />
+                    <input id="mahs_chuyen" name="mahs_chuyen" type="hidden" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
                     <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 

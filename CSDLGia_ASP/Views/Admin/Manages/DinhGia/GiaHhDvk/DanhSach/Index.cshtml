@@ -4,6 +4,13 @@
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     string maDV = (string)ViewData["Madv"];
     var dscqcq = (IEnumerable<DsDonVi>)ViewData["DsCqcq"];
+    DateTime currentDate = DateTime.Today;
+    DateTime firstDayOfYear = new DateTime(currentDate.Year, 1, 1);
+    DateTime lastDayOfYear = new DateTime(currentDate.Year, 12, 31);
+    string FromDate = ViewData["FromDate"]?.ToString() ?? firstDayOfYear.ToString("yyyy-MM-dd");
+    string ToDate = ViewData["ToDate"]?.ToString() ?? lastDayOfYear.ToString("yyyy-MM-dd");
+    int Nam = ViewData["Nam"] as int? ?? 0;
+    int Thang = ViewData["Thang"] as int? ?? 0;
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk>
 
@@ -73,10 +80,10 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Tháng</label>
                     <select class="form-control select2basic" id="Thang" name="Thang">
-                        <option value="all">--Tất cả--</option>
+                        <option value="0">--Tất cả--</option>
                         @for (var i = 1; i <= 12; i++)
                         {
-                            <!option value="@i" @((string)ViewData["Thang"] == i.ToString() ? "selected" : "")>@i</!option>
+                            <!option value="@i" @(Thang == i ? "selected" : "")>@i</!option>
                         }
                     </select>
                 </div>
@@ -85,13 +92,13 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
                     <select class="form-control select2basic" id="Nam" name="Nam">
-                        <option value="all">--Tất cả--</option>
+                        <option value="0">--Tất cả--</option>
                         @{
-                            var nam_start = DateTime.Now.Year - 5;
-                            var nam_stop = DateTime.Now.Year + 1;
-                            for (var i = nam_start; i <= nam_stop; i++)
+                            int nam_start = DateTime.Now.Year - 5;
+                            int nam_stop = DateTime.Now.Year + 1;
+                            for (int i = nam_start; i <= nam_stop; i++)
                             {
-                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
+                                <!option value="@i" @(Nam == i ? "selected" : "")>Năm @i</!option>
                             }
                         }
                     </select>
@@ -145,36 +152,37 @@
                                 Ngày: @Helpers.ConvertDateToStr(item.Thoidiemlk)
                             </td>
                             <td style="text-align: center">
-                                @if (item.Trangthai == "CHT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-outline-warning label-inline">Chưa hoàn thành</span>
-                                }
-                                @if (item.Trangthai == "HHT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-outline-danger label-inline">Bị trả lại</span>
-                                    <p>Lý do:&nbsp;@item.Lydo</p>
-                                }
-                                @if (item.Trangthai == "HT")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-info label-inline">Đã hoàn thành và gửi đi</span>
-                                }
-                                @if (item.Trangthai == "CB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-success label-inline">Công bố</span>
-                                }
-                                @if (item.Trangthai == "HCB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-danger label-inline">Hủy công bố</span>
-                                }
-                                @if (item.Trangthai == "CCB")
-                                {
-                                    <span class="label font-weight-bold label-lg  label-light-warning label-inline">Chưa công bố</span>
-                                }
+                                <span style="width: 112px;">
+                                    @if (item.Trangthai == "CC")
+                                    {
+                                        <span class="label font-weight-bold label-lg label-xl label-light-info label-inline">Chờ chuyển</span>
+                                    }
+                                    else if (item.Trangthai == "CD")
+                                    {
+                                        <span class="label font-weight-bold label-lg label-inline label-light-warning">Chờ duyệt</span>
+                                    }
+                                    else if (item.Trangthai == "DD")
+                                    {
+                                        <span class="label font-weight-bold label-lg label-inline label-light-primary">Đã duyệt</span>
+                                    }
+                                    else if (item.Trangthai == "BTL")
+                                    {
+                                        <span class="label font-weight-bold label-lg label-inline label-light-danger">Bị trả lại</span>
+
+                                        <br />
+                                        <span>Lý do:&nbsp;@item.Lydo</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label font-weight-bold label-lg label-inline label-light-success">Công bố</span>
+                                    }
+                                </span>
                             </td>
                             <td style="text-align: center">@item.Ghichu</td>
                             <td style="text-align: left">
                                 @if (!string.IsNullOrEmpty(item.Macqcq))
                                     @(dscqcq.FirstOrDefault(x => x.MaDv == item.Macqcq)?.TenDv ?? "")
+
                             </td>
                             <td>
                                 <a asp-controller="GiaHhDvk" asp-action="Show" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Xem chi tiết"
@@ -184,7 +192,7 @@
                                 <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
                                     <i class="icon-lg la la-file-alt text-dark"></i>
                                 </button>
-                                @if (item.Trangthai == "CHT" || item.Trangthai == "HHT")
+                                @if (item.Trangthai == "CC" || item.Trangthai == "BTL")
                                 {
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Edit"))
                                     {
@@ -192,16 +200,24 @@
                                             <i class="icon-lg la la-edit text-primary"></i>
                                         </a>
                                     }
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Approve"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Chuyển" data-toggle="modal" data-target="#Chuyen_Modal" onclick="Chuyen('@item.Mahs')">
+                                            <i class="icon-lg la la-mail-forward text-primary"></i>
+                                        </button>
+                                    }
                                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.tt", "Delete"))
                                     {
+
                                         <button type="button" class="btn btn-sm btn-clean btn-icon" title="Xóa" data-toggle="modal" data-target="#Delete_Modal" onclick="SetDelete('@item.Id')">
                                             <i class="icon-lg la la-trash text-danger"></i>
                                         </button>
                                     }
-                                    <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#Chuyen_Modal" onclick="Chuyen('@item.Mahs')">
-                                        <i class="icon-lg la la-check text-primary "></i>
-                                    </button>
                                 }
+                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-redo-alt text-danger"></i>
+                                </a>
                             </td>
                         </tr>
                     }

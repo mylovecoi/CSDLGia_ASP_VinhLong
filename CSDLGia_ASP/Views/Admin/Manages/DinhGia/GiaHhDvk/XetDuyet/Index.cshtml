@@ -3,6 +3,13 @@
     var dsdiaban = (IEnumerable<DsDiaBan>)ViewData["DsDiaBan"];
     var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
     var dsdonvichuyen = (IEnumerable<DsDonVi>)ViewData["DsDonViChuyen"];
+    DateTime currentDate = DateTime.Today;
+    DateTime firstDayOfYear = new DateTime(currentDate.Year, 1, 1);
+    DateTime lastDayOfYear = new DateTime(currentDate.Year, 12, 31);
+    string FromDate = ViewData["FromDate"]?.ToString() ?? firstDayOfYear.ToString("yyyy-MM-dd");
+    string ToDate = ViewData["ToDate"]?.ToString() ?? lastDayOfYear.ToString("yyyy-MM-dd");
+    int Nam = ViewData["Nam"] as int? ?? 0;
+    int Thang = ViewData["Thang"] as int? ?? 0;
 }
 @model IEnumerable<CSDLGia_ASP.Models.Manages.DinhGia.GiaHhDvk>
 
@@ -23,12 +30,11 @@
         });
 
         $(function () {
-            $('#Nam, #Thang, #Madv').change(function () {
+            $('#Nam, #Thang').change(function () {
                 var current_path_url = '/GiaHhDvk/XetDuyet?';
                 var nam = '&Nam=' + $('#Nam').val();
                 var thang = '&Thang=' + $('#Thang').val();
-                var madv = '&Madv=' + $('#Madv').val();
-                var url = current_path_url + nam + thang + madv;
+                var url = current_path_url + nam + thang;
                 window.location.href = url;
             })
         });
@@ -52,10 +58,10 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Tháng</label>
                     <select class="form-control select2basic" id="Thang" name="Thang">
-                        <option value="all">--Tất cả--</option>
+                        <option value="0">--Tất cả--</option>
                         @for (var i = 1; i <= 12; i++)
                         {
-                            <!option value="@i" @((string)ViewData["Thang"] == i.ToString() ? "selected" : "")>@i</!option>
+                            <!option value="@i" @(Thang == i ? "selected" : "")>@i</!option>
                         }
                     </select>
                 </div>
@@ -64,25 +70,14 @@
                 <div class="form-group fv-plugins-icon-container">
                     <label style="font-weight:bold; color:blue">Năm</label>
                     <select class="form-control select2basic" id="Nam" name="Nam">
-                        <option value="all">--Tất cả--</option>
+                        <option value="0">--Tất cả--</option>
                         @{
-                            var nam_start = DateTime.Now.Year - 5;
-                            var nam_stop = DateTime.Now.Year + 1;
-                            for (var i = nam_start; i <= nam_stop; i++)
+                            int nam_start = DateTime.Now.Year - 5;
+                            int nam_stop = DateTime.Now.Year + 1;
+                            for (int i = nam_start; i <= nam_stop; i++)
                             {
-                                <!option value="@i" @((string)ViewData["Nam"] == Helpers.ConvertYearToStr(i) ? "selected" : "")>@i</!option>
+                                <!option value="@i" @(Nam == i ? "selected" : "")>Năm @i</!option>
                             }
-                        }
-                    </select>
-                </div>
-            </div>
-            <div class="col-xl-6">
-                <div class="form-group fv-plugins-icon-container">
-                    <label style="font-weight:bold; color:blue">Đơn vị</label>
-                    <select class="form-control select2basic" id="Madv" name="Madv">
-                        @foreach (var item in dsdonvi)
-                        {
-                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
                         }
                     </select>
                 </div>
@@ -146,46 +141,56 @@
                                     <i class="icon-lg la la-eye text-success"></i>
                                 </a>
 
-                                @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.xd", "Approve"))
+                                <button type="button" onclick="GetFile('@item.Mahs')" class="btn btn-sm btn-clean btn-icon" title="Giấy tờ kèm theo">
+                                    <i class="icon-lg la la-file-alt text-dark"></i>
+                                </button>
+
+                                @if (item.Trangthai == "CD")
                                 {
-
-                                    @if (item.Trangthai == "HT" || item.Trangthai == "HCB")
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.xd", "Approve"))
                                     {
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                                onclick="TraLai('@item.Id', '@item.Macqcq')">
+                                        <button type="submit" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
+                                                onclick="TraLai('@item.Id')">
                                             <i class="icon-lg la la-reply text-danger "></i>
                                         </button>
-
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Công bố" data-toggle="modal" data-target="#CongBo_Modal"
-                                                onclick="CongBo('@item.Mahs')">
-                                            <i class="icon-lg la la-send text-primary "></i>
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Duyệt" data-toggle="modal" data-target="#Duyet_Modal" onclick="SetDuyet('@item.Mahs', '@item.Soqd')">
+                                            <i class="icon-lg la la-check text-primary"></i>
                                         </button>
-
                                     }
+                                }
 
-                                    @if (item.Trangthai == "HHT" || item.Trangthai == "CHT")
+                                @if (item.Trangthai == "DD")
+                                {
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.xd", "Approve"))
                                     {
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Trả lại" data-toggle="modal" data-target="#TraLai_Modal"
-                                                onclick="TraLai('@item.Id', '@item.Macqcq')">
-                                            <i class="icon-lg la la-reply text-danger "></i>
-                                        </button>
-
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hoàn thành" data-toggle="modal" data-target="#ChuyenXd_Modal"
-                                                onclick="ChuyenXd('@item.Mahs', '@item.Macqcq')">
-                                            <i class="icon-lg la la-check text-primary "></i>
-                                        </button>
-
-                                    }
-                                    @if (item.Trangthai == "CB")
-                                    {
-                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy công bố" data-toggle="modal" data-target="#HuyCongBo_Modal"
-                                                onclick="HuyCongBo('@item.Mahs')">
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy duyệt" data-toggle="modal" data-target="#HuyDuyet_Modal"
+                                                onclick="SetHuyDuyet('@item.Mahs','@item.Soqd')">
                                             <i class="icon-lg la la-times text-danger "></i>
                                         </button>
                                     }
-
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.xd", "Public"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Công bố" data-toggle="modal" data-target="#CongBo_Modal"
+                                                onclick="CongBo('@item.Mahs','@item.Soqd')">
+                                            <i class="icon-lg la la-send text-primary "></i>
+                                        </button>
+                                    }
                                 }
-                            </td>
+                                @if (item.Trangthai == "CB")
+                                {
+                                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "csdlmucgiahhdv.hhdvk.xd", "Public"))
+                                    {
+                                        <button type="button" class="btn btn-sm btn-clean btn-icon" title="Hủy công bố" data-toggle="modal" data-target="#HuyCongBo_Modal"
+                                                onclick="HuyCongBo('@item.Mahs', '@item.Soqd')">
+                                            <i class="icon-lg la la-times text-danger "></i>
+                                        </button>
+                                    }
+                                }
+
+                                <a asp-controller="TrangThaiHoSo" target="_blank" asp-action="Index" asp-route-Mahs="@item.Mahs" class="btn btn-sm btn-clean btn-icon" title="Trạng Thái Hồ Sơ"
+                                   target="_blank">
+                                    <i class="icon-lg la la-redo-alt text-danger"></i>
+                                </a>
                         </tr>
                     }
                 }
@@ -194,3 +199,4 @@
     </div>
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaHhDvk/XetDuyet/Modal.cshtml")
+@await Html.PartialAsync("~/Views/Admin/Manages/DinhGia/GiaHhDvk/ThongTinGiayTo/Show.cshtml")
