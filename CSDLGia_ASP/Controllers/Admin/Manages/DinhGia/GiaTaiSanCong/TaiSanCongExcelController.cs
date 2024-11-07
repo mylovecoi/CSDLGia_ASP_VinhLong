@@ -174,7 +174,23 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.TaiSanCong
                 }
                 _db.GiaTaiSanCongCt.AddRange(list_add);
                 _db.SaveChanges();
-                return RedirectToAction("Create", "TaiSanCongExcel", new { Madv = Madv, Mahs = Mahs });
+                var model = new CSDLGia_ASP.Models.Manages.DinhGia.GiaTaiSanCong
+                {
+                    Madv = request.Madv,
+                    Thoidiem = DateTime.Now,
+                    Mahs = Mahs
+                };
+                model.GiaTaiSanCongCt = _db.GiaTaiSanCongCt.Where(t => t.Mahs == Mahs).ToList();
+
+
+                ViewData["DmDvt"] = _db.DmDvt.ToList();
+                ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
+                ViewData["Dmtaisancong"] = _db.GiaTaiSanCongDm.ToList();
+                ViewData["Title"] = "Thêm mới giá tài sản công";
+                ViewData["MenuLv1"] = "menu_dg";
+                ViewData["MenuLv2"] = "menu_tsc";
+                ViewData["MenuLv3"] = "menu_giatsc_tt";
+                return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/DanhSach/Create.cshtml", model);
             }
             else
             {

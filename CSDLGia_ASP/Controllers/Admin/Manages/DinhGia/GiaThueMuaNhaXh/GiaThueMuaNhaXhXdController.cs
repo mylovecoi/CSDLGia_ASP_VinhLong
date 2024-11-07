@@ -48,7 +48,10 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueMuaNhaXhXd
                                           Soqd = dg.Soqd,
                                           Thongtin = dg.Thongtin,
                                           TenDonVi = donvi.TenDv,
-                                          Trangthai = dg.Trangthai
+                                          Trangthai = dg.Trangthai,
+                                          Mota =dg.Mota,
+
+
                                       });
 
                     ViewData["Madv"] = Madv;

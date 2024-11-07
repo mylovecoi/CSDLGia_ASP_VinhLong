@@ -432,20 +432,14 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.thongtin", "Edit"))
-                {
+               
                     var model = _db.GiaThueMatDatMatNuoc.FirstOrDefault(t => t.Mahs == Mahs);
                     var modelct = _db.GiaThueMatDatMatNuocCt.Where(t => t.Mahs == Mahs);
                     model.GiaThueMatDatMatNuocCt = modelct.ToList();
                     ViewData["DsNhom"] = _db.GiaThueMatDatMatNuocNhom;                
                     ViewData["Title"] = "Chi tiết giá thuê mặt dất mặt nước";
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/Show.cshtml", model);
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
+               
             }
             else
             {

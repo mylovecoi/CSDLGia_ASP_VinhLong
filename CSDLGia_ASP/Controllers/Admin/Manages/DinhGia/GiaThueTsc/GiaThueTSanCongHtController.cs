@@ -95,7 +95,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueTsc
                     _db.GiaThueTaiSanCong.Update(model);
                     _db.SaveChanges();
                     //Add Log
-                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Cập nhật");
+                    _trangThaiHoSoService.LogHoSo(model.Mahs, Helpers.GetSsAdmin(HttpContext.Session, "Name"), "Duyệt");
 
                     // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
                     LoggingHelper.LogAction(HttpContext, _db, "XetDuyet", "Xét duyệt hồ sơ giá thuê tài sản công");

@@ -231,15 +231,40 @@ namespace CSDLGia_ASP.Controllers.Admin.CongBo
         {
             var model = _db.GiaGiaoDichBDS.FirstOrDefault(t => t.Mahs == Mahs);
             var modelct = _db.GiaGiaoDichBDSCt.Where(t => t.Mahs == Mahs);
-            model.GiaGiaoDichBDSCt = modelct.ToList();
-            ViewData["DsDiaBan"] = _db.DsDiaBan.ToList();
-            ViewData["DsDonVi"] = _db.DsDonVi.ToList();
+
+            var viewModel = new CSDLGia_ASP.Models.Manages.DinhGia.GiaGiaoDichBDS
+            {
+                // Thông tin hồ sơ
+                Soqd = model.Soqd,
+                Mahs = model.Mahs,
+                Madv = model.Madv,
+                Madiaban = model.Madiaban,
+                Thoidiem = model.Thoidiem,
+                Macqcq = model.Macqcq,
+                //// Thông tin hồ sơ chi tiết
+                //Ten = modelct.Ten,
+                //Dvt = modelct.Dvt,
+                //Gia = modelct.Gia,
+            };
+            viewModel.GiaGiaoDichBDSCt = modelct.ToList();
             var donvi = _db.DsDonVi.First(x => x.MaDv == model.Madv);
             ViewData["DanhMucNhom"] = _db.GiaGiaoDichBDSNhom;
-            ViewData["TenDiaBan"] = _db.DsDiaBan.First(x => x.MaDiaBan == donvi.MaDiaBan).TenDiaBan;
+            //ViewData["TenDiaBan"] = _db.DsDiaBan.First(x => x.MaDiaBan == donvi.MaDiaBan).TenDiaBan;
+
+            var diaBan = _db.DsDonVi.FirstOrDefault(x => x.MaDv == donvi.MaDv);
+
+            if (diaBan != null)
+            {
+                ViewData["TenDiaBan"] = diaBan.TenDv;
+            }
+            else
+            {
+                ViewData["TenDiaBan"] = "Không tìm thấy địa bàn";
+            }
+
             ViewData["TenDonVi"] = donvi.TenDv;
-            ViewData["Title"] = "Chi tiết giá giao dịch bất động sản";
-            return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/DanhSach/Show.cshtml", model);
+            ViewData["Title"] = "Bảng giá giao dịch bất động sản";
+            return View("Views/Admin/Manages/DinhGia/GiaGiaoDichBDS/DanhSach/Show.cshtml", viewModel);
         }
 
         [Route("CongBo/GiaNuocSh")]
