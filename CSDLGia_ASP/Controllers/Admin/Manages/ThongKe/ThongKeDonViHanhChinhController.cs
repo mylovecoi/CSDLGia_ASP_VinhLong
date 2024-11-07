@@ -1,31 +1,30 @@
-﻿
-using CSDLGia_ASP.Database;
+﻿using CSDLGia_ASP.Database;
 using CSDLGia_ASP.Helper;
-using CSDLGia_ASP.Models.Manages.DinhGia;
-using CSDLGia_ASP.Services;
 using CSDLGia_ASP.ViewModels.Systems;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using CSDLGia_ASP.Models.Manages.DinhGia;
+using CSDLGia_ASP.Services;
+using Microsoft.AspNetCore.Hosting;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CSDLGia_ASP.Controllers.Admin.Systems
+namespace CSDLGia_ASP.Controllers.Admin.Manages.ThongKe
 {
-    public class ThongKeController : Controller
+    public class ThongKeDonViHanhChinhController : Controller
     {
         private readonly CSDLGiaDBContext _db;
 
-        public ThongKeController(CSDLGiaDBContext db)
+        public ThongKeDonViHanhChinhController(CSDLGiaDBContext db)
         {
             _db = db;
         }
 
-        [Route("ThongKe/DanhSach")]
+        [Route("ThongKeDonViHanhChinh/DanhSach")]
         [HttpGet]
         public IActionResult Index(int Nam, string Madv, int Thang)
         {
@@ -722,7 +721,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     ViewData["Nam"] = Nam == 0 ? DateTime.Now.Year : Nam;
                     ViewData["Thang"] = Thang == 0 ? DateTime.Now.Month : Thang;
 
-                    return View("Views/Admin/Systems/ThongKe/Index.cshtml", viewModel);
+                    return View("Views/Admin/Manages/ThongKe/DonViHanhChinh/Index.cshtml", viewModel);
 
                 }
                 else
@@ -737,10 +736,5 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             }
 
         }//
-
     }
 }
-
-
-
-

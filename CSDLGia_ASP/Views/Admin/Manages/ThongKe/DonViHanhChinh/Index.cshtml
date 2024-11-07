@@ -1,0 +1,475 @@
+﻿
+@{
+    var dsdonvi = (IEnumerable<DsDonVi>)ViewData["DsDonVi"];
+    // int Nam = ViewData["Nam"] as int? ?? 0;
+    // int Thang = ViewData["Thang"] as int? ?? 0;
+
+    int Nam = ViewData["Nam"] as int? ?? DateTime.Now.Year;
+    int Thang = ViewData["Thang"] as int? ?? DateTime.Now.Month;
+}
+@model CSDLGia_ASP.ViewModels.Systems.VMThongKe
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+
+}
+
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            TableManaged.init();
+            TableManaged2.init();
+            $('.select2multi').select2();
+        });
+
+        $(function () {
+            $('#Madv, #Nam,#Thang').change(function () {
+                var current_path_url = '/ThongKe/DanhSach?';
+                var madv = '&Madv=' + $('#Madv').val();
+                var nam = '&Nam=' + $('#Nam').val();
+                var thang = '&Thang=' + $('#Thang').val();
+                var url = current_path_url + madv + nam + thang;
+                window.location.href = url;
+            })
+        });
+    </script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                Thống kê hồ sơ của đơn vị hành chính
+            </h3>
+        </div>
+       
+    </div>
+    <hr />
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Tháng</label>
+                    <select class="form-control select2basic" id="Thang" name="Thang">
+                        @{
+                            for (int thang = 1; thang <= 12; thang++)
+                            {
+                                <!option value="@thang" @(Thang == thang ? "selected" : "") >Tháng @thang</!option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Năm</label>
+                    <select class="form-control select2basic" id="Nam" name="Nam">
+
+                        @{
+                            int nam_start = DateTime.Now.Year - 5;
+                            int nam_stop = DateTime.Now.Year + 1;
+                            for (int i = nam_start; i <= nam_stop; i++)
+                            {
+                                <!option value="@i" @(Nam == i ? "selected" : "") > Năm @i</!option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group fv-plugins-icon-container">
+                    <label style="font-weight:bold; color:blue">Đơn vị</label>
+                    <select class="form-control select2basic" id="Madv" name="Madv">
+                        <option value="all">--Tất cả--</option>
+                        @foreach (var item in dsdonvi)
+                        {
+                            <!option value="@item.MaDv" @((string)ViewData["Madv"] == item.MaDv ? "selected" : "")>&emsp;@item.TenDv</!option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr style="text-align:center">
+                    <th width="1%" rowspan="2">STT</th>
+                    <th rowspan="2"  >Nội dung CSDL địa phương</th>
+                    <th width="10%" colspan="2">Hồ sơ trong tháng</th>
+                    <th width="10%" colspan="2">Tổng số hồ sơ</th>
+                </tr>
+                <tr style="text-align:center">
+                    <th>Nhập mới</th>
+                    <th>Hoàn thành</th>
+                    <th>Nhập mới</th>
+                    <th>Hoàn thành</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td style="text-align:left"><strong>A</strong></td>
+                    <td style="text-align:left"><strong>CSDL VỀ MỨC GIÁ HÀNG HÓA DỊCH VỤ</strong></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td style="text-align:center"><strong>I</strong></td>
+                    <td style="text-align:left">Định giá</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">1</td>
+                    <td style="text-align:left">Giá thuê đất nước</td>
+                    <td style="text-align:center">@Model.countGiaThueMatDatMatNuocCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaThueMatDatMatNuocHTthang</td>
+                    <td style="text-align:center">@Model.countGiaThueMatDatMatNuocCHT</td>
+                    <td style="text-align:center">@Model.countGiaThueMatDatMatNuocHT</td>
+                </tr>
+
+               <tr>
+                    <td style="text-align:right">2</td>
+                    <td style="text-align:left">Giá rừng</td>
+                    <td style="text-align:center">@Model.countGiaRungCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaRungHTthang</td>
+                    <td style="text-align:center">@Model.countGiaRungCHT</td>
+                    <td style="text-align:center">@Model.countGiaRungHT</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">3</td>
+                    <td style="text-align:left">Giá thuê mua nhà xã hội</td>
+                    <td style="text-align:center">@Model.countGiaThueMuaNhaXhCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaThueMuaNhaXhHTthang</td>
+                    <td style="text-align:center">@Model.countGiaThueMuaNhaXhCHT</td>
+                    <td style="text-align:center">@Model.countGiaThueMuaNhaXhHT</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">4</td>
+                    <td style="text-align:left">Giá tài sản công</td>
+                    <td style="text-align:center">@Model.countGiaTaiSanCongCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaTaiSanCongHTthang</td>
+                    <td style="text-align:center">@Model.countGiaTaiSanCongCHT</td>
+                    <td style="text-align:center">@Model.countGiaTaiSanCongHT</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">5</td>
+                    <td style="text-align:left">Giá giao dịch bất động sản</td>
+                    <td style="text-align:center">@Model.countGiaGiaoDichBDSCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaGiaoDichBDSHTthang</td>
+                    <td style="text-align:center">@Model.countGiaGiaoDichBDSCHT</td>
+                    <td style="text-align:center">@Model.countGiaGiaoDichBDSHT</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">6</td>
+                    <td style="text-align:left">Giá nước sinh hoạt</td>
+                    <td style="text-align:center">@Model.countGiaNuocShCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaNuocShHTthang</td>
+                    <td style="text-align:center">@Model.countGiaNuocShCHT</td>
+                    <td style="text-align:center">@Model.countGiaNuocShHT</td>
+                </tr>
+
+
+                <tr>
+                    <td style="text-align:right">7</td>
+                    <td style="text-align:left">Giá thuê tài sản công</td>
+                    <td style="text-align:center">@Model.countGiaThueTaiSanCongCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaThueTaiSanCongHTthang</td>
+                    <td style="text-align:center">@Model.countGiaThueTaiSanCongCHT</td>
+                    <td style="text-align:center">@Model.countGiaThueTaiSanCongHT</td>
+                </tr>
+
+
+                <tr>
+                    <td style="text-align:right">8</td>
+                    <td style="text-align:left">Giá SP, DVCI, DVSNC, HH-DV đặt hàng</td>
+                    <td style="text-align:center">@Model.countGiaSpDvCongIchCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaSpDvCongIchHTthang</td>
+                    <td style="text-align:center">@Model.countGiaSpDvCongIchCHT</td>
+                    <td style="text-align:center">@Model.countGiaSpDvCongIchHT</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">9</td>
+                    <td style="text-align:left">Dịch vụ giáo dục đào tạo</td>
+                    <td style="text-align:center">@Model.countGiaDvKcbCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaDvKcbHTthang</td>
+                    <td style="text-align:center">@Model.countGiaDvKcbCHT</td>
+                    <td style="text-align:center">@Model.countGiaDvKcbHT</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">9</td>
+                    <td style="text-align:left">Trợ giá trợ cước</td>
+                    <td style="text-align:center">@Model.countGiaTroGiaTroCuocCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaTroGiaTroCuocHTthang</td>
+                    <td style="text-align:center">@Model.countGiaTroGiaTroCuocCHT</td>
+                    <td style="text-align:center">@Model.countGiaTroGiaTroCuocHT</td>
+                </tr>
+
+
+                <tr>
+                    <td style="text-align:right">11</td>
+                    <td style="text-align:left">Giá thuế tài nguyên</td>
+                    <td style="text-align:center">@Model.countGiaThueTaiNguyenCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaThueTaiNguyenHTthang</td>
+                    <td style="text-align:center">@Model.countGiaThueTaiNguyenCHT</td>
+                    <td style="text-align:center">@Model.countGiaThueTaiNguyenHT</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">12</td>
+                    <td style="text-align:left">Giá thuế tài nguyên</td>
+                    <td style="text-align:center">@Model.countGiaHangHoaTaiSieuThiCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaHangHoaTaiSieuThiHTthang</td>
+                    <td style="text-align:center">@Model.countGiaHangHoaTaiSieuThiCHT</td>
+                    <td style="text-align:center">@Model.countGiaHangHoaTaiSieuThiHT</td>
+                </tr>
+
+
+
+                <tr>
+                    <td style="text-align:center"><strong>II</strong></td>
+                    <td style="text-align:left">Giá sản phẩm dịch vụ cụ thể</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">1</td>
+                    <td style="text-align:left"><strong>Giá sản phẩm dịch vụ cụ thể</strong></td>
+                    <td style="text-align:center">@Model.countGiaSpDvCuTheCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaSpDvCuTheHTthang</td>
+                    <td style="text-align:center">@Model.countGiaSpDvCuTheCHT</td>
+                    <td style="text-align:center">@Model.countGiaSpDvCuTheHT</td>
+                </tr>
+
+
+
+                <tr>
+                    <td style="text-align:center"><strong>III</strong></td>
+                    <td style="text-align:left">Giá sản phẩm dịch vụ tối đa</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">1</td>
+                    <td style="text-align:left"><strong>Giá sản phẩm dịch vụ tối đa</strong></td>
+                    <td style="text-align:center">@Model.countGiaSpDvToiDaCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaSpDvToiDaHTthang</td>
+                    <td style="text-align:center">@Model.countGiaSpDvToiDaCHT</td>
+                    <td style="text-align:center">@Model.countGiaSpDvToiDaHT</td>
+                </tr>
+
+
+                <tr>
+                    <td style="text-align:center"><strong>IV</strong></td>
+                    <td style="text-align:left">Khung giá sản phẩm dịch vụ</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">1</td>
+                    <td style="text-align:left"><strong>Khung giá sản phẩm dịch vụ</strong></td>
+                    <td style="text-align:center">@Model.countGiaSpDvKhungGiaCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaSpDvKhungGiaHTthang</td>
+                    <td style="text-align:center">@Model.countGiaSpDvKhungGiaCHT</td>
+                    <td style="text-align:center">@Model.countGiaSpDvKhungGiaHT</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:center"><strong>V</strong></td>
+                    <td style="text-align:left">Giá đất</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">1</td>
+                    <td style="text-align:left"><strong>Giá đất cụ thể</strong></td>
+                    <td style="text-align:center">@Model.countGiaDatCuTheVlCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaDatCuTheVlHTthang</td>
+                    <td style="text-align:center">@Model.countGiaDatCuTheVlCHT</td>
+                    <td style="text-align:center">@Model.countGiaDatCuTheVlHT</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">2</td>
+                    <td style="text-align:left"><strong>Bảng giá đất</strong></td>
+                    <td style="text-align:center">@Model.countGiaDatDiaBanCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaDatDiaBanHTthang</td>
+                    <td style="text-align:center">@Model.countGiaDatDiaBanCHT</td>
+                    <td style="text-align:center">@Model.countGiaDatDiaBanHT</td>
+                </tr>
+
+
+                <tr>
+                    <td style="text-align:right">3</td>
+                    <td style="text-align:left"><strong>Giá đất giao dịch thực tế trên thị trường</strong></td>
+                    <td style="text-align:center">@Model.countGiaGiaoDichDatCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaGiaoDichDatHTthang</td>
+                    <td style="text-align:center">@Model.countGiaGiaoDichDatCHT</td>
+                    <td style="text-align:center">@Model.countGiaGiaoDichDatHT</td>
+                </tr>
+
+
+                <tr>
+                    <td style="text-align:right">4</td>
+                    <td style="text-align:left"><strong>Giá trúng đấu giá quyền sử dụng đất</strong></td>
+                    <td style="text-align:center">@Model.countGiaDauGiaDatCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaDauGiaDatHTthang</td>
+                    <td style="text-align:center">@Model.countGiaDauGiaDatCHT</td>
+                    <td style="text-align:center">@Model.countGiaDauGiaDatHT</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:center"><strong>VI</strong></td>
+                    <td style="text-align:left">Giá đất</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">1</td>
+                    <td style="text-align:left"><strong>Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu</strong></td>
+                    <td style="text-align:center">@Model.countGiaMuaTaiSanCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaMuaTaiSanHTthang</td>
+                    <td style="text-align:center">@Model.countGiaMuaTaiSanCHT</td>
+                    <td style="text-align:center">@Model.countGiaMuaTaiSanHT</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:center"><strong>VII</strong></td>
+                    <td style="text-align:left">Giá HH - DV khác</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">1</td>
+                    <td style="text-align:left"><strong>Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu</strong></td>
+                    <td style="text-align:center">@Model.countGiaHhDvkCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaHhDvkHTthang</td>
+                    <td style="text-align:center">@Model.countGiaHhDvkCHT</td>
+                    <td style="text-align:center">@Model.countGiaHhDvkHT</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:center"><strong>VIII</strong></td>
+                    <td style="text-align:left">Giá HH - DV khác</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">1</td>
+                    <td style="text-align:left"><strong>Giá HH-DV khác theo quy định của pháp luật chuyên ngành</strong></td>
+                    <td style="text-align:center">@Model.countGiaHhDvCnCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaHhDvCnHTthang</td>
+                    <td style="text-align:center">@Model.countGiaHhDvCnCHT</td>
+                    <td style="text-align:center">@Model.countGiaHhDvCnHT</td>
+                </tr>
+
+
+                <tr>
+                    <td style="text-align:right">2</td>
+                    <td style="text-align:left"><strong>Giá lệ phí trước bạ</strong></td>
+                    <td style="text-align:center">@Model.countGiaPhiLePhiCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaPhiLePhiHTthang</td>
+                    <td style="text-align:center">@Model.countGiaPhiLePhiCHT</td>
+                    <td style="text-align:center">@Model.countGiaPhiLePhiHT</td>
+                </tr>
+
+
+                <tr>
+                    <td style="text-align:right">3</td>
+                    <td style="text-align:left"><strong>Giá phí lệ phí</strong></td>
+                    <td style="text-align:center">@Model.countPhiLePhiCHTthang</td>
+                    <td style="text-align:center">@Model.countPhiLePhiHTthang</td>
+                    <td style="text-align:center">@Model.countPhiLePhiCHT</td>
+                    <td style="text-align:center">@Model.countPhiLePhiHT</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">4</td>
+                    <td style="text-align:left"><strong>Giá vật liệu xây dựng</strong></td>
+                    <td style="text-align:center">@Model.countGiaVatLieuXayDungCHTthang</td>
+                    <td style="text-align:center">@Model.countGiaVatLieuXayDungHTthang</td>
+                    <td style="text-align:center">@Model.countGiaVatLieuXayDungCHT</td>
+                    <td style="text-align:center">@Model.countGiaVatLieuXayDungHT</td>
+                </tr>
+
+
+
+
+                <tr>
+                    <td style="text-align:center"><strong>IX</strong></td>
+                    <td style="text-align:left">Thẩm định giá</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:left"><strong>B</strong></td>
+                    <td style="text-align:left"><strong>CSDL THẨM ĐỊNH GIÁ</strong></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th></th>
+                </tr>
+
+
+                <tr>
+                    <td style="text-align:center"><strong>I</strong></td>
+                    <td style="text-align:left">Thẩm định giá</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:right">1</td>
+                    <td style="text-align:left"><strong>Thẩm định giá</strong></td>
+                    <td style="text-align:center">@Model.countThamDinhGiaCHTthang</td>
+                    <td style="text-align:center">@Model.countThamDinhGiaHTthang</td>
+                    <td style="text-align:center">@Model.countThamDinhGiaCHT</td>
+                    <td style="text-align:center">@Model.countThamDinhGiaHT</td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
