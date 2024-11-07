@@ -33,7 +33,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
 
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdltdg.thongke.thongkedonvi", "Index"))
+                if (Helpers.CheckPermission(HttpContext.Session, "thongke.thongkehethong.nhaplieudonvihanhchinh", "Index"))
                 {
                     // Giá thuê mặt đất mặt nước
 

@@ -2,13 +2,15 @@
     Layout = null;
 }
 
-@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "thongkehethong", "Index"))
+
+
+@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "thongke", "Index"))
 {
     <li class="menu-section">
         <h4 class="menu-text">THỐNG KÊ HỆ THỐNG</h4>
         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
     </li>
-    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "thongkehethong.thongkehethong", "Index"))
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "thongke.thongkehethong", "Index"))
     {
         <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_thongke">
             <a href="javascript:;" class="menu-link menu-toggle">
@@ -30,7 +32,7 @@
                 <i class="menu-arrow"></i>
                 <ul class="menu-subnav">
 
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.thongkehethong.nhaplieudonvihanhchinh", "Index"))
+                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "thongke.thongkehethong.nhaplieudonvihanhchinh", "Index"))
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_thongke_donvi">
                             <a asp-controller="ThongKe" asp-action="Index" class="menu-link">
@@ -42,17 +44,6 @@
                         </li>
                     }
 
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "hethong.nguoidung.dsnhomtaikhoan", "Index"))
-                    {
-                        <li class="menu-item" aria-haspopup="true" id="menu_dsnhomtaikhoan">
-                            <a asp-controller="ThongKeDN" asp-action="Index" class="menu-link">
-                                <i class="menu-bullet menu-bullet-line">
-                                    <span></span>
-                                </i>
-                                <span class="menu-text">Nhập liệu đơn vị doanh nghiệp</span>
-                            </a>
-                        </li>
-                    }
 
 
                 </ul>
