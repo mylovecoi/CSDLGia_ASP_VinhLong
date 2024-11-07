@@ -96,7 +96,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                         Mahs = MaCsKd + "_" + MaNghe + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         MaNghe = MaNghe,
                         MaCsKd = MaCsKd,
-                        TrangThai = "CC"
+                        TrangThai = "CC",
+                        Thoidiem = DateTime.Now,
                     };
 
                     var modellk = _db.KeKhaiDangKyGia.Where(t => t.MaNghe == MaNghe && t.MaCsKd == MaCsKd &&
@@ -297,6 +298,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KeKhaiDangKyGia
                     var model_cqcq = _db.CompanyLvCc.FirstOrDefault(t => t.Manghe == model.MaNghe && t.Madv == model_dv.MaDv);
 
                     model.TrangThai = "CD";
+                    model.Thoidiem = DateTime.Now;
                     model.ThongTinNguoiChuyen = thongtinnguoichuyen_chuyen;
                     model.SoDtNguoiChuyen = sodienthoaichuyen_chuyen;
                     model.NgayChuyen = DateTime.Now;

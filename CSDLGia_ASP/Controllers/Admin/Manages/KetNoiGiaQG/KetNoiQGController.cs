@@ -749,12 +749,12 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KetNoiGiaQG
                         break;
                     }
 
-                case "thamdinhgia":
+                case "thamdinhgiahd":
                     {
-                        var model_hoso = _db.ThamDinhGia.FirstOrDefault(x => x.Mahs == request.Mahs);
-                        var model = _db.ThamDinhGiaHD.FirstOrDefault(t => t.Mahs == model_hoso.Mahs);
+                        //var model_hoso = _db.ThamDinhGia.FirstOrDefault(x => x.Mahs == request.Mahs);
+                        var model = _db.ThamDinhGiaHD.FirstOrDefault(t => t.MaHoiDong == request.Mahs);
 
-                        if (string.IsNullOrEmpty(model.FileQD_Base64))
+                        if (model == null || string.IsNullOrEmpty(model.FileQD_Base64))
                         {
                             return "Hồ sơ chưa có file đính kèm để gửi dữ liệu lên cơ sở dữ liệu quốc giá";
                         }
@@ -806,6 +806,63 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.KetNoiGiaQG
                         });
 
                         jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(hoiDongTDG) + @"}";
+                        break;
+                    }
+
+                case "thamdinhgia":
+                    {
+                        var model_hoso = _db.ThamDinhGia.FirstOrDefault(x => x.Mahs == request.Mahs);
+                        var model_chitiet = _db.ThamDinhGiaCt.Where(t => t.Mahs == model_hoso.Mahs).ToList();
+                        var model_giayto = _db.ThongTinGiayTo.Where(t => t.Mahs == model_hoso.Mahs).ToList();
+                        var model_hoidong = _db.ThamDinhGiaHD.FirstOrDefault(t => t.Mahs == model_hoso.Mahs);
+
+                        //Lấy tài liệu đính kèm
+                        var dinhKem = new List<VMThamDinhGia_DSDK>();
+                        foreach (var item in model_giayto)
+                        {
+                            string fileBase64 = "";
+                            string path = _env.WebRootPath + "/UpLoad/File/ThongTinGiayTo/" + item.FileName;
+                            if (System.IO.File.Exists(path))                           
+                            {
+                                // Đọc tất cả dữ liệu từ tập tin
+                                byte[] fileBytes = System.IO.File.ReadAllBytes(path);
+                                // Chuyển đổi dữ liệu thành mã base64
+                                fileBase64 = Convert.ToBase64String(fileBytes);
+                            }
+                            dinhKem.Add(new VMThamDinhGia_DSDK
+                            {
+                                TEN_FILE = item.FileName,
+                                FILE_DINH_KEM = fileBase64,
+                            });
+                        }
+                        //Lấy chi tiết hồ sơ
+                        var chiTiet = new List<VMThamDinhGia_DSTS>();
+                        foreach (var item in model_chitiet)
+                        {
+                            chiTiet.Add(new VMThamDinhGia_DSTS
+                            {
+                                TEN_TAI_SAN = item.Tents,
+                                DAC_DIEM=item.Dacdiempl,
+                                DON_VI_TINH = item.Dvt,
+                                SO_LUONG = item.Sl,
+                                DON_GIA = item.Giatritstd,
+                                THANH_TIEN = item.Giatritstd,
+                            });
+                        }
+
+                            //Hồ sơ
+                            var hoSo = new List<VMThamDinhGia>();                       
+                        hoSo.Add(new VMThamDinhGia
+                        {
+                            DIA_BAN = request.DIA_BAN,
+                            MA_HOI_DONG_DINH_GIA_TAI_SAN = model_hoidong != null ? model_hoidong.MaHoiDong : "",
+                           
+                            NGUOI_DUYET_ID = request.NGUOI_TAO,
+                            DS_CHI_TIET_TS_BP = chiTiet,
+                            DS_DINH_KEM = dinhKem,
+                        });
+
+                        jsonKetQua = @"{""data"":" + JsonConvert.SerializeObject(hoSo) + @"}";
                         break;
                     }
             }
