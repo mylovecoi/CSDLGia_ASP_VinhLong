@@ -133,6 +133,56 @@
         public int countGiaDauGiaDatCHT { get; set; }
         public int countGiaDauGiaDatHT { get; set; }
 
+        //Giá trúng thầu của HH-DV được mua sắm theo QĐ của PL về đấu thầu
+        public int countGiaMuaTaiSanCHTthang { get; set; }
+        public int countGiaMuaTaiSanHTthang { get; set; }
+        public int countGiaMuaTaiSanCHT { get; set; }
+        public int countGiaMuaTaiSanHT { get; set; }
+
+        //Giá hàng hóa dịch vụ khác
+        public int countGiaHhDvkCHTthang { get; set; }
+        public int countGiaHhDvkHTthang { get; set; }
+        public int countGiaHhDvkCHT { get; set; }
+        public int countGiaHhDvkHT { get; set; }
+
+
+        //Giá hàng hóa dịch vụ theo pahps luật chuyên nghành
+        public int countGiaHhDvCnCHTthang { get; set; }
+        public int countGiaHhDvCnHTthang { get; set; }
+        public int countGiaHhDvCnCHT { get; set; }
+        public int countGiaHhDvCnHT { get; set; }
+
+
+        //Giá lệ phí trước bạ
+        public int countGiaPhiLePhiCHTthang { get; set; }
+        public int countGiaPhiLePhiHTthang { get; set; }
+        public int countGiaPhiLePhiCHT { get; set; }
+        public int countGiaPhiLePhiHT { get; set; }
+
+        //Giá phí lệ phí
+        public int countPhiLePhiCHTthang { get; set; }
+        public int countPhiLePhiHTthang { get; set; }
+        public int countPhiLePhiCHT { get; set; }
+        public int countPhiLePhiHT { get; set; }
+
+
+
+        //Giá vật liệu xây dựng
+        public int countGiaVatLieuXayDungCHTthang { get; set; }
+        public int countGiaVatLieuXayDungHTthang { get; set; }
+        public int countGiaVatLieuXayDungCHT { get; set; }
+        public int countGiaVatLieuXayDungHT { get; set; }
+
+        //Thẩm định giá
+        public int countThamDinhGiaCHTthang { get; set; }
+        public int countThamDinhGiaHTthang { get; set; }
+        public int countThamDinhGiaCHT { get; set; }
+        public int countThamDinhGiaHT { get; set; }
+
+
+
+
+
 
 
 
