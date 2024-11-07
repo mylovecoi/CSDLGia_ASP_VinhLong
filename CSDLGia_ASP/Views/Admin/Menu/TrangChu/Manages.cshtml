@@ -770,13 +770,13 @@
     }
 }
 
-@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "vbqlnnvegiaplp", "Index"))
+@if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "ketnoicsdlgiaqg", "Index"))
 {
     <li class="menu-section">
         <h4 class="menu-text">KẾT NỐI CƠ SỞ DỮ LIỆU GIÁ QUỐC GIA</h4>
         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
     </li>
-    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "", "Index"))
+    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "ketnoicsdlgiaqg.ketnoi", "Index"))
     {
         <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover" id="menu_giaqg"
             title="Kết nối cơ sở dữ liệu giá quốc gia">
@@ -1546,12 +1546,10 @@
     }
  *@
 
-
-
 @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "thongke", "Index"))
 {
     <li class="menu-section">
-        <h4 class="menu-text">THỐNG KÊ HỆ THỐNG</h4>
+        <h4 class="menu-text">THỐNG KÊ</h4>
         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
     </li>
     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "thongke.thongkehethong", "Index"))
@@ -1575,7 +1573,6 @@
             <div class="menu-submenu">
                 <i class="menu-arrow"></i>
                 <ul class="menu-subnav">
-
                     @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "thongke.thongkehethong.nhaplieudonvihanhchinh", "Index"))
                     {
                         <li class="menu-item" aria-haspopup="true" id="menu_thongke_donvi">
@@ -1599,9 +1596,6 @@
                             </a>
                         </li>
                     }
-
-
-
                 </ul>
             </div>
         </li>

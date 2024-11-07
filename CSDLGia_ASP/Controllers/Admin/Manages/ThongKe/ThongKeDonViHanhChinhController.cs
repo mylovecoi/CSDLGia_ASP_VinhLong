@@ -28,8 +28,6 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThongKe
         [HttpGet]
         public IActionResult Index(int Nam, string Madv, int Thang)
         {
-
-
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
                 if (Helpers.CheckPermission(HttpContext.Session, "thongke.thongkehethong.nhaplieudonvihanhchinh", "Index"))
