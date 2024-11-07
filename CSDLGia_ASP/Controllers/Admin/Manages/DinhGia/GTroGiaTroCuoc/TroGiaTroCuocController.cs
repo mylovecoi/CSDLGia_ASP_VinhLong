@@ -184,9 +184,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     _db.GiaTroGiaTroCuoc.Add(model);
                     _db.SaveChanges();
 
-                    var modelct = _db.GiaTroGiaTroCuocCt.Where(t => t.Mahs == request.Mahs);
+
+                    var modelct = _db.GiaTroGiaTroCuocCt.Where(t => t.Mahs == request.Mahs).ToList();
+                    if (modelct != null)
+                    {
+                        foreach (var item in modelct)
+                        {
+                            item.Trangthai = "XD";
+                        }
+                    }
                     _db.GiaTroGiaTroCuocCt.UpdateRange(modelct);
                     _db.SaveChanges();
+
+
+
                     var model_file = _db.ThongTinGiayTo.Where(t => t.Mahs == request.Mahs);
                     if (model_file.Any())
                     {
@@ -282,8 +293,15 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GTroGiaTroCuoc
                     _db.GiaTroGiaTroCuoc.Update(model);
                     _db.SaveChanges();
 
-                    var modelct = _db.GiaTroGiaTroCuocCt.Where(t => t.Mahs == request.Mahs);
 
+                    var modelct = _db.GiaTroGiaTroCuocCt.Where(t => t.Mahs == request.Mahs).ToList();
+                    if (modelct != null)
+                    {
+                        foreach (var item in modelct)
+                        {
+                            item.Trangthai = "XD";
+                        }
+                    }
                     _db.GiaTroGiaTroCuocCt.UpdateRange(modelct);
                     _db.SaveChanges();
 

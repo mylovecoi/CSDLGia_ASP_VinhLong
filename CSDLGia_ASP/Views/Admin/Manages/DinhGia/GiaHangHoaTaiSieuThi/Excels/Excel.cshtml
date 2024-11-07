@@ -23,6 +23,7 @@
     <!--begin::Form-->
     <form asp-controller="GiaHangHoaTaiSieuThiExcel" asp-action="Import" method="post" enctype="multipart/form-data">
         <div class="card-body">
+
             <div class="mb-3 font-weight-bold font-size-lg">
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin file excel dữ liệu mẫu:</label>
                 <a href="~/UpLoad/File/DinhGia/Excel/FileExcelGiaHhSt.xlsm" target="_blank" class="btn btn-link"
@@ -34,17 +35,8 @@
                 <label style="text-decoration-line: underline; font-weight: bold">Thông tin hồ sơ</label>
             </div>
             <div class="row">
-                <div class="col-xl-3">
-                    <div class="form-group fv-plugins-icon-container">
-                        <label>Đơn vị báo cáo</label>
-                        <select asp-for="MaDv" class="form-control">
-                            @foreach (var dv in dsdonvi.Where(t => t.Level != "ADMIN"))
-                            {
-                                <!option value="@dv.MaDv" @((string)ViewData["Madv"] == dv.MaDv ? "selected" : "")>@dv.TenDv</!option>
-                            }
-                        </select>
-                    </div>
-                </div>
+                <input hidden name="MaDv" id="MaDv" value="@Model.MaDv" />
+                
                 <div class="col-xl-3">
                     <div class="form-group fv-plugins-icon-container">
                         <label>Danh mục thông tư</label>

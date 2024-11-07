@@ -62,7 +62,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.DvKhamChuaBenh
                         Mahs = Madv + "_" + DateTime.Now.ToString("yyMMddssmmHH"),
                         Thoidiem = DateTime.Now,
                         Sheet = 1,
-                        LineStart = 4,
+                        LineStart = 3,
                         LineStop = 3000,
                     };
                     ViewData["Title"] = " Thông tin hồ sơ giá dịch vụ khám chữa bệnh";

@@ -554,8 +554,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                                      Dvt = hosoct.Dvt,
                                      Mucgiatu = hosoct.Mucgiatu,
                                      Mucgiaden = hosoct.Mucgiaden,
-                                     Mucgia3 = hosoct.Mucgia3,
-                                     Mucgia4 = hosoct.Mucgia4,
+                                     //Mucgia3 = hosoct.Mucgia3,
+                                     //Mucgia4 = hosoct.Mucgia4,
                                      Manhom = hosoct.Manhom,
                                      Trangthai = hoso.Trangthai,
                                      Mahs = hoso.Mahs
@@ -564,12 +564,18 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaSpDvCongIch
                     model = model.Where(t => t.Thoidiem >= NgayTu && t.Thoidiem <= NgayDen && list_trangthai.Contains(t.Trangthai));
                     if (Madv != "all") { model = model.Where(t => t.Madv == Madv); }
                     if (Manhom != "all") { model = model.Where(t => t.Manhom == Manhom); }
-                    if (DonGiaTu > 0) { model = model.Where(t => t.Mucgiatu >= DonGiaTu || t.Mucgiaden >= DonGiaTu || t.Mucgia3 >= DonGiaTu || t.Mucgia4 >= DonGiaTu); }
-                    if (DonGiaDen > 0) { model = model.Where(t => t.Mucgia4 <= DonGiaDen || t.Mucgiaden <= DonGiaDen || t.Mucgia3 <= DonGiaDen || t.Mucgia4 <= DonGiaDen); }
-                    if (Mahs != "all") { model = model.Where(t => t.Mahs == Mahs); }
-                    if (!string.IsNullOrEmpty(Ten))
+
+                    if (DonGiaTu > 0 && DonGiaDen == 0)
                     {
-                        model = model.Where(t => t.Ten.ToLower().Contains(Ten.ToLower()));
+                        model = model.Where(t => t.Mucgiatu <= DonGiaTu);
+                    }
+                    else if (DonGiaTu == 0 && DonGiaDen >= 0)
+                    {
+                        model = model.Where(t => t.Mucgiaden >= DonGiaDen);
+                    }
+                    else if (DonGiaTu > 0 && DonGiaDen >= 0)
+                    {
+                        model = model.Where(t => t.Mucgiatu <= DonGiaTu || t.Mucgiaden >= DonGiaTu);
                     }
 
                     ViewData["Madv"] = Madv;

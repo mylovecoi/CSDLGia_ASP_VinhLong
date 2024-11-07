@@ -180,8 +180,9 @@
                     </td>
                     <td style="text-align: center">@Helpers.ConvertDateToStr(item.Thoidiem)</td>
                     <td style="text-align: left">
-                        @if(!string.IsNullOrEmpty(item.Manhom)){
-                            @nhomtn.FirstOrDefault(x=>x.Manhom==item.Manhom).Tennhom
+                        @if (!string.IsNullOrEmpty(item.Manhom))
+                        {
+                            @(nhomtn.FirstOrDefault(x => x.Manhom == item.Manhom)?.Tennhom)
                         }
                     </td>
                     <td style="text-align: left">@item.Ten</td>
