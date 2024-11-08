@@ -25,6 +25,9 @@ namespace CSDLGia_ASP.Models
         public string FileDangKy { get; set; }
         public string FileDangKyBase64 { get; set; }
         public string TimeOut { get; set; }
+        public string SSOCode { get; set; }
+        public string SSOGetToken { get; set; }
+        public string SSOGetUserInfo { get; set; }
         [NotMapped]
         public IFormFile FileImportHDSD { get; set; }
         [NotMapped]

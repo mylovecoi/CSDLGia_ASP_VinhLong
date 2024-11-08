@@ -49,7 +49,7 @@ namespace CSDLGia_ASP.Models.Systems
         public string LinkAPI { get; set; }
         public string Manghanh { get; set; }
         public string Manghe { get; set; }
-
+        public bool SSO { get; set; } = false;
 
         [NotMapped]
         public string Loaihinhhd { get; set; }
