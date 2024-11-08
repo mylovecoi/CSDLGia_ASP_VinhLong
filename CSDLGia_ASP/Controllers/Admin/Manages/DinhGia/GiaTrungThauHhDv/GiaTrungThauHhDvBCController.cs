@@ -89,6 +89,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
                     ViewData["denngay"] = denngay;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
+                    //Định danh
+                    var today = DateTime.Now;
+                    ViewData["NgayTaoBaoCao"] = $"Ngày {today.Day} Tháng {today.Month} Năm {today.Year}";
+                    var Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                    var donVi = _db.Users.FirstOrDefault(x => x.Madv == Madv);
+                    if (donVi != null)
+                    {
+                        ViewData["DinhDanh"] = donVi.Name;
+                    }
+                    else
+                    {
+                        ViewData["DinhDanh"] = "Lỗi";
+                    }
+                    //End Định danh
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauHhDv/BaoCao/BcTH.cshtml", model);
                 }
                 else
@@ -158,6 +172,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTrungThauHhDv
 
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
+                    //Định danh
+                    var today = DateTime.Now;
+                    ViewData["NgayTaoBaoCao"] = $"Ngày {today.Day} Tháng {today.Month} Năm {today.Year}";
+                    var Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                    var donVi = _db.Users.FirstOrDefault(x => x.Madv == Madv);
+                    if (donVi != null)
+                    {
+                        ViewData["DinhDanh"] = donVi.Name;
+                    }
+                    else
+                    {
+                        ViewData["DinhDanh"] = "Lỗi";
+                    }
+                    //End Định danh
                     ViewData["Title"] = "Báo cáo giá trúng thầu hàng hóa được mua sắm theo quy định của pháp luật về đấu thầu";
                     return View("Views/Admin/Manages/DinhGia/GiaTrungThauHhDv/BaoCao/BcCT.cshtml", model);
                 }

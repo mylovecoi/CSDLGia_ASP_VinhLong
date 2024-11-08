@@ -92,6 +92,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     ViewData["NgayDen"] = denngay;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
+                    //Định danh
+                    var today = DateTime.Now;
+                    ViewData["NgayTaoBaoCao"] = $"Ngày {today.Day} Tháng {today.Month} Năm {today.Year}";
+                    var Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                    var donVi = _db.Users.FirstOrDefault(x => x.Madv == Madv);
+                    if (donVi != null)
+                    {
+                        ViewData["DinhDanh"] = donVi.Name;
+                    }
+                    else
+                    {
+                        ViewData["DinhDanh"] = "Lỗi";
+                    }
+                    //End Định danh
                     return View("Views/Admin/Manages/DinhGia/GiaoDucDaoTao/BaoCao/BcTH.cshtml", model);
                 }
                 else
@@ -159,6 +173,20 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["Title"] = "Báo cáo giá giáo dục đào tạo";
+                    //Định danh
+                    var today = DateTime.Now;
+                    ViewData["NgayTaoBaoCao"] = $"Ngày {today.Day} Tháng {today.Month} Năm {today.Year}";
+                    var Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                    var donVi = _db.Users.FirstOrDefault(x => x.Madv == Madv);
+                    if (donVi != null)
+                    {
+                        ViewData["DinhDanh"] = donVi.Name;
+                    }
+                    else
+                    {
+                        ViewData["DinhDanh"] = "Lỗi";
+                    }
+                    //End Định danh
                     return View("Views/Admin/Manages/DinhGia/GiaoDucDaoTao/BaoCao/BcCT.cshtml", model);
                 }
                 else

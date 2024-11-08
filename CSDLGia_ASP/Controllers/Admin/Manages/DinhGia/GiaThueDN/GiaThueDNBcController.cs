@@ -71,9 +71,9 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                 if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.thuedatnuoc.baocao", "Index"))
                 {
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
-                    var model = (from hoso in _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay 
+                    var model = (from hoso in _db.GiaThueMatDatMatNuoc.Where(t => t.Thoidiem >= tungay && t.Thoidiem <= denngay
                                             && list_trangthai.Contains(t.Trangthai))
-                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv    
+                                 join donvi in _db.DsDonVi on hoso.Madv equals donvi.MaDv
                                  select new CSDLGia_ASP.Models.Manages.DinhGia.GiaThueMatDatMatNuoc
                                  {
                                      TenDonVi = donvi.TenDv,
@@ -90,14 +90,24 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["NgayTu"] = tungay;
                     ViewData["NgayDen"] = denngay;
 
+                    //Định danh
                     var today = DateTime.Now;
                     ViewData["NgayTaoBaoCao"] = $"Ngày {today.Day} Tháng {today.Month} Năm {today.Year}";
-
-
-
+                    var Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                    var donVi = _db.Users.FirstOrDefault(x => x.Madv == Madv);
+                    if (donVi != null)
+                    {
+                        ViewData["DinhDanh"] = donVi.Name;
+                    }
+                    else
+                    {
+                        ViewData["DinhDanh"] = "Lỗi";
+                    }
+                    //End Định danh
 
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
+
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/BaoCao/BcTH.cshtml", model);
                 }
                 else
@@ -126,7 +136,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     MaNhom = string.IsNullOrEmpty(MaNhom) ? "all" : MaNhom;
                     ngaytu = ngaytu.HasValue ? ngaytu : firstDayCurrentYear;
                     ngayden = ngayden.HasValue ? ngayden : lastDayCurrentYear;
-                  
+
                     var model = (from hosoct in _db.GiaThueMatDatMatNuocCt
                                  join hoso in _db.GiaThueMatDatMatNuoc on hosoct.Mahs equals hoso.Mahs
                                  join nhom in _db.GiaThueMatDatMatNuocNhom on hosoct.MaNhom equals nhom.Manhom
@@ -151,7 +161,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     List<string> list_trangthai = new List<string> { "HT", "DD", "CB" };
                     model = model.Where(t => t.ThoiDiem >= ngaytu && t.ThoiDiem <= ngayden && list_trangthai.Contains(t.Trangthai));
                     if (MaNhom != "all") { model = model.Where(t => t.MaNhom == MaNhom); }
-                    if (MaHsTongHop != "all") {model = model.Where(t => t.Mahs == MaHsTongHop); }
+                    if (MaHsTongHop != "all") { model = model.Where(t => t.Mahs == MaHsTongHop); }
 
                     List<string> list_madv = model.Select(t => t.Madv).ToList();
                     var model_donvi = _db.DsDonVi.Where(t => list_madv.Contains(t.MaDv));
@@ -164,6 +174,22 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["NgayTu"] = ngaytu;
                     ViewData["NgayDen"] = ngayden;
                     ViewData["DmNhom"] = _db.GiaThueMatDatMatNuocNhom;
+
+                    //Định danh
+                    var today = DateTime.Now;
+                    ViewData["NgayTaoBaoCao"] = $"Ngày {today.Day} Tháng {today.Month} Năm {today.Year}";
+                    var Madv = Helpers.GetSsAdmin(HttpContext.Session, "Madv");
+                    var donVi = _db.Users.FirstOrDefault(x => x.Madv == Madv);
+                    if (donVi != null)
+                    {
+                        ViewData["DinhDanh"] = donVi.Name;
+                    }
+                    else
+                    {
+                        ViewData["DinhDanh"] = "Lỗi";
+                    }
+                    //End Định danh
+
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["Title"] = "Báo cáo giá thuê mặt đất mặt nước";

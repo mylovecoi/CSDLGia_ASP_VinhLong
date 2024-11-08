@@ -14,6 +14,8 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using CSDLGia_ASP.Models.Manages.DinhGia;
 using DocumentFormat.OpenXml.Math;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSDLGia_ASP.Helper
 {
@@ -37,7 +39,6 @@ namespace CSDLGia_ASP.Helper
                 _worksheet.Column(columnIndex).Style.Font.Color.SetColor(fontColor.Value);
             }
         }
-
 
 
         public static List<VMKeyValue> GetListColExcel()
@@ -1374,7 +1375,7 @@ namespace CSDLGia_ASP.Helper
 
         public static bool CheckFileSize(long size)
         {
-            if (size <= 5242880) return true;
+            if (size <= 12582912) return true;
             return false;
         }
 
