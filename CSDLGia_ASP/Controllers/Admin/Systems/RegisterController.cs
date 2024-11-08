@@ -102,7 +102,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
             if (check_company == null)
             {
                 var check_user = _db.Users.FirstOrDefault(u => u.Username == request.Username);
-                if (check_user == null)
+                var check_email = _db.Users.FirstOrDefault(u => u.Email == request.Email);
+                if (check_user == null && check_email == null)
                 {
                     string md5_password = "";
                     using (MD5 md5Hash = MD5.Create())
@@ -114,7 +115,8 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                     var user = new Users
                     {
                         Madv = request.Madv,
-                        Name = request.Tendn,
+                        Name = request.Tendn, 
+                        Email = request.Email,
                         Username = request.Username,
                         Password = md5_password,
                         Status = "Chờ xét duyệt",
@@ -201,7 +203,19 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems
                                       }).ToList();
                     request.VMCompanyLvCc = model_join.ToList();
 
-                    ModelState.AddModelError("Username", "Tài khoản truy cập này đã tồn tại");
+                    //ModelState.AddModelError("Username", "Tài khoản truy cập này đã tồn tại");
+
+                    if (check_user != null)
+                    {
+                        ModelState.AddModelError("Username", "Tài khoản truy cập này đã tồn tại");
+                    }
+
+                    if (check_email != null)
+                    {
+                        ModelState.AddModelError("Email", "Email này đã được sử dụng");
+                    }
+
+
                     ViewData["DsDiaBan"] = _db.DsDiaBan.Where(t => t.Level != "ADMIN").ToList();
                     ViewData["DsDonVi"] = _db.DsDonVi.ToList();
                     ViewData["DmNganhKd"] = _db.DmNganhKd.ToList();

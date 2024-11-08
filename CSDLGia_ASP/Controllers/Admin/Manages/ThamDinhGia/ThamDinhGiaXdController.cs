@@ -55,11 +55,11 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                                         TenDv = dv.TenDv,
                                         ChucNang = dv.ChucNang,
                                         Level = db.Level,
-                                    }).First();
+                                    }).FirstOrDefault();
 
                     var model = _db.ThamDinhGia.ToList();
 
-                    if (getdonvi.Level == "H")
+                    if (getdonvi != null && getdonvi.Level == "H")
                     {
                         if (string.IsNullOrEmpty(Nam))
                         {
@@ -136,7 +136,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.ThamDinhGia
                         ViewData["maKetNoiAPI"] = "thamdinhgia";
                         return View("Views/Admin/Manages/ThamDinhGia/XetDuyet/Index.cshtml", model_join);
                     }
-                    else if (getdonvi.Level == "T")
+                    else if (getdonvi != null && getdonvi.Level == "T")
                     {
                         if (string.IsNullOrEmpty(Nam))
                         {

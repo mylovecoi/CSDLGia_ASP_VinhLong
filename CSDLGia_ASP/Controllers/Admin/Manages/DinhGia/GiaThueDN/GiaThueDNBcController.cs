@@ -89,6 +89,13 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaThueDN
                     ViewData["MenuLv3"] = "menu_dgtmdmn_bc";
                     ViewData["NgayTu"] = tungay;
                     ViewData["NgayDen"] = denngay;
+
+                    var today = DateTime.Now;
+                    ViewData["NgayTaoBaoCao"] = $"Ngày {today.Day} Tháng {today.Month} Năm {today.Year}";
+
+
+
+
                     ViewData["ChucDanhNguoiKy"] = chucdanhky;
                     ViewData["HoTenNguoiKy"] = hotennguoiky;
                     return View("Views/Admin/Manages/DinhGia/GiaThueMatDatMatNuoc/BaoCao/BcTH.cshtml", model);

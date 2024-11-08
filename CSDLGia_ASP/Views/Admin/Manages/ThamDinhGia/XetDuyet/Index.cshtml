@@ -168,7 +168,7 @@
                                     }
 
                                     ViewData["maHoSoTruyen"] = item.Mahs;
-                                    @await Html.PartialAsync("~/Views/Admin/_DungChung/KetNoiAPI/Index_button.cshtml", ViewData["maHoSoTruyen"])
+                                    // @await Html.PartialAsync("~/Views/Admin/_DungChung/KetNoiAPI/Index_button.cshtml", ViewData["maHoSoTruyen"])
                                 }
                             </td>
                         </tr>
@@ -179,4 +179,3 @@
     </div>
 </div>
 @await Html.PartialAsync("~/Views/Admin/Manages/ThamDinhGia/XetDuyet/Modal.cshtml")
-@await Html.PartialAsync("~/Views/Admin/_DungChung/KetNoiAPI/Index_modal.cshtml")

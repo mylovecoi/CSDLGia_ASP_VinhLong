@@ -40,29 +40,29 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaHangHoaTaiSieuThi
                         MaDv = Madv,
                     };
 
-                    var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "ADMIN")
-                                   join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
-                                   select new VMDsDonVi
-                                   {
-                                       Id = dv.Id,
-                                       TenDiaBan = db.TenDiaBan,
-                                       MaDiaBan = dv.MaDiaBan,
-                                       TenDv = dv.TenDv,
-                                       MaDv = dv.MaDv,
-                                   }).ToList();
+                    //var dsdonvi = (from db in _db.DsDiaBan.Where(t => t.Level != "ADMIN")
+                    //               join dv in _db.DsDonVi.Where(t => t.ChucNang != "QUANTRI") on db.MaDiaBan equals dv.MaDiaBan
+                    //               select new VMDsDonVi
+                    //               {
+                    //                   Id = dv.Id,
+                    //                   TenDiaBan = db.TenDiaBan,
+                    //                   MaDiaBan = dv.MaDiaBan,
+                    //                   TenDv = dv.TenDv,
+                    //                   MaDv = dv.MaDv,
+                    //               }).ToList();
 
-                    if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
-                    {
-                        ViewData["DsDonVi"] = dsdonvi;
-                    }
-                    else
-                    {
-                        ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
-                    }
+                    //if (Helpers.GetSsAdmin(HttpContext.Session, "Madv") == null)
+                    //{
+                    //    ViewData["DsDonVi"] = dsdonvi;
+                    //}
+                    //else
+                    //{
+                    //    ViewData["DsDonVi"] = dsdonvi.Where(t => t.MaDv == Madv);
+                    //}
                     ViewData["MenuLv1"] = "menu_dg";
                     ViewData["MenuLv2"] = "menu_dgsieuthi";
                     ViewData["MenuLv3"] = "menu_dgsieuthi_tt";
-                    ViewData["Madv"] = Madv;
+                    //ViewData["Madv"] = Madv;
                     ViewData["Dstt"] = _db.GiaHangHoaTaiSieuThiDm;
                     ViewData["Title"] = "Thông tin hồ sơ giá hàng hóa tại siêu thị";
                     return View("Views/Admin/Manages/DinhGia/GiaHangHoaTaiSieuThi/Excels/Excel.cshtml", model);

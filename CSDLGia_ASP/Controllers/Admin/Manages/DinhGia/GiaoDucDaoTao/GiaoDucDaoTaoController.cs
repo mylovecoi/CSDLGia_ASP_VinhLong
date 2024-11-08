@@ -488,8 +488,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.giaoducdaotao.thongtin", "Show"))
-                {
+                
                 //    var model = _db.GiaDvGdDt.FirstOrDefault(t => t.Mahs == Mahs);
                 //    ViewData["GiaDvGdDtCt"] = _db.GiaDvGdDtCt.Where(t => t.Mahs == Mahs).ToList();
                 //    ViewData["DsNhom"] = _db.GiaDvGdDtNhom;
@@ -506,12 +505,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaoDucDaoTao
                     ViewData["MenuLv2"] = "menu_dggddt";
                     ViewData["MenuLv3"] = "menu_dggddt_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaoDucDaoTao/Show.cshtml", model);
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
+               
             }
             else
             {

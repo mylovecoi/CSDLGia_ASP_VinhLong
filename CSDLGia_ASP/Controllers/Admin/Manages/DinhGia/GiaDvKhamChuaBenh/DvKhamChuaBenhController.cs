@@ -292,7 +292,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaDvKhamChuaBenh
                     {
                         foreach (var item in modelct)
                         {
-                            item.Ghichu = "XD";
+                            item.Trangthai = "XD";
                         }
                     }
                     var model_file = _db.ThongTinGiayTo.Where(t => t.Mahs == request.Mahs);

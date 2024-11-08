@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CSDLGia_ASP.Models.Systems
 {
+
+   
     public class Company
     {
         [Key]
@@ -18,6 +21,7 @@ namespace CSDLGia_ASP.Models.Systems
         public string Tel { get; set; }
         [Phone]
         public string Fax { get; set; }
+
         [EmailAddress]
         public string Email { get; set; }
         public string Website { get; set; }

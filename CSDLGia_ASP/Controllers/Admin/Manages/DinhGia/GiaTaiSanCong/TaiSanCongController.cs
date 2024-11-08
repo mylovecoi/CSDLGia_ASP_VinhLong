@@ -383,8 +383,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
         {
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SsAdmin")))
             {
-                if (Helpers.CheckPermission(HttpContext.Session, "csdlmucgiahhdv.dinhgia.taisancong.thongtin", "Index"))
-                {
+               
 
                     var model = _db.GiaTaiSanCong.FirstOrDefault(t => t.Mahs == Mahs);
 
@@ -397,12 +396,7 @@ namespace CSDLGia_ASP.Controllers.Admin.Manages.DinhGia.GiaTaiSanCong
                     ViewData["MenuLv2"] = "menu_tsc";
                     ViewData["MenuLv3"] = "menu_giatsc_tt";
                     return View("Views/Admin/Manages/DinhGia/GiaTaiSanCong/DanhSach/Show.cshtml", model);
-                }
-                else
-                {
-                    ViewData["Messages"] = "Bạn không có quyền truy cập vào chức năng này!";
-                    return View("Views/Admin/Error/Page.cshtml");
-                }
+               
             }
             else
             {
