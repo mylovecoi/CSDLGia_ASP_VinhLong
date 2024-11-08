@@ -17,7 +17,6 @@ namespace CSDLGia_ASP.Services
     {
         private readonly RequestDelegate _next;
 
-
         public SessionManagementMiddleware(RequestDelegate next)
         {
             _next = next;
@@ -46,36 +45,39 @@ namespace CSDLGia_ASP.Services
                             var danhsachykien = _db.YKienGopY.Count();
                             context.Session.SetString("DanhSachYKienDongGop", danhsachykien.ToString());
 
-                            context.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
+                            //context.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
 
-                            var permissions = _db.Permissions.Where(t => t.Index);
-                            if (model.Chucnang == "K")
-                            {
-                                permissions = permissions.Where(p => p.Username == username);
-                            }
-                            else
-                            {
-                                permissions = permissions.Where(p => p.Username == model.Chucnang);
-                            }
+                            //var permissions = _db.Permissions.Where(t => t.Index);
+                            //if (model.Chucnang == "K")
+                            //{
+                            //    permissions = permissions.Where(p => p.Username == username);
+                            //}
+                            //else
+                            //{
+                            //    permissions = permissions.Where(p => p.Username == model.Chucnang);
+                            //}
 
 
-                            List<DmNgheKd> data_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD").ToList();
-                            if (model.Level != "DN")
-                            {
-                                var model_donvi = _dsDonviService.GetListDonvi(model.Madv);
-                                List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+                            //List<DmNgheKd> data_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD").ToList();
+                            //if (model.Level != "DN")
+                            //{
+                            //    var model_donvi = _dsDonviService.GetListDonvi(model.Madv);
+                            //    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
 
-                                // Lọc dữ liệu sử dụng LINQ to Objects thay vì LINQ to Entities
-                                data_nghe = data_nghe.Where(x => list_madv.Any(v => x.Madv.Split(',').Contains(v))).ToList();
-                            }
-                            else
-                            {
-                                var donvi_nghe = _db.CompanyLvCc.Where(t => t.Madv == model.Madv);
-                                List<string> list_manghe = donvi_nghe.Select(t => t.Manghe).ToList();
-                                data_nghe = data_nghe.Where(t => t.Theodoi == "TD" && list_manghe.Contains(t.Manghe)).ToList();
-                            }
-                            context.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
-                            context.Session.SetString("KeKhaiDangKyGia", JsonConvert.SerializeObject(data_nghe));
+                            //    // Lọc dữ liệu sử dụng LINQ to Objects thay vì LINQ to Entities
+                            //    data_nghe = data_nghe.Where(x => list_madv.Any(v => x.Madv.Split(',').Contains(v))).ToList();
+                            //}
+                            //else
+                            //{
+                            //    var donvi_nghe = _db.CompanyLvCc.Where(t => t.Madv == model.Madv);
+                            //    List<string> list_manghe = donvi_nghe.Select(t => t.Manghe).ToList();
+                            //    data_nghe = data_nghe.Where(t => t.Theodoi == "TD" && list_manghe.Contains(t.Manghe)).ToList();
+                            //}
+                            //context.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
+                            //context.Session.SetString("KeKhaiDangKyGia", JsonConvert.SerializeObject(data_nghe));
+                            var authService = scope.ServiceProvider.GetRequiredService<AuthService>(); // Giải quyết scoped mỗi yêu cầu
+                            authService.SetSessionData(model);
+                            
                         }
                     }
                     else

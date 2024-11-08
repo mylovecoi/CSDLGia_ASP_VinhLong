@@ -74,7 +74,9 @@ namespace CSDLGia_ASP
             services.AddScoped<IDsDiaBanService, DsDiaBanService>();
             services.AddScoped<IDsDonviService, DsDonviService>();
             services.AddScoped<ITrangThaiHoSoService, TrangThaiHoSoService>();
+            services.AddScoped<AuthService>();
 
+            services.AddHttpClient();
             services.AddHttpContextAccessor();
             services.AddMvc().AddRazorPagesOptions(options =>
             {
@@ -96,7 +98,6 @@ namespace CSDLGia_ASP
             app.UseStaticFiles();
             app.UseRouting();
             app.UseSession();
-
 
             app.UseAuthentication(); // Kích hoạt xác thực cookie
             app.UseAuthorization();  // Kích hoạt ủy quyền
