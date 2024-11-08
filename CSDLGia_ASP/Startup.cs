@@ -74,6 +74,7 @@ namespace CSDLGia_ASP
             services.AddScoped<IDsDiaBanService, DsDiaBanService>();
             services.AddScoped<IDsDonviService, DsDonviService>();
             services.AddScoped<ITrangThaiHoSoService, TrangThaiHoSoService>();
+            services.AddScoped<AuthService>();
 
             services.AddHttpClient();
             services.AddHttpContextAccessor();
