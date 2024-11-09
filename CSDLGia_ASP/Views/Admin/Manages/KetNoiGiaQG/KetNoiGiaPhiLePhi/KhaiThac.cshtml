@@ -1,0 +1,104 @@
+﻿@model CSDLGia_ASP.Models.Systems.API.KetNoiAPI_DanhSach
+
+@section custom_style {
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Admin/assets/datatables/bootstrap/dataTables.css" />
+}
+
+@section custom_script {
+    <script type="text/javascript" src="~/Admin/assets/datatables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Admin/assets/datatables/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Admin/assets/datatables/scripts/table-managed.js"></script>
+    <script src="~/Admin/assets/js/pages/crud/forms/widgets/select2.js"></script>
+}
+
+<div class="card card-custom">
+    <div class="card-header flex-wrap border-0 pt-6 pb-0">
+        <div class="card-title">
+            <h3 class="card-label">
+                THÔNG TIN KHAI THÁC DỮ LIỆU GIÁ THUẾ TÀI NGUYÊN
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            <button type="button" data-target="#KhaiThac_Modal" onclick="setKhaiThac('@Model.Maso','@Model.LinkNhanGet')" data-toggle="modal" class="btn btn-primary font-weight-bolder" title="Thiết lập">
+                <i class="la la-plus"></i>Nhận dữ liệu
+            </button>
+        </div>
+    </div>
+    <hr />
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-xl-12">
+                <table class="table table-striped table-bordered table-hover class-nosort">
+                    <thead>
+                        <tr style="text-align:center">
+                            <th>STT</th>
+                            <th>Số quyết định</th>
+                            <th>Thời gian áp dụng</th>
+                            <th>Tên sản phẩm dịch vụ</th>
+                            <th>Thành thị</th>
+                            <th>Nông thôn</th>
+                            <th>Miền núi</th>                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @* @if (Model != null)
+                        {
+                            @foreach (var item in data.OrderBy(t => t.Id))
+                            {
+                                <tr>
+                                    <td style="text-align:center">@(record_id++)</td>
+                                    <td style="text-align:left">@item.Mota</td>
+                                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giathanhthi1)</td>
+                                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Gianongthon1)</td>
+                                    <td style="text-align:right">@Helpers.ConvertDbToStr(item.Giamiennui1)</td>
+                                    <td>
+                                        <button type="button" onclick="GetEdit(@item.Id)" class="btn btn-sm btn-clean btn-icon" title="Chỉnh sửa">
+                                            <i class="icon-lg la la-edit text-primary"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        } *@
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--Create Modal-->
+<div class="modal fade" id="KhaiThac_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form asp-controller="KetNoiGiaDaoTao" asp-action="LayKhaiThac" method="post" id="frm_khaithac">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="card-label">
+                        Thông tin chi tiết
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label>Link nhận dữ liệu</label>
+                                <input type="text" class="form-control" asp-for="LinkNhanGet" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Hủy thao tác</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold">Đồng ý</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

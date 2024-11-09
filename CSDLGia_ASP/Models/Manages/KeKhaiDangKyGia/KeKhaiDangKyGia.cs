@@ -47,6 +47,9 @@ namespace CSDLGia_ASP.Models.Manages.KeKhaiDangKyGia
 
         public DateTime Thoidiem { get; set; }
 
+        //Trang thái kết nối CSDLQG
+        public string TrangThaiCSDLQG { get; set; }
+        public DateTime NgayKetNoi { get; set; }
 
         [NotMapped]
         public List<KeKhaiDangKyGiaCt> KeKhaiDangKyGiaCt { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace CSDLGia_ASP.Models.Manages.DinhGia
 {
@@ -10,5 +11,8 @@ namespace CSDLGia_ASP.Models.Manages.DinhGia
         public string MaNhom { get; set; }
         public string TenNhom { get; set; }
         public string Syle { get; set; }
+        //Trang thái kết nối CSDLQG
+        public string TrangThaiCSDLQG { get; set; }
+        public DateTime NgayKetNoi { get; set; }
     }
 }

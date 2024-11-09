@@ -82,6 +82,9 @@ namespace CSDLGia_ASP.Models.Systems
         public double DvThuongMai { get; set; }
         public double KhamChuaBenh { get; set; }
         public double LuHanh { get; set; }
+        //Trang thái kết nối CSDLQG
+        public string TrangThaiCSDLQG { get; set; }
+        public DateTime NgayKetNoi { get; set; }
 
     }
 }

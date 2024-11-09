@@ -28,7 +28,10 @@ namespace CSDLGia_ASP.Models.Manages.ThamDinhGia
         public string MaTinhApDung { get; set; }
         public string MaHuyenApDung { get; set; }
         public string FileQD { get; set; }
-        public string FileQD_Base64 { get; set; }       
+        public string FileQD_Base64 { get; set; }
+        //Trang thái kết nối CSDLQG
+        public string TrangThaiCSDLQG { get; set; }
+        public DateTime NgayKetNoi { get; set; }
         [NotMapped]
         public List<ThamDinhGiaHDCt> ThamDinhGiaHDCt { get; set; }
         [NotMapped]

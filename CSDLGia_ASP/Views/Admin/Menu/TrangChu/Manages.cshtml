@@ -807,8 +807,7 @@
                         </a>
                     </li>
 
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "", "Index"))
-                    {
+                   
                         <li class="menu-item" aria-haspopup="true" id="menu_giaqg_giaoduc">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="menu-bullet menu-bullet-line">
@@ -850,10 +849,9 @@
                                 </ul>
                             </div>
                         </li>
-                    }
+                  
 
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "", "Index"))
-                    {
+                   
                         <li class="menu-item" aria-haspopup="true" id="menu_giaqg_racthai">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="menu-bullet menu-bullet-line">
@@ -895,10 +893,8 @@
                                 </ul>
                             </div>
                         </li>
-                    }
+                  
 
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "", "Index"))
-                    {
                         <li class="menu-item" aria-haspopup="true" id="menu_giaqg_tainguyen">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="menu-bullet menu-bullet-line">
@@ -940,10 +936,8 @@
                                 </ul>
                             </div>
                         </li>
-                    }
-
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "", "Index"))
-                    {
+                   
+                    
                         <li class="menu-item" aria-haspopup="true" id="menu_giaqg_chuyennganh">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="menu-bullet menu-bullet-line">
@@ -985,10 +979,9 @@
                                 </ul>
                             </div>
                         </li>
-                    }
+                   
 
-                    @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "", "Index"))
-                    {
+                   
                         <li class="menu-item" aria-haspopup="true" id="menu_giaqg_thamdinh">
                             <a href="javascript:;" class="menu-link menu-toggle">
                                 <i class="menu-bullet menu-bullet-line">
@@ -1030,8 +1023,48 @@
                                 </ul>
                             </div>
                         </li>
-                    }
 
+                    <li class="menu-item" aria-haspopup="true" id="menu_giaqg_philephi">
+                        <a href="javascript:;" class="menu-link menu-toggle">
+                            <i class="menu-bullet menu-bullet-line">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Giá phí, lệ phí trước bạ </span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="menu-submenu">
+                            <i class="menu-arrow"></i>
+                            <ul class="menu-subnav">
+                               
+                                <li class="menu-item" aria-haspopup="true" id="menu_giaqg_philephi_khaithac">
+                                    <a asp-controller="KetNoiGiaPhiLePhi" asp-action="KhaiThac" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Khai thác dữ liệu</span>
+                                    </a>
+                                </li>
+
+                                <li class="menu-item" aria-haspopup="true" id="menu_giaqg_philephi_danhmuc">
+                                    <a asp-controller="KetNoiGiaPhiLePhi" asp-action="DanhMuc" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Truyền danh mục</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item" aria-haspopup="true" id="menu_giaqg_philephi_hoso">
+                                    <a asp-controller="KetNoiGiaPhiLePhi" asp-action="HoSo" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="menu-text">Truyền hồ sơ kê khai</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
                     @*
 
 
@@ -1039,56 +1072,7 @@
 
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "", "Index"))
             {
-            <li class="menu-item" aria-haspopup="true" id="menu_giaqg_philephi">
-            <a href="javascript:;" class="menu-link menu-toggle">
-            <i class="menu-bullet menu-bullet-line">
-            <span></span>
-            </i>
-            <span class="menu-text">Giá phí, lệ phí trước bạ </span>
-            <i class="menu-arrow"></i>
-            </a>
-            <div class="menu-submenu">
-            <i class="menu-arrow"></i>
-            <ul class="menu-subnav">
-
-            <li class="menu-item" aria-haspopup="true" id="menu_giaqg_philephi_thietlap">
-            <a asp-controller="KetNoiGiaPhiLePhi" asp-action="ThietLap" class="menu-link">
-            <i class="menu-bullet menu-bullet-dot">
-            <span></span>
-            </i>
-            <span class="menu-text">Thiết lập hệ thống</span>
-            </a>
-            </li>
-
-            <li class="menu-item" aria-haspopup="true" id="menu_giaqg_philephi_khaithac">
-            <a asp-controller="KetNoiGiaPhiLePhi" asp-action="KhaiThac" class="menu-link">
-            <i class="menu-bullet menu-bullet-dot">
-            <span></span>
-            </i>
-            <span class="menu-text">Khai thác dữ liệu</span>
-            </a>
-            </li>
-
-            <li class="menu-item" aria-haspopup="true" id="menu_giaqg_philephi_danhmuc">
-            <a asp-controller="KetNoiGiaPhiLePhi" asp-action="DanhMuc" class="menu-link">
-            <i class="menu-bullet menu-bullet-dot">
-            <span></span>
-            </i>
-            <span class="menu-text">Truyền danh mục</span>
-            </a>
-            </li>
-            <li class="menu-item" aria-haspopup="true" id="menu_giaqg_philephi_hoso">
-            <a asp-controller="KetNoiGiaPhiLePhi" asp-action="HoSo" class="menu-link">
-            <i class="menu-bullet menu-bullet-dot">
-            <span></span>
-            </i>
-            <span class="menu-text">Truyền hồ sơ kê khai</span>
-            </a>
-            </li>
-
-            </ul>
-            </div>
-            </li>
+            
             }
 
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "", "Index"))
@@ -1201,29 +1185,20 @@
 
             @if (Helpers.CheckPermission(HttpContextAccessor.HttpContext.Session, "", "Index"))
             {
-            <li class="menu-item" aria-haspopup="true" id="menu_giaqg_tieudung">
+            <li class="menu-item" aria-haspopup="true" id="menu_giaqg_taisan">
             <a href="javascript:;" class="menu-link menu-toggle">
             <i class="menu-bullet menu-bullet-line">
             <span></span>
             </i>
-            <span class="menu-text">Giá tiêu dùng </span>
+            <span class="menu-text">Giá tài sản </span>
             <i class="menu-arrow"></i>
             </a>
             <div class="menu-submenu">
             <i class="menu-arrow"></i>
-            <ul class="menu-subnav">
+            <ul class="menu-subnav">          
 
-            <li class="menu-item" aria-haspopup="true" id="menu_giaqg_tieudung_thietlap">
-            <a asp-controller="KetNoiGiaTieuDung" asp-action="ThietLap" class="menu-link">
-            <i class="menu-bullet menu-bullet-dot">
-            <span></span>
-            </i>
-            <span class="menu-text">Thiết lập hệ thống</span>
-            </a>
-            </li>
-
-            <li class="menu-item" aria-haspopup="true" id="menu_giaqg_tieudung_khaithac">
-            <a asp-controller="KetNoiGiaTieuDung" asp-action="KhaiThac" class="menu-link">
+            <li class="menu-item" aria-haspopup="true" id="menu_giaqg_taisan_khaithac">
+            <a asp-controller="KetNoiGiaTaiSan" asp-action="KhaiThac" class="menu-link">
             <i class="menu-bullet menu-bullet-dot">
             <span></span>
             </i>
@@ -1231,16 +1206,8 @@
             </a>
             </li>
 
-            <li class="menu-item" aria-haspopup="true" id="menu_giaqg_tieudung_danhmuc">
-            <a asp-controller="KetNoiGiaTieuDung" asp-action="DanhMuc" class="menu-link">
-            <i class="menu-bullet menu-bullet-dot">
-            <span></span>
-            </i>
-            <span class="menu-text">Truyền danh mục</span>
-            </a>
-            </li>
-            <li class="menu-item" aria-haspopup="true" id="menu_giaqg_tieudung_hoso">
-            <a asp-controller="KetNoiGiaTieuDung" asp-action="HoSo" class="menu-link">
+            <li class="menu-item" aria-haspopup="true" id="menu_giaqg_taisan_hoso">
+            <a asp-controller="KetNoiGiaTaiSan" asp-action="HoSo" class="menu-link">
             <i class="menu-bullet menu-bullet-dot">
             <span></span>
             </i>
