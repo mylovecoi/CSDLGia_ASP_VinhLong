@@ -29,161 +29,161 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
             _dsDonviService = dsDonviService;
         }
 
-        [Route("DangNhap")]
-        [HttpGet]
-        public IActionResult Login()
-        {
-            /*var hethong = _db.tblHeThong;*/
-            ViewData["Title"] = "Đăng nhập";
-            return View("Views/Admin/Systems/Auth/Login.cshtml");
-            /*return View("Views/Admin/Systems/Auth/Login.cshtml", hethong);*/
+        //[Route("DangNhap")]
+        //[HttpGet]
+        //public IActionResult Login()
+        //{
+        //    /*var hethong = _db.tblHeThong;*/
+        //    ViewData["Title"] = "Đăng nhập";
+        //    return View("Views/Admin/Systems/Auth/Login.cshtml");
+        //    /*return View("Views/Admin/Systems/Auth/Login.cshtml", hethong);*/
 
-        }
+        //}
 
-        [Route("SignIn")]
-        [HttpPost]
-        public IActionResult SignIn(string username, string password)
-        {
-            if (username != null && password != null)
-            {
-                var model = _db.Users.FirstOrDefault(u => u.Username == username);
-                //Lấy thông tin trong bảng hệ thống để gán
-                var heThong = _db.tblHeThong.FirstOrDefault();
-                if (heThong != null)
-                {
-                    HttpContext.Session.SetString("LinkAPIXacthuc", heThong.LinkAPIXacthuc);
-                    HttpContext.Session.SetString("TokenLGSP", heThong.TokenLGSP);
-                    HttpContext.Session.SetString("MaDiaBanHanhChinh", heThong.MaDiaBanHanhChinh);
-                    HttpContext.Session.SetString("MaDonViThuThap", heThong.MaDonViThuThap);
-                    HttpContext.Session.SetString("TimeOut", heThong.TimeOut);
-                }
-                //Lấy các thông tin về kết nối API
-                //var dsKetNoi = _db.KetNoiAPI_DanhSach.Where(x=>x.Maso=="KOGKFKJ").ToList();
-                var dsKetNoi = _db.KetNoiAPI_DanhSach.ToList();
+        //[Route("SignIn")]
+        //[HttpPost]
+        //public IActionResult SignIn(string username, string password)
+        //{
+        //    if (username != null && password != null)
+        //    {
+        //        var model = _db.Users.FirstOrDefault(u => u.Username == username);
+        //        //Lấy thông tin trong bảng hệ thống để gán
+        //        var heThong = _db.tblHeThong.FirstOrDefault();
+        //        if (heThong != null)
+        //        {
+        //            HttpContext.Session.SetString("LinkAPIXacthuc", heThong.LinkAPIXacthuc);
+        //            HttpContext.Session.SetString("TokenLGSP", heThong.TokenLGSP);
+        //            HttpContext.Session.SetString("MaDiaBanHanhChinh", heThong.MaDiaBanHanhChinh);
+        //            HttpContext.Session.SetString("MaDonViThuThap", heThong.MaDonViThuThap);
+        //            HttpContext.Session.SetString("TimeOut", heThong.TimeOut);
+        //        }
+        //        //Lấy các thông tin về kết nối API
+        //        //var dsKetNoi = _db.KetNoiAPI_DanhSach.Where(x=>x.Maso=="KOGKFKJ").ToList();
+        //        var dsKetNoi = _db.KetNoiAPI_DanhSach.ToList();
 
-                // Chuyển đổi danh sách các đối tượng thành chuỗi JSON với key là trường khóa
-                Dictionary<string, KetNoiAPI_DanhSach> dictionary = dsKetNoi.ToDictionary(item => item.Maso, item => item);
-                string json = JsonConvert.SerializeObject(dictionary);
+        //        // Chuyển đổi danh sách các đối tượng thành chuỗi JSON với key là trường khóa
+        //        Dictionary<string, KetNoiAPI_DanhSach> dictionary = dsKetNoi.ToDictionary(item => item.Maso, item => item);
+        //        string json = JsonConvert.SerializeObject(dictionary);
 
-                // Lưu chuỗi JSON vào session
-                HttpContext.Session.SetString("LinkAPIKetNoi", json);
+        //        // Lưu chuỗi JSON vào session
+        //        HttpContext.Session.SetString("LinkAPIKetNoi", json);
 
                
 
-                //HttpContext.Session.SetString("LinkAPIKetNoi", JsonConvert.SerializeObject(dsKetNoi ?? null));
-                //
+        //        //HttpContext.Session.SetString("LinkAPIKetNoi", JsonConvert.SerializeObject(dsKetNoi ?? null));
+        //        //
 
-                if (model != null)
-                {
-                    string md5_password = "";
-                    using (MD5 md5Hash = MD5.Create())
-                    {
-                        string change = Helpers.GetMd5Hash(md5Hash, password);
-                        md5_password = change;
-                    }
-                    if (md5_password == model.Password)
-                    {
-                        if (model.Status == "Chờ xét duyệt")
-                        {
-                            ModelState.AddModelError("username", "Tài khoản chưa được kích hoạt. Liên hệ với quản trị hệ thống !!!");
-                            ViewData["username"] = username;
-                            ViewData["password"] = password;
-                            return View("Views/Admin/Systems/Auth/Login.cshtml");
-                        }
-                        else
-                        {
-                            if (model.Status == "Vô hiệu")
-                            {
-                                ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
-                                ViewData["username"] = username;
-                                ViewData["password"] = password;
-                                return View("Views/Admin/Systems/Auth/Login.cshtml");
-                            }
-                            else
-                            {
+        //        if (model != null)
+        //        {
+        //            string md5_password = "";
+        //            using (MD5 md5Hash = MD5.Create())
+        //            {
+        //                string change = Helpers.GetMd5Hash(md5Hash, password);
+        //                md5_password = change;
+        //            }
+        //            if (md5_password == model.Password)
+        //            {
+        //                if (model.Status == "Chờ xét duyệt")
+        //                {
+        //                    ModelState.AddModelError("username", "Tài khoản chưa được kích hoạt. Liên hệ với quản trị hệ thống !!!");
+        //                    ViewData["username"] = username;
+        //                    ViewData["password"] = password;
+        //                    return View("Views/Admin/Systems/Auth/Login.cshtml");
+        //                }
+        //                else
+        //                {
+        //                    if (model.Status == "Vô hiệu")
+        //                    {
+        //                        ModelState.AddModelError("username", "Tài khoản bị khóa. Liên hệ với quản trị hệ thống !!!");
+        //                        ViewData["username"] = username;
+        //                        ViewData["password"] = password;
+        //                        return View("Views/Admin/Systems/Auth/Login.cshtml");
+        //                    }
+        //                    else
+        //                    {
 
-                                var danhsachykien = _db.YKienGopY.Count();
-                                HttpContext.Session.SetString("DanhSachYKienDongGop", danhsachykien.ToString());
+        //                        var danhsachykien = _db.YKienGopY.Count();
+        //                        HttpContext.Session.SetString("DanhSachYKienDongGop", danhsachykien.ToString());
 
-                                HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
+        //                        HttpContext.Session.SetString("SsAdmin", JsonConvert.SerializeObject(model));
 
-                                if (model.Chucnang == "K")
-                                {
-                                    var permissions = _db.Permissions.Where(p => p.Username == username);
-                                    HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
-                                }
-                                else
-                                {
-                                    var permissions = _db.Permissions.Where(p => p.Username == model.Chucnang);
-                                    HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
-                                }
+        //                        if (model.Chucnang == "K")
+        //                        {
+        //                            var permissions = _db.Permissions.Where(p => p.Username == username);
+        //                            HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
+        //                        }
+        //                        else
+        //                        {
+        //                            var permissions = _db.Permissions.Where(p => p.Username == model.Chucnang);
+        //                            HttpContext.Session.SetString("Permission", JsonConvert.SerializeObject(permissions));
+        //                        }
 
-                                if (model.Level != "DN")
-                                {
-                                    var model_donvi = _dsDonviService.GetListDonvi(model.Madv);
-                                    List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
+        //                        if (model.Level != "DN")
+        //                        {
+        //                            var model_donvi = _dsDonviService.GetListDonvi(model.Madv);
+        //                            List<string> list_madv = model_donvi.Select(t => t.MaDv).ToList();
 
-                                    var data_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD").ToList(); // Lấy toàn bộ dữ liệu ra bằng ToList()
+        //                            var data_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD").ToList(); // Lấy toàn bộ dữ liệu ra bằng ToList()
 
-                                    // Lọc dữ liệu sử dụng LINQ to Objects thay vì LINQ to Entities
-                                    data_nghe = data_nghe.Where(x => list_madv.Any(v => x.Madv.Split(',').Contains(v))).ToList();
+        //                            // Lọc dữ liệu sử dụng LINQ to Objects thay vì LINQ to Entities
+        //                            data_nghe = data_nghe.Where(x => list_madv.Any(v => x.Madv.Split(',').Contains(v))).ToList();
                                    
-                                    HttpContext.Session.SetString("KeKhaiDangKyGia", JsonConvert.SerializeObject(data_nghe));
-                                }
-                                else
-                                {
-                                    var donvi_nghe = _db.CompanyLvCc.Where(t => t.Madv == model.Madv);
-                                    List<string> list_manghe = donvi_nghe.Select(t => t.Manghe).ToList();
-                                    var data_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD" &&list_manghe.Contains(t.Manghe));
-                                    HttpContext.Session.SetString("KeKhaiDangKyGia", JsonConvert.SerializeObject(data_nghe));
-                                }
-                                // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
-                                LoggingHelper.LogAction(HttpContext, _db, "DANGNHAP", "Đăng nhập");
+        //                            HttpContext.Session.SetString("KeKhaiDangKyGia", JsonConvert.SerializeObject(data_nghe));
+        //                        }
+        //                        else
+        //                        {
+        //                            var donvi_nghe = _db.CompanyLvCc.Where(t => t.Madv == model.Madv);
+        //                            List<string> list_manghe = donvi_nghe.Select(t => t.Manghe).ToList();
+        //                            var data_nghe = _db.DmNgheKd.Where(t => t.Theodoi == "TD" &&list_manghe.Contains(t.Manghe));
+        //                            HttpContext.Session.SetString("KeKhaiDangKyGia", JsonConvert.SerializeObject(data_nghe));
+        //                        }
+        //                        // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+        //                        LoggingHelper.LogAction(HttpContext, _db, "DANGNHAP", "Đăng nhập");
 
-                                return RedirectToAction("Index", "Home");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("password", "Mật khẩu truy cập không đúng !!!");
-                        ViewData["username"] = username;
-                        ViewData["Title"] = "Đăng nhập";
-                        return View("Views/Admin/Systems/Auth/Login.cshtml");
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError("username", "Tài khoản truy cập không tồn tại !!!");
-                    ViewData["Title"] = "Đăng nhập";
-                    return View("Views/Admin/Systems/Auth/Login.cshtml");
-                }
-
-
-            }
-            else
-            {
-                ModelState.AddModelError("username", "Tài khoản truy cập không được để trống !!!");
-                ModelState.AddModelError("password", "Mật khẩu truy cập không được để trống !!!");
-                ViewData["Title"] = "Đăng nhập";
-                return View("Views/Admin/Systems/Auth/Login.cshtml");
-            }
-        }
-
-        [Route("DangXuat")]
-        [HttpPost]
-        public IActionResult LogOut()
-        {
-            // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
-            LoggingHelper.LogAction(HttpContext, _db, "DANGXUAT", "Đăng xuất");
-
-            HttpContext.Session.Remove("Permission");
-            HttpContext.Session.Remove("SsAdmin");
-            HttpContext.Session.Remove("KeKhaiDangKyGia");
-            return RedirectToAction("Index", "Home");
+        //                        return RedirectToAction("Index", "Home");
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                ModelState.AddModelError("password", "Mật khẩu truy cập không đúng !!!");
+        //                ViewData["username"] = username;
+        //                ViewData["Title"] = "Đăng nhập";
+        //                return View("Views/Admin/Systems/Auth/Login.cshtml");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError("username", "Tài khoản truy cập không tồn tại !!!");
+        //            ViewData["Title"] = "Đăng nhập";
+        //            return View("Views/Admin/Systems/Auth/Login.cshtml");
+        //        }
 
 
-        }
+        //    }
+        //    else
+        //    {
+        //        ModelState.AddModelError("username", "Tài khoản truy cập không được để trống !!!");
+        //        ModelState.AddModelError("password", "Mật khẩu truy cập không được để trống !!!");
+        //        ViewData["Title"] = "Đăng nhập";
+        //        return View("Views/Admin/Systems/Auth/Login.cshtml");
+        //    }
+        //}
+
+        //[Route("DangXuat")]
+        //[HttpPost]
+        //public IActionResult LogOut()
+        //{
+        //    // Lưu vết từng tài khoản đăng nhập theo thời gian truy cập vào hệ thống 
+        //    LoggingHelper.LogAction(HttpContext, _db, "DANGXUAT", "Đăng xuất");
+
+        //    HttpContext.Session.Remove("Permission");
+        //    HttpContext.Session.Remove("SsAdmin");
+        //    HttpContext.Session.Remove("KeKhaiDangKyGia");
+        //    return RedirectToAction("Index", "Home");
+
+
+        //}
 
         [HttpGet("TestList")]
         public IActionResult TestList()
