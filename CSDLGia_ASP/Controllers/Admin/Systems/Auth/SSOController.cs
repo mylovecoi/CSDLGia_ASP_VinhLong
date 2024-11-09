@@ -6,6 +6,8 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Web;
+using CSDLGia_ASP.Database;
+using System.Linq;
 
 namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
 {
@@ -13,14 +15,17 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
     {
         private const string AuthorizationEndpoint = "https://cas.vinhlong.gov.vn/cas/oidc/authorize";
         private const string TokenEndpoint = "https://cas.vinhlong.gov.vn/cas/oidc/token";
+        private const string UserInfoEndpoint = "https://cas.vinhlong.gov.vn/cas/oidc/userinfo";
         private const string ClientId = "your_client_id";
         private const string ClientSecret = "your_client_secret";
         private const string Scope = "openid profile";
 
+        private readonly CSDLGiaDBContext _db;
         private readonly HttpClient _httpClient;
 
-        public SSOController(HttpClient httpClient)
+        public SSOController(CSDLGiaDBContext db, HttpClient httpClient)
         {
+            _db = db;
             _httpClient = httpClient;
         }
 
@@ -97,9 +102,44 @@ namespace CSDLGia_ASP.Controllers.Admin.Systems.Auth
             var tokenData = JObject.Parse(responseContent);
             var accessToken = tokenData["access_token"]?.ToString();
 
+            //return Ok(accessToken);
 
-            return Ok(accessToken);
+            // Sử dụng access token để lấy thông tin người dùng
+            var userInfoRequest = new HttpRequestMessage(HttpMethod.Get, UserInfoEndpoint);
+            userInfoRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var userInfoResponse = await _httpClient.SendAsync(userInfoRequest);
+
+            if (!userInfoResponse.IsSuccessStatusCode)
+            {
+                return StatusCode((int)userInfoResponse.StatusCode, "Unable to retrieve user info.");
+            }
+
+            var userInfoContent = await userInfoResponse.Content.ReadAsStringAsync();
+            var userInfo = JObject.Parse(userInfoContent);
+
+            return Ok(userInfo);
+            //string username = userInfo["username"]?.ToString();
+            //string email = userInfo["email"]?.ToString();
+            //if (this.CheckUserInfo(username, email)) {
+            //    //Insert acccout && SignIn
+            //}
+            //else
+            //{
+            //    //SignIn
+            //}
+
         }
 
+        public bool CheckUserInfo(string username, string email)
+        {
+            var model = _db.Users.FirstOrDefault(t => t.Username == username && t.Email == email && t.SSO);
+            if (model != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
+
+
 }
